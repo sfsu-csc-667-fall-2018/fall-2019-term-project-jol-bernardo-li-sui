@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  h1 Results
+  each res in result
+    p= res.id
+    p= res.createdAt
+    p= res.testString
+    br

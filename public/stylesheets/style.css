@@ -2,6 +2,10 @@ h1 {
     text-align: center;
 }
 
+html {
+    min-height: 100vh;
+}
+
 body {
     margin: 0;
     background: radial-gradient(rgb(236, 236, 63), rgb(29, 28, 28))
@@ -78,7 +82,7 @@ body {
     padding: 5px 15px;
     height: 40px;
     width: 120px;
-    font-family: monospace;
+    font-family: monospace:;
     font-size: 15px;
     text-align: center;
 }

@@ -1,8 +1,84 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+h1 {
+    text-align: center;
 }
 
-a {
-  color: #00B7FF;
+body {
+    margin: 0;
+    background: radial-gradient(rgb(236, 236, 63), rgb(29, 28, 28))
+}
+
+.uno-logo {
+    height: 250px;
+    width: 300px;
+}
+
+.chat-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    border-radius: 12px;
+    padding: 2px 20px;
+    font-size: 14px;
+}
+
+#login-signup {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    background-color: inherit;
+    padding: 14px 28px;
+    font-family: monospace;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.cards-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.back-cards {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    border-width: 1px;
+}
+
+.start-page-buttons {
+    position: relative;
+    top: 85px;
+    display: flex;
+    justify-content: center;
+}
+
+#start-button {
+    background-color: rgb(250, 234, 93);
+    border-radius: 20px;
+    padding: 5px 15px;
+    height: 40px;
+    width: 120px;
+    font-family: monospace;
+    font-size: 15px;
+    text-align: center;
+}
+
+#join-button {
+    background-color: rgb(250, 234, 93);
+    margin-left: 250px;
+    border-radius: 20px;
+    padding: 5px 15px;
+    height: 40px;
+    width: 120px;
+    font-family: monospace;
+    font-size: 15px;
+    text-align: center;
 }

@@ -1,5 +1,19 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+    title Uno
+    h1.page-title
+        img.uno-logo(src='./media/UNO-Logo.svg', alt='uno-logo' width='200' height='100')
+    button.chat-button Chat
+    #login-signup Login/Signup
+    .cards-container
+        img.back-cards(src='./media/UNO-Back.svg', alt='back-card' width='200' height='200')
+        img.back-cards(src='./media/UNO-Back.svg', alt='back-card' width='200' height='200')
+        img.back-cards(src='./media/UNO-Back.svg', alt='back-card' width='200' height='200')
+        img.back-cards(src='./media/UNO-Back.svg', alt='back-card' width='200' height='200')
+        img.back-cards(src='./media/UNO-Back.svg', alt='back-card' width='200' height='200')
+        img.back-cards(src='./media/UNO-Back.svg', alt='back-card' width='200' height='200')
+        img.back-cards(src='./media/UNO-Back.svg', alt='back-card' width='200' height='200')
+    .start-page-buttons
+        button#start-button Start
+        button#join-button Join

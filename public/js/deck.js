@@ -5,12 +5,6 @@ class Card {
     }
 }
 
-class Wild {
-    constructor(wildCard) {
-        this.wildCard = wildCard;
-    }
-}
-
 class Deck {
     constructor() {
         this.deck = [];
@@ -25,7 +19,6 @@ class Deck {
         for(let wildCard of wildCards) {
             this.deck.push(new Wild(wildCard));
         }
-        return this.deck;
     }
 
     shuffle() {

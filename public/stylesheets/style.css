@@ -60,18 +60,25 @@ a {
     src: url('./fonts/Kefa-Regular.TTF');
 }
 
-.card{
+.hand {
+    display: grid;
+    justify-items: center;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fit, 150px);
+    grid-gap: 10px
+}
+
+.hand__card{
     display: flex;
     justify-content: center;
     align-items: center;
-
     background-color: rgb(255,87,87);
     border-radius: 10px;
-    width: 211.2px;
-    height: 336px;
+    width: 120px;
+    height: 195px;
 }
 
-.circle{
+.hand__card--circle{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -88,12 +95,13 @@ a {
     transform: rotateZ(20deg);
 }
 
-p {
+.hand__card--num {
     transform: rotateZ(-20deg);
     margin: 0;
     padding: 0;
-    margin-top: 40px;
-    margin-left: 20px;
+    /* margin-top: 40px; */
+    /* margin-left: 20px; */
+    font-size: 75px;
 }
 
 
@@ -104,14 +112,6 @@ p {
 
     margin-top: 100px;
     padding: 10px;
-}
-
-.cards-container {
-    display: grid;
-    justify-items: center;
-    justify-content: center;
-    grid-template-columns: repeat(auto-fit, 150px);
-    grid-gap: 10px
 }
 
 .back-cards {

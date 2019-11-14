@@ -1,0 +1,9 @@
+@media only screen and (max-width: 920px){
+    .hand {
+        grid-template-areas:
+            "top"
+            "bottom"
+        ;
+        grid-gap: 10px
+    }
+}

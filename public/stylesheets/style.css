@@ -12,7 +12,7 @@ html {
 
 body{
     margin: 0;
-    background: rgb(1, 182, 1);
+    background: var(--main-bg-color);
 }
 
 
@@ -31,7 +31,7 @@ body{
 
 .chat-button {
     border-radius: 12px;
-    background-color: rgb(250, 234, 93);
+    background-color: var(--yellow);
     padding: 2px 20px;
     font-size: 14px;
 }
@@ -61,21 +61,20 @@ a {
 }
 
 .hand {
-    display: grid;
-    justify-items: center;
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    grid-template-columns: repeat(auto-fit, 150px);
-    grid-gap: 10px
 }
 
 .hand__card{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(255,87,87);
+    background-color: var(--red);
     border-radius: 10px;
     width: 120px;
     height: 195px;
+    margin: 10px;
 }
 
 .hand__card--circle{
@@ -85,7 +84,7 @@ a {
 
     font-size: 200px;
     font-family: 'Kefa';
-    color: rgb(255,87,87);
+    color: var(--red);
 
     background-color: white;
     border-radius: 50%;
@@ -126,7 +125,7 @@ a {
 
 .start-button,
 .join-button {
-    background-color: rgb(250, 234, 93);
+    background-color: var(--yellow);
     border-radius: 20px;
 
     padding: 5px 15px;

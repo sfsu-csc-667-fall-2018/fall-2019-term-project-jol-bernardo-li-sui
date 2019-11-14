@@ -106,8 +106,8 @@
     align-content: center;
     background-color: white;
     border-radius: 50px;
-    height: 40px;
-    width: 500px;
+    height: 35px;
+    width: 550px;
 }
 
 .chat__box--input{
@@ -120,12 +120,14 @@
 }
 
 .chat__box--button{
-    border-radius: 50px;
+    border-radius: 0 50px 50px 0;
     background-color: rgb(0, 132, 255);
     align-self: center;
-    margin-right: 5px;
-    width: 30px;
-    height: 30px;
+    margin: 0;
+    padding: 0 10px;
+    /* margin-right: 5px; */
+    /* width: 30px; */
+    height: 100%;
     border: none;
     color: white;
     cursor: pointer;

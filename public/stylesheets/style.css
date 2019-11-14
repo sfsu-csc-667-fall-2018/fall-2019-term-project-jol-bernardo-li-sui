@@ -54,6 +54,49 @@ a {
 }
 
 /*-------------------------------------------------------------------BODY--*/
+
+@font-face{
+    font-family: 'Kefa';
+    src: url('./fonts/Kefa-Regular.TTF');
+}
+
+.card{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: rgb(255,87,87);
+    border-radius: 10px;
+    width: 211.2px;
+    height: 336px;
+}
+
+.circle{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 200px;
+    font-family: 'Kefa';
+    color: rgb(255,87,87);
+
+    background-color: white;
+    border-radius: 50%;
+    width: 80%;
+    height: 85%;
+    
+    transform: rotateZ(20deg);
+}
+
+p {
+    transform: rotateZ(-20deg);
+    margin: 0;
+    padding: 0;
+    margin-top: 40px;
+    margin-left: 20px;
+}
+
+
 .body {
     display: flex;
     flex-direction: column;

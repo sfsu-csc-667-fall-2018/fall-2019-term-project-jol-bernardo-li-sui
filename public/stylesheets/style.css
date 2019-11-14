@@ -2,6 +2,11 @@
     box-sizing: border-box;
 }
 
+@font-face{
+    font-family: 'Kefa';
+    src: url('./fonts/Kefa-Regular.TTF');
+}
+
 h1 {
     text-align: center;
 }
@@ -17,26 +22,24 @@ body{
 
 
 /*-----------------------------------------------------------------HEADER--*/
-.header{
+.body{
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: space-around;
     align-items: flex-start;
 
-    padding: 10px;
+    padding: 50px;
+    height: 100vh;
+    width: 100%;
 }
 
 .header_logo {
-    height: 200px;
-}
-
-.chat-button {
-    border-radius: 12px;
-    background-color: var(--yellow);
-    padding: 2px 20px;
-    font-size: 14px;
+    height: 400px;
+    align-self: center;
 }
 
 .login-signup {
+    align-self: center;
     display: flex;
     justify-content: space-between;
 
@@ -53,78 +56,26 @@ a {
     color: white;
 }
 
-/*-------------------------------------------------------------------BODY--*/
-
-@font-face{
-    font-family: 'Kefa';
-    src: url('./fonts/Kefa-Regular.TTF');
-}
-
-.hand {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.hand__card{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--red);
-    border-radius: 10px;
-    width: 120px;
-    height: 195px;
-    margin: 10px;
-}
-
-.hand__card--circle{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    font-size: 200px;
-    font-family: 'Kefa';
-    color: var(--red);
-
+.chat{
     background-color: white;
-    border-radius: 50%;
-    width: 80%;
-    height: 85%;
-    
-    transform: rotateZ(20deg);
-}
-
-.hand__card--num {
-    transform: rotateZ(-20deg);
-    margin: 0;
-    padding: 0;
-    /* margin-top: 40px; */
-    /* margin-left: 20px; */
-    font-size: 75px;
-}
-
-
-.body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
-    margin-top: 100px;
-    padding: 10px;
-}
-
-.back-cards {
-    width: 150px;
+    align-self: center;
+    border-radius: 10px;
+    width: 600px;
+    height: 300px;
 }
 
 .start-page-buttons {
+    align-self: center;
     display: flex;
     justify-content: center;
-    margin-top: 100px;
 }
 
 .start-button,
 .join-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     background-color: var(--yellow);
     border-radius: 20px;
 
@@ -137,3 +88,4 @@ a {
     font-size: 15px;
     text-align: center;
 }
+

@@ -11,6 +11,9 @@ if(process.env.NODE_ENV === 'development') {
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const testsRouter = require('./routes/tests');
+const sessionRouter = require('./routes/session');
+const joinRouter = require('./routes/join');
+
 
 const app = express();
 
@@ -27,6 +30,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/', usersRouter);
 app.use('/', testsRouter);
+app.use('/', sessionRouter);
+app.use('/', joinRouter);
+
 
 app.use('/users', require('./routes/users'));
 // catch 404 and forward to error handler

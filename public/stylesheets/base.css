@@ -1,0 +1,29 @@
+*{
+    box-sizing: border-box;
+}
+
+@font-face{
+    font-family: 'Kefa';
+    src: url('./fonts/Kefa-Regular.TTF');
+}
+
+h1 {
+    font-family: var(--main-font);
+    color: white;
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+html {
+    min-height: 100vh;
+}
+
+body{
+    margin: 0;
+    background: var(--main-bg-color);
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}

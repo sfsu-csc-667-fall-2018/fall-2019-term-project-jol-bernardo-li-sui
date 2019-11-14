@@ -2,4 +2,12 @@
     --main-bg-color: rgb(108, 214, 101);
     --red: rgb(255,87,87);
     --yellow: rgb(255, 222, 89);
+    --blue: rgb(81, 113, 255);
+    
+    --main-font: 'Kefa-Regular';
+}
+
+@font-face{
+    font-family: 'Kefa-Regular';
+    src: url('fonts/Kefa-Regular.TFF');
 }

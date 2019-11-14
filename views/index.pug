@@ -2,11 +2,27 @@ extends layout
 
 block content
     .body
-        img(src='images/Logo.png', alt='uno-logo' class='header_logo')
-        .login-signup
-                a(href='/users/login') Login
-                a(href='/users/signup') Signup
+        .logo__container
+            img(src='images/Logo.png', alt='uno-logo' class='logo')
+            .login-signup
+                    a(href='/users/login') Login
+                    a(href='/users/signup') Signup
         .chat
+            h1.chat__title CHAT
+            .chat__box
+                .chat__box--messages
+                    .chat__box--incoming-message Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent sed pharetra leo, vel dapibus est.
+                    .chat__box--incoming-message Lorem ipsum dolor sit amet, consectetur adipiscing.
+                    .chat__box--incoming-message Lorem ipsum
+                    .chat__box--outgoing-message Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent
+                    .chat__box--incoming-message Lorem ipsum dolor sit amet, consectetur adipiscing.
+                    .chat__box--incoming-message Lorem
+                    .chat__box--outgoing-message Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent sed pharetra leo
+                .chat__box--form-container
+                    form.chat__box--form
+                        input(type="text" class="chat__box--input")
+                        button(type='submit' class="chat__box--button") GO
+
         .start-page-buttons
             a(href='/session' class='start-button') Start
             a(href='/join' class='join-button') Join

@@ -124,8 +124,8 @@ p {
     margin-top: 100px;
 }
 
-#start-button,
-#join-button {
+.start-button,
+.join-button {
     background-color: rgb(250, 234, 93);
     border-radius: 20px;
 

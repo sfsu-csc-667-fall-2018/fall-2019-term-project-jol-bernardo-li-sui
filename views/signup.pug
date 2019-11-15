@@ -3,7 +3,7 @@ extends layout
 block content
     .body
         .container
-            form.form__signup
+            form(class="form__signup" action="")
                 h1.form__signup--title Sign Up
 
                 label.form__signup--label Name
@@ -17,3 +17,8 @@ block content
 
                 label.form__signup--label Confirm Password
                 input(type="password" class="form__signup--input")
+
+                .form__signup--buttons
+                    button(class="form__signup--button-cancel")
+                        a(href="../index") Cancel
+                    button(class="form__signup--button-submit" type="submit") Submit

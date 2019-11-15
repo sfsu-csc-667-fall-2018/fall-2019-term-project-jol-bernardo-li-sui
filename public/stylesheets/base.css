@@ -23,7 +23,12 @@ body{
     background: var(--main-bg-color);
 }
 
+p{
+    font-family: var(--secondary-font);
+}
+
 a {
     text-decoration: none;
     color: white;
+    font-family: var(--secondary-font);
 }

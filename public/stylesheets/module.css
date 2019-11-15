@@ -78,6 +78,8 @@
     max-width: 400px;
     border-radius: 12px;
     margin: 5px;
+    font-family: var(--secondary-font);
+    font-size: 14px;
 }
 
 .chat__box--incoming-message{
@@ -115,7 +117,8 @@
     outline: none;
     background: none;
     padding: 10px 15px;
-    font-size: 15px;
+    font-size: 14px;
+    font-family: var(--secondary-font);
 }
 
 .chat__box--button{
@@ -214,7 +217,8 @@
     scroll-snap-type: x mandatory;
     overflow: -moz-scrollbars-none;
     -ms-overflow-style: none;
-}::-webkit-scrollbar { height: 0 !important}
+}
+.hand::-webkit-scrollbar { height: 0 !important}
 
 .hand__card{
     display: flex;

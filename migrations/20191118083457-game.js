@@ -2,20 +2,19 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable("test_table", {
+    return queryInterface.createTable("game", {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
       },
-      createdAt: {
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal("NOW()"),
-        allowNull: false
+      chatId: {
+        type: Sequelize.INTEGER,
+        reference: { model: "chat", key: "id" }
       },
-      testString: {
-        type: Sequelize.STRING,
-        allowNull: false
+      deckId: {
+        type: Sequelize.INTEGER,
+        reference: { model: "deck", key: "id" }
       }
     });
   },

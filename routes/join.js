@@ -1,5 +1,4 @@
 const express = require('express');
-const Pool = require('pg').Pool
 const router = express.Router();
 
 /* join page. */

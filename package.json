@@ -1,16 +1,19 @@
 {
   "name": "uno",
-  "version": "0.0.0",
+  "version": "6.9.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
     "start:dev": "NODE_ENV=development DEBUG=uno:* nodemon ./bin/www",
+    "build": "browserify frontend/main.js -o public/js/bundle.js -t [ babelify --presets [ @babel/preset-env ] ]",
+    "build:dev": "watchify frontend/main.js -o public/js/bundle.js -t [ babelify --presets [ @babel/preset-env ] ] -v",
     "db:create:migration": "sequelize migration:generate --name ",
     "db:migrate": "sequelize db:migrate",
     "dv:rollback": "sequelize db:migrate:undo",
     "postinstall": "sequelize db:migrate"
   },
   "dependencies": {
+    "browserify": "^16.5.0",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
@@ -20,9 +23,13 @@
     "pg-promise": "^9.3.3",
     "pug": "^2.0.0-beta11",
     "sequelize": "^5.21.1",
-    "sequelize-cli": "^5.5.1"
+    "sequelize-cli": "^5.5.1",
+    "socket.io": "^2.3.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.7.2",
+    "@babel/preset-env": "^7.7.1",
+    "babelify": "^10.0.0",
     "nodemon": "^1.19.4"
   }
 }

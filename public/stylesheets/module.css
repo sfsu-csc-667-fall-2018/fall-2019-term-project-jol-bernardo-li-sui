@@ -56,9 +56,8 @@
 
 .chat__box{
     border-radius: 10px;
-    width: 600px;
-    /* height: 300px; */
     background-color: white;
+    width: 600px;
 }
 
 .chat__box--messages{
@@ -69,7 +68,7 @@
     width: 100%;
     height: 300px;
 
-    overflow: scroll;
+    overflow-y: scroll;
 }
 
 .chat__box--incoming-message,
@@ -108,7 +107,7 @@
     align-content: center;
     background-color: white;
     border-radius: 50px;
-    width: 550px;
+    width: 100%;
 }
 
 .chat__box--input{

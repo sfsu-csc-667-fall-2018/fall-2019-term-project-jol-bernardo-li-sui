@@ -4,7 +4,8 @@
 var _events = require("../src/events");
 
 var socket = io();
-var user = "anon";
+var user = "anon"; //sets chatbox scroll to bottom
+
 var chatBoxMessages = document.querySelector('.chat__box--messages');
 chatBoxMessages.scrollTop = chatBoxMessages.scrollHeight;
 
@@ -17,11 +18,7 @@ var incomingMessage = function incomingMessage(data) {
   chatBoxMessages.scrollTop = chatBoxMessages.scrollHeight;
 };
 
-var initializeSocket = function initializeSocket() {
-  socket.on(_events.MESSAGE_SEND, incomingMessage);
-};
-
-initializeSocket();
+socket.on(_events.MESSAGE_SEND, incomingMessage);
 var chatBoxButton = document.querySelector('.chat__box--button');
 var chatBoxInput = document.querySelector('.chat__box--input');
 chatBoxButton.addEventListener("click", function (event) {

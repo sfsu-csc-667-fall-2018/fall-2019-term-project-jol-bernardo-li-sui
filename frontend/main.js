@@ -3,6 +3,8 @@ import { MESSAGE_SEND } from '../src/events'
 const socket = io();
 
 let user = "anon"
+
+//sets chatbox scroll to bottom
 const chatBoxMessages = document.querySelector('.chat__box--messages')
 chatBoxMessages.scrollTop = chatBoxMessages.scrollHeight
 
@@ -18,11 +20,8 @@ const incomingMessage = data => {
     chatBoxMessages.scrollTop = chatBoxMessages.scrollHeight
 }
 
-const initializeSocket = () => {
-    socket.on( MESSAGE_SEND, incomingMessage);
-}
+socket.on( MESSAGE_SEND, incomingMessage);
 
-initializeSocket();
 
 const chatBoxButton = document.querySelector('.chat__box--button')
 const chatBoxInput = document.querySelector('.chat__box--input')

@@ -1,4 +1,5 @@
 const socketIo = require( 'socket.io' )
+const { USER_JOINED, MESSAGE_SEND } = require('../src/events')
 
 const init = ( app, server ) => {
   const io = socketIo( server ) //mount socket server to http server
@@ -12,8 +13,8 @@ const init = ( app, server ) => {
       console.log( 'client disconnected' )
     })
 
-    socket.on( 'user-joined', data => io.emit( 'user-joined', data ))
-    socket.on( 'message-send', data => io.emit( 'message-send', data ))
+    socket.on( USER_JOINED, data => io.emit( USER_JOINED, data ))
+    socket.on( MESSAGE_SEND, data => io.emit( MESSAGE_SEND, data ))
   })
 }
 

@@ -8,6 +8,13 @@
     width: 100%;
 }
 
+.lobby{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .session{
     display: flex;
     flex-direction: column;

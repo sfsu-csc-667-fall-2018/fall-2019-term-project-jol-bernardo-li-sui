@@ -32,12 +32,7 @@ var createDeck = function createDeck(deck, colors, values) {
       try {
         for (var _iterator2 = values[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
           var value = _step2.value;
-
-          if (value === 'w' || value === 'w4') {
-            deck.push(new Card('', value, "-wild"));
-          } else {
-            deck.push(new Card(color, value, ""));
-          }
+          deck.push(new Card(color, value, ""));
         }
       } catch (err) {
         _didIteratorError2 = true;
@@ -68,6 +63,13 @@ var createDeck = function createDeck(deck, colors, values) {
       }
     }
   }
+
+  var wildDeck = ['w', 'w', 'w', 'w', 'w4', 'w4', 'w4', 'w4'];
+
+  for (var _i = 0, _wildDeck = wildDeck; _i < _wildDeck.length; _i++) {
+    var wild = _wildDeck[_i];
+    deck.push(new Card("", wild, "-wild"));
+  }
 };
 
 var shuffle = function shuffle(deck) {
@@ -81,8 +83,6 @@ var shuffle = function shuffle(deck) {
     deck[counter] = deck[i];
     deck[i] = temp;
   }
-
-  return deck;
 };
 
 var deal = function deal(deck) {
@@ -109,20 +109,32 @@ var deck = require('./deck.js');
 var deckInstance = [];
 var hand = [];
 var colors = ['--red', '--blue', '--green', '--yellow'];
-var values = [0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 'Draw Two', 'Draw Two', 'Skip', 'Skip', 'Reverse', 'Reverse', 'w', 'w', 'w', 'w', 'w4', 'w4', 'w4', 'w4'];
+var values = [0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 'Draw Two', 'Draw Two', 'Skip', 'Skip', 'Reverse', 'Reverse'];
 deck.createDeck(deckInstance, colors, values);
 deck.shuffle(deckInstance);
+deckInstance.map(function (card) {
+  console.log(card);
+});
 hand = deck.deal(deckInstance);
 hand.map(function (card) {
   var handCard = document.createElement('div');
   handCard.classList.add("hand__card".concat(card.color));
   var handCardCircle = document.createElement('div');
   handCardCircle.classList.add("hand__card--circle".concat(card.circleColor));
-  var handCardNum = document.createElement('p');
-  handCardNum.classList.add('hand__card--num');
-  var node = document.createTextNode(card.value);
-  handCardNum.appendChild(node);
-  handCardCircle.appendChild(handCardNum);
+
+  if (card.value === "Reverse") {
+    var handCardImg = document.createElement('img');
+    handCardImg.classList.add("hand__card--img");
+    handCardImg.src = "images/card_icons/reverse".concat(card.color, ".png");
+    handCardCircle.appendChild(handCardImg);
+  } else {
+    var handCardNum = document.createElement('p');
+    handCardNum.classList.add('hand__card--num');
+    var node = document.createTextNode(card.value);
+    handCardNum.appendChild(node);
+    handCardCircle.appendChild(handCardNum);
+  }
+
   handCard.appendChild(handCardCircle);
   var hand = document.querySelector('.hand');
   hand.appendChild(handCard);

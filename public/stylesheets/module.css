@@ -284,6 +284,11 @@
     font-size: 100px;
     font-family: 'Kefa';
 }
+
+.hand__card--img {
+    transform: rotateZ(-20deg);
+    width: 70%;
+}
 /*--------------------------------------------------------------------LOBBY--*/
 .back-button {
     background-color: lightblue;

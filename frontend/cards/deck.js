@@ -15,12 +15,14 @@ class Wild {
 const createDeck = (deck, colors, values) => {
     for(let color of colors) {
         for(let value of values) {
-            if(value === 'w' || value === 'w4') {
-                deck.push(new Card('', value, "-wild"))
-            } else {
-                deck.push(new Card(color, value, ""));
-            }
+            deck.push(new Card(color, value, ""));
         }
+    }
+
+    let wildDeck = ['w', 'w', 'w', 'w', 'w4', 'w4', 'w4', 'w4']
+
+    for(let wild of wildDeck){
+        deck.push(new Card("", wild, "-wild"))
     }
 }
 
@@ -33,7 +35,6 @@ const shuffle = (deck) => {
         deck[counter] = deck[i];
         deck[i] = temp;
      }
-     return deck;
 }
 
 const deal = (deck) => {

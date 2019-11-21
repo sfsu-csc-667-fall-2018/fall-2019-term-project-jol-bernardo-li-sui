@@ -219,7 +219,11 @@
 }
 .hand::-webkit-scrollbar { height: 0 !important}
 
-.hand__card{
+.hand__card,
+.hand__card--green,
+.hand__card--red,
+.hand__card--yellow,
+.hand__card--blue{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -227,16 +231,33 @@
 
     scroll-snap-align: start;
 
-    background-color: rgb(255,87,87);
+    color: white;
+    background-color: black;
     border-radius: 10px;
     border: 5px solid white;
-    width: 120px;
-    height: 195px;
+    width: 160px;
+    height: 258px;
 
     margin: 10px;
 }
+.hand__card--green{
+    background-color: var(--green);
+    color: var(--green);
+}
+.hand__card--red{
+    background-color: var(--red);
+    color: var(--red);
+}
+.hand__card--yellow{
+    background-color: var(--yellow);
+    color: var(--yellow);
+}
+.hand__card--blue{
+    background-color: var(--blue);
+    color: var(--blue);
+}
 
-.hand__card--cirlce,
+.hand__card--circle,
 .hand__card--circle-wild{
     display: flex;
     justify-content: center;
@@ -262,7 +283,6 @@
 
     font-size: 100px;
     font-family: 'Kefa';
-    color: rgb(255,87,87);
 }
 /*--------------------------------------------------------------------LOBBY--*/
 .back-button {

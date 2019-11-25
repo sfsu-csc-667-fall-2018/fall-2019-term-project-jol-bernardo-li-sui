@@ -12,18 +12,23 @@ class Wild {
     }
 }
 
-const createDeck = (deck, colors, values) => {
+const createDeck = () => {
+    let colors = ['--red', '--blue', '--green', '--yellow'];
+    let values = [0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 'Draw Two', 'Draw Two', 'Skip', 'Skip', 'Reverse', 'Reverse'];
+    let wildDeck = ['w', 'w', 'w', 'w', 'w4', 'w4', 'w4', 'w4']
+    let deck = [];
+
     for(let color of colors) {
         for(let value of values) {
             deck.push(new Card(color, value, ""));
         }
     }
 
-    let wildDeck = ['w', 'w', 'w', 'w', 'w4', 'w4', 'w4', 'w4']
-
     for(let wild of wildDeck){
         deck.push(new Card("", wild, "-wild"))
     }
+
+    return deck;
 }
 
 const shuffle = (deck) => {

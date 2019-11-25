@@ -17,59 +17,45 @@ var Wild = function Wild(wild) {
   this.wild = wild;
 };
 
-var createDeck = function createDeck(deck, colors, values) {
-  var _iteratorNormalCompletion = true;
-  var _didIteratorError = false;
-  var _iteratorError = undefined;
+var createDeck = function createDeck() {
+  var colors = ['--red', '--blue', '--green', '--yellow'];
+  var values = [0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 'Draw Two', 'Draw Two', 'Skip', 'Skip', 'Reverse', 'Reverse'];
+  var wildDeck = ['w', 'w', 'w', 'w', 'w4', 'w4', 'w4', 'w4'];
+  var deck = [];
 
-  try {
-    for (var _iterator = colors[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-      var color = _step.value;
-      var _iteratorNormalCompletion2 = true;
-      var _didIteratorError2 = false;
-      var _iteratorError2 = undefined;
+  for (var _i = 0, _colors = colors; _i < _colors.length; _i++) {
+    var color = _colors[_i];
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
 
-      try {
-        for (var _iterator2 = values[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-          var value = _step2.value;
-          deck.push(new Card(color, value, ""));
-        }
-      } catch (err) {
-        _didIteratorError2 = true;
-        _iteratorError2 = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
-            _iterator2["return"]();
-          }
-        } finally {
-          if (_didIteratorError2) {
-            throw _iteratorError2;
-          }
-        }
-      }
-    }
-  } catch (err) {
-    _didIteratorError = true;
-    _iteratorError = err;
-  } finally {
     try {
-      if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-        _iterator["return"]();
+      for (var _iterator = values[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        var value = _step.value;
+        deck.push(new Card(color, value, ""));
       }
+    } catch (err) {
+      _didIteratorError = true;
+      _iteratorError = err;
     } finally {
-      if (_didIteratorError) {
-        throw _iteratorError;
+      try {
+        if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+          _iterator["return"]();
+        }
+      } finally {
+        if (_didIteratorError) {
+          throw _iteratorError;
+        }
       }
     }
   }
 
-  var wildDeck = ['w', 'w', 'w', 'w', 'w4', 'w4', 'w4', 'w4'];
-
-  for (var _i = 0, _wildDeck = wildDeck; _i < _wildDeck.length; _i++) {
-    var wild = _wildDeck[_i];
+  for (var _i2 = 0, _wildDeck = wildDeck; _i2 < _wildDeck.length; _i2++) {
+    var wild = _wildDeck[_i2];
     deck.push(new Card("", wild, "-wild"));
   }
+
+  return deck;
 };
 
 var shuffle = function shuffle(deck) {
@@ -106,15 +92,9 @@ module.exports = {
 
 var deck = require('./deck.js');
 
-var deckInstance = [];
+var deckInstance = deck.createDeck();
 var hand = [];
-var colors = ['--red', '--blue', '--green', '--yellow'];
-var values = [0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 'Draw Two', 'Draw Two', 'Skip', 'Skip', 'Reverse', 'Reverse'];
-deck.createDeck(deckInstance, colors, values);
 deck.shuffle(deckInstance);
-deckInstance.map(function (card) {
-  console.log(card);
-});
 hand = deck.deal(deckInstance);
 hand.map(function (card) {
   var handCard = document.createElement('div');
@@ -137,7 +117,7 @@ hand.map(function (card) {
 
   handCard.appendChild(handCardCircle);
   var hand = document.querySelector('.hand');
-  hand.appendChild(handCard);
+  if (hand != null) hand.appendChild(handCard);
 });
 
 },{"./deck.js":1}],3:[function(require,module,exports){
@@ -149,8 +129,7 @@ var _hand = _interopRequireDefault(require("./cards/hand.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var socket = io();
-var user = "anon"; //sets chatbox scroll to bottom
+var socket = io(); //sets chatbox scroll to bottom
 
 var chatBoxMessages = document.querySelector('.chat__box--messages');
 

@@ -9,6 +9,7 @@
 
 h1 {
     font-family: var(--main-font);
+    font-size: 50px;
     color: white;
     margin: 0;
     margin-bottom: 10px;
@@ -20,7 +21,7 @@ html {
 
 body{
     margin: 0;
-    background: var(--main-bg-color);
+    scroll-snap-type: y mandatory;
 }
 
 p{

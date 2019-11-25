@@ -3,8 +3,6 @@ import deck from './cards/hand.js'
 
 const socket = io();
 
-let user = "anon"
-
 //sets chatbox scroll to bottom
 const chatBoxMessages = document.querySelector('.chat__box--messages')
 

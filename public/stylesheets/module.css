@@ -8,7 +8,7 @@
 
     opacity: .3;
     background: url('../images/resources/black-mamba.png');
-    background-size: 30%;
+    background-size: 320px;
 }
 .bg-texture::before{
     content: '';
@@ -97,13 +97,16 @@
 
 .card-desc__description{
     color: white;
-    text-align: center;
     padding: 0 10px;
     margin: 0;
     font-family: var(--main-font);
     font-size: 18px;
 }
 
+.card-desc__title{
+    margin: 0 0 5px 0;
+    padding: 0 10px;
+}
 
 .card-types div{
     scroll-snap-align: none;
@@ -293,7 +296,7 @@
     scroll-snap-align: start;
 
     color: white;
-    background-color: black;
+    background-color: rgb(255, 255, 255);
     border-radius: 10px;
     border: 5px solid white;
     width: 160px;
@@ -318,8 +321,7 @@
     color: var(--blue);
 }
 
-.hand__card--circle,
-.hand__card--circle-wild{
+.hand__card--circle{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -332,11 +334,6 @@
     transform: rotateZ(20deg);
 }
 
-.hand__card--circle-wild{
-    background: rgb(255,87,87);
-    background: linear-gradient(90deg, rgba(255,87,87,1) 0%, rgba(255,255,89,1) 33%, rgba(126,217,88,1) 69%, rgba(81,113,255,1) 100%);
-}
-
 .hand__card--num {
     transform: rotateZ(-20deg);
     margin: 0;
@@ -346,9 +343,13 @@
     font-family: 'Kefa';
 }
 
-.hand__card--img {
+.hand__card--img,
+.hand__card--img-wild {
     transform: rotateZ(-20deg);
     width: 70%;
+}
+.hand__card--img-wild{
+    width: 100%;
 }
 
 .spinContainer{
@@ -412,6 +413,7 @@
     margin-top: 400px;
     padding: 12px;
     overflow: auto;
+
 }
 
 .lobby-icon{

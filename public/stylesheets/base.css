@@ -15,6 +15,12 @@ h1 {
     margin: 10px;
 }
 
+h2 {
+    font-family: var(--main-font);
+    font-size: 30px;
+    color: white;
+}
+
 html {
     min-height: 100vh;
 }

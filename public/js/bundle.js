@@ -3,12 +3,11 @@
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Card = function Card(color, value, circleColor) {
+var Card = function Card(color, value) {
   _classCallCheck(this, Card);
 
   this.color = color;
   this.value = value;
-  this.circleColor = circleColor;
 };
 
 var Wild = function Wild(wild) {
@@ -20,7 +19,7 @@ var Wild = function Wild(wild) {
 var createDeck = function createDeck() {
   var colors = ['--red', '--blue', '--green', '--yellow'];
   var values = [0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 'Draw Two', 'Draw Two', 'Skip', 'Skip', 'Reverse', 'Reverse'];
-  var wildDeck = ['w', 'w', 'w', 'w', 'w4', 'w4', 'w4', 'w4'];
+  var wildDeck = ['wild', 'wild', 'wild', 'wild', 'draw4', 'draw4', 'draw4', 'draw4'];
   var deck = [];
 
   for (var _i = 0, _colors = colors; _i < _colors.length; _i++) {
@@ -32,7 +31,7 @@ var createDeck = function createDeck() {
     try {
       for (var _iterator = values[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
         var value = _step.value;
-        deck.push(new Card(color, value, ""));
+        deck.push(new Card(color, value));
       }
     } catch (err) {
       _didIteratorError = true;
@@ -52,7 +51,7 @@ var createDeck = function createDeck() {
 
   for (var _i2 = 0, _wildDeck = wildDeck; _i2 < _wildDeck.length; _i2++) {
     var wild = _wildDeck[_i2];
-    deck.push(new Card("", wild, "-wild"));
+    deck.push(new Card("", wild));
   }
 
   return deck;
@@ -100,19 +99,51 @@ hand.map(function (card) {
   var handCard = document.createElement('div');
   handCard.classList.add("hand__card".concat(card.color));
   var handCardCircle = document.createElement('div');
-  handCardCircle.classList.add("hand__card--circle".concat(card.circleColor));
+  handCardCircle.classList.add("hand__card--circle");
+  var handCardImg;
 
-  if (card.value === "Reverse") {
-    var handCardImg = document.createElement('img');
-    handCardImg.classList.add("hand__card--img");
-    handCardImg.src = "images/card_icons/reverse".concat(card.color, ".png");
-    handCardCircle.appendChild(handCardImg);
-  } else {
-    var handCardNum = document.createElement('p');
-    handCardNum.classList.add('hand__card--num');
-    var node = document.createTextNode(card.value);
-    handCardNum.appendChild(node);
-    handCardCircle.appendChild(handCardNum);
+  switch (card.value) {
+    case 'Reverse':
+      handCardImg = document.createElement('img');
+      handCardImg.classList.add("hand__card--img");
+      handCardImg.src = "images/card_icons/reverse".concat(card.color, ".png");
+      handCardCircle.appendChild(handCardImg);
+      break;
+
+    case 'Skip':
+      handCardImg = document.createElement('img');
+      handCardImg.classList.add("hand__card--img");
+      handCardImg.src = "images/card_icons/skip".concat(card.color, ".png");
+      handCardCircle.appendChild(handCardImg);
+      break;
+
+    case 'Draw Two':
+      handCardImg = document.createElement('img');
+      handCardImg.classList.add("hand__card--img");
+      handCardImg.src = "images/card_icons/draw2".concat(card.color, ".png");
+      handCardCircle.appendChild(handCardImg);
+      break;
+
+    case 'wild':
+      handCardImg = document.createElement('img');
+      handCardImg.classList.add("hand__card--img-wild");
+      handCardImg.src = "images/card_icons/wild.png";
+      handCardCircle.appendChild(handCardImg);
+      break;
+
+    case 'draw4':
+      handCardImg = document.createElement('img');
+      handCardImg.classList.add("hand__card--img-wild");
+      handCardImg.src = "images/card_icons/draw4.png";
+      handCardCircle.appendChild(handCardImg);
+      break;
+
+    default:
+      var handCardNum = document.createElement('p');
+      handCardNum.classList.add('hand__card--num');
+      var node = document.createTextNode(card.value);
+      handCardNum.appendChild(node);
+      handCardCircle.appendChild(handCardNum);
   }
 
   handCard.appendChild(handCardCircle);

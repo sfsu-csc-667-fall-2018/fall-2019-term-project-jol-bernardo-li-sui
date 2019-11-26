@@ -8,10 +8,13 @@ block content
                 a(class="button__login" href='/login') Login
                 a(class="button__login" href='/signup') Signup
         .spinContainer
-            include cardspin.pug
+            include includes/cardspin.pug
+        .bg-texture
 
     .full-view
         h1 How to Play
+        .card-types
+            include includes/cardtypes.pug
 
     .full-view
         .chat

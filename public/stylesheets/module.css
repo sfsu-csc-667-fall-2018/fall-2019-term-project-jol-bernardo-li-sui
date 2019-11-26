@@ -1,10 +1,32 @@
 /*---------------------------------------------------------------------LOGO--*/
+.bg-texture{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+
+    opacity: .3;
+    background: url('../images/resources/black-mamba.png');
+    background-size: 30%;
+}
+.bg-texture::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+
+    background: rgb(108,214,101);
+    background: linear-gradient(0deg, rgba(108,214,101,.85) 0%, rgba(43,86,40,0) 60%, rgba(0,0,0,0.35) 100%);
+}
+
 .logo__container{
-    align-self: center;
     display: flex;
     flex-direction: column;
     align-items: center;
-    z-index: 10;
+    z-index: 1000;
 }
 
 .logo {
@@ -56,6 +78,35 @@
     font-family: monospace;
     font-size: 15px;
     text-align: center;
+}
+/*--------------------------------------------------------------------ABOUT--*/
+.card-types{
+    display: flex;
+    justify-content: center;
+
+    width: 100%;
+    padding: 30px;
+}
+
+.card-desc{
+    display: flex;
+    flex-direction: column;
+    max-width: 180px;
+    margin: 5px;
+}
+
+.card-desc__description{
+    color: white;
+    text-align: center;
+    padding: 0 10px;
+    margin: 0;
+    font-family: var(--main-font);
+    font-size: 18px;
+}
+
+
+.card-types div{
+    scroll-snap-align: none;
 }
 
 /*---------------------------------------------------------------------CHAT--*/
@@ -328,6 +379,8 @@
     animation-duration: 10s;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
+
+    z-index: 100;
 
 }
 .spin p {

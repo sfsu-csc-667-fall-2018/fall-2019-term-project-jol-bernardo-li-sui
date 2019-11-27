@@ -1,16 +1,20 @@
 /*---------------------------------------------------------------------LOGO--*/
-.bg-texture{
+.bg-texture {
     position: absolute;
     top: 0;
     left: 0;
     height: 100%;
     width: 100%;
 
-    opacity: .3;
+    opacity: .4;
     background: url('../images/resources/black-mamba.png');
-    background-size: 320px;
+    background-size: 350px;
+
+    animation: animatedBackground 80s linear infinite;
+
 }
-.bg-texture::before{
+
+.bg-texture::before {
     content: '';
     position: absolute;
     top: 0;
@@ -18,11 +22,11 @@
     height: 100%;
     width: 100%;
 
-    background: rgb(108,214,101);
-    background: linear-gradient(0deg, rgba(108,214,101,.85) 0%, rgba(43,86,40,0) 60%, rgba(0,0,0,0.35) 100%);
+    background: rgb(108, 214, 101);
+    background: linear-gradient(0deg, rgba(108, 214, 101, .85) 0%, rgba(43, 86, 40, 0) 60%, rgba(0, 0, 0, 0.35) 100%);
 }
 
-.logo__container{
+.logo__container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -49,7 +53,7 @@
 }
 
 .button__login,
-.button__signup{
+.button__signup {
     background-color: var(--yellow);
     padding: 10px;
     margin: 0 5px;
@@ -79,8 +83,9 @@
     font-size: 15px;
     text-align: center;
 }
+
 /*--------------------------------------------------------------------ABOUT--*/
-.card-types{
+.card-types {
     display: flex;
     justify-content: center;
 
@@ -88,14 +93,14 @@
     padding: 30px;
 }
 
-.card-desc{
+.card-desc {
     display: flex;
     flex-direction: column;
     max-width: 180px;
     margin: 5px;
 }
 
-.card-desc__description{
+.card-desc__description {
     color: white;
     padding: 0 10px;
     margin: 0;
@@ -103,28 +108,38 @@
     font-size: 18px;
 }
 
-.card-desc__title{
+.card-desc__title {
     margin: 0 0 5px 0;
     padding: 0 10px;
 }
 
-.card-types div{
+.card-desc .hand__card,
+.card-desc .hand__card--yellow,
+.card-desc .hand__card--blue,
+.card-desc .hand__card--green,
+.card-desc .hand__card--red {
+    -webkit-box-shadow: 7px 7px 5px 0px rgba(0,0,0,0.15);
+    -moz-box-shadow: 7px 7px 5px 0px rgba(0,0,0,0.15);
+    box-shadow: 7px 7px 5px 0px rgba(0,0,0,0.15);
+}
+
+.card-types div {
     scroll-snap-align: none;
 }
 
 /*---------------------------------------------------------------------CHAT--*/
-.chat__title{
+.chat__title {
     font-size: 40px;
     margin: 0;
 }
 
-.chat__box{
+.chat__box {
     border-radius: 10px;
     background-color: white;
     width: 600px;
 }
 
-.chat__box--messages{
+.chat__box--messages {
     display: flex;
     flex-direction: column;
 
@@ -136,7 +151,7 @@
 }
 
 .chat__box--incoming-message,
-.chat__box--outgoing-message{
+.chat__box--outgoing-message {
     padding: 10px;
     max-width: 400px;
     border-radius: 12px;
@@ -145,18 +160,18 @@
     font-size: 14px;
 }
 
-.chat__box--incoming-message{
+.chat__box--incoming-message {
     align-self: flex-start;
     background-color: rgb(233, 233, 233);
 }
 
-.chat__box--outgoing-message{
+.chat__box--outgoing-message {
     align-self: flex-end;
     background-color: rgb(0, 132, 255);
     color: white;
 }
 
-.chat__box--form-container{
+.chat__box--form-container {
     display: flex;
     justify-content: center;
     border-radius: 0 0 10px 10px;
@@ -165,7 +180,7 @@
     background-color: rgb(233, 233, 233);
 }
 
-.chat__box--form{
+.chat__box--form {
     display: flex;
     justify-content: space-between;
     align-content: center;
@@ -174,7 +189,7 @@
     width: 100%;
 }
 
-.chat__box--input{
+.chat__box--input {
     width: 100%;
     border: none;
     outline: none;
@@ -184,7 +199,7 @@
     font-family: var(--secondary-font);
 }
 
-.chat__box--button{
+.chat__box--button {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -202,27 +217,27 @@
     cursor: pointer;
 }
 
-.chat__box--button-img{
+.chat__box--button-img {
     height: 15px;
 }
 
 /*-------------------------------------------------------------LOGIN/SIGNUP--*/
-.form__signup{
+.form__signup {
     display: flex;
     flex-direction: column;
 }
 
-.form__signup--title{
+.form__signup--title {
     align-self: center;
     color: black;
 }
 
-.form__signup--label{
+.form__signup--label {
     font-family: var(--main-font);
     /* color: white; */
 }
 
-.form__signup--input{
+.form__signup--input {
     width: 350px;
     height: 40px;
     margin: 10px 0;
@@ -235,7 +250,7 @@
     /* border-bottom: 1px solid rgb(197, 197, 197) */
 }
 
-.form__signup--buttons{
+.form__signup--buttons {
     display: flex;
     justify-content: flex-end;
     width: 100%;
@@ -243,12 +258,12 @@
 }
 
 .form__signup--button-cancel,
-.form__signup--button-submit{
+.form__signup--button-submit {
     display: flex;
     justify-content: center;
     align-items: center;
 
-    width:130px;
+    width: 130px;
     height: 35px;
     margin: 5px;
 
@@ -262,32 +277,21 @@
     cursor: pointer;
 }
 
-.form__signup--button-cancel{
+.form__signup--button-cancel {
     background-color: rgb(209, 209, 209);
 }
 
-.form__signup--button-submit{
+.form__signup--button-submit {
     background-color: var(--blue);
 }
 
 /*--------------------------------------------------------------------CARDS--*/
-.hand{
-    display: flex;
-
-    width: 840px;
-
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    overflow: -moz-scrollbars-none;
-    -ms-overflow-style: none;
-}
-.hand::-webkit-scrollbar { height: 0 !important}
 
 .hand__card,
 .hand__card--green,
 .hand__card--red,
 .hand__card--yellow,
-.hand__card--blue{
+.hand__card--blue {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -304,24 +308,28 @@
 
     margin: 10px;
 }
-.hand__card--green{
+
+.hand__card--green {
     background-color: var(--green);
     color: var(--green);
 }
-.hand__card--red{
+
+.hand__card--red {
     background-color: var(--red);
     color: var(--red);
 }
-.hand__card--yellow{
+
+.hand__card--yellow {
     background-color: var(--yellow);
     color: var(--yellow);
 }
-.hand__card--blue{
+
+.hand__card--blue {
     background-color: var(--blue);
     color: var(--blue);
 }
 
-.hand__card--circle{
+.hand__card--circle {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -330,7 +338,7 @@
     border-radius: 50%;
     width: 80%;
     height: 85%;
-    
+
     transform: rotateZ(20deg);
 }
 
@@ -348,11 +356,12 @@
     transform: rotateZ(-20deg);
     width: 70%;
 }
-.hand__card--img-wild{
+
+.hand__card--img-wild {
     width: 100%;
 }
 
-.spinContainer{
+.spinContainer {
     position: absolute;
     top: -100px;
     left: 0;
@@ -365,7 +374,7 @@
     overflow: hidden;
 }
 
-.spin{
+.spin {
     /* position: absolute;
     top: -100px; */
 
@@ -384,6 +393,7 @@
     z-index: 100;
 
 }
+
 .spin p {
     font-size: 40px;
 }
@@ -397,14 +407,14 @@
     margin-left: 5px;
 }
 
-.user-icon{
+.user-icon {
     width: 60px;
     height: 70px;
     padding: 4px;
     border-radius: 50%;
 }
 
-.sessions{
+.sessions {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -416,7 +426,7 @@
 
 }
 
-.lobby-icon{
+.lobby-icon {
     width: 125px;
     height: 125px;
     border-radius: 50%;
@@ -424,5 +434,3 @@
 
     background-color: white;
 }
-
-

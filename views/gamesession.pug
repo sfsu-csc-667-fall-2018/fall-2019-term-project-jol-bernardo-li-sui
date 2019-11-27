@@ -2,14 +2,24 @@ extends layout
 
 block content
     .session
-        .header
         .play-space
-            .hand__card
-                .hand__card--circle
-                    p.hand__card--num 0
-            .hand__card
-                .hand__card--circle
-                    p.hand__card--num 0
-
-        .hand
+            .players
+            .global-deck
+                .hand__card
+                    .hand__card--circle
+                        p.hand__card--num 0
+                .hand__card
+                    .hand__card--circle
+                        p.hand__card--num 0
+            .hand
+        .session-chat
+            .session-chat__message
+                .session-chat__message-payload
+                    p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent sed pharetra leo, vel dapibus est.
+                .session-chat__message-user
+                    p C
+            form.session-chat__form
+                input(type="text" class="session-chat__form-input")
+                button(type="submit" class="session-chat__form--button")
+                    img(src="images/arrow.png" class="session-chat__form--img")
             

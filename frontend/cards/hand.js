@@ -1,11 +1,11 @@
-const deck = require('./deck.js');
+const deck = require('./deck.js')
 
-let deckInstance = deck.createDeck();
-let hand = [];
+let deckInstance = deck.createDeck()
+let hand = []
 
 deck.shuffle(deckInstance)
 
-hand = deck.deal(deckInstance);
+hand = deck.deal(deckInstance)
 
 hand.map(card => {
     let handCard = document.createElement('div')
@@ -69,6 +69,6 @@ hand.map(card => {
 
     handCard.appendChild(handCardCircle)
 
-    let hand = document.querySelector('.hand');
+    let hand = document.querySelector('.hand')
     if(hand != null) hand.appendChild(handCard)
 })

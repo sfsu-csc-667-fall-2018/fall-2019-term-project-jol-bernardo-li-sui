@@ -10,12 +10,6 @@ var Card = function Card(color, value) {
   this.value = value;
 };
 
-var Wild = function Wild(wild) {
-  _classCallCheck(this, Wild);
-
-  this.wild = wild;
-};
-
 var createDeck = function createDeck() {
   var colors = ['--red', '--blue', '--green', '--yellow'];
   var values = [0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 'Draw Two', 'Draw Two', 'Skip', 'Skip', 'Reverse', 'Reverse'];

@@ -55,7 +55,10 @@
     align-items: center;
     margin: 0 0 10px 0;
 }
-.session-chat__message-user{
+.session-chat__message-user--red,
+.session-chat__message-user--blue,
+.session-chat__message-user--green,
+.session-chat__message-user--yellow{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -65,20 +68,44 @@
     min-width: 50px;
     max-width: 50px;
     border-radius: 50px;
-    background-color: var(--red);
     padding: 10px;
     margin-left: 15px;
-}
-.session-chat__message-user p {
-    margin: 0;
-    padding: 0;
+
     color: white;
 }
-.session-chat__message-payload{
+.session-chat__message-user--red{
     background-color: var(--red);
+}
+.session-chat__message-user--yellow{
+    background-color: var(--yellow);
+}
+.session-chat__message-user--green{
+    background-color: var(--green);
+}
+.session-chat__message-user--blue{
+    background-color: var(--blue);
+}
+
+.session-chat__message-payload--red,
+.session-chat__message-payload--blue,
+.session-chat__message-payload--green,
+.session-chat__message-payload--yellow{
     border-radius: 17px;
-    padding: 3px 10px;
+    padding: 12px;
+    margin: 0;
     color: white;
+}
+.session-chat__message-payload--red{
+    background-color: var(--red);
+}
+.session-chat__message-payload--yellow{
+    background-color: var(--yellow);
+}
+.session-chat__message-payload--blue{
+    background-color: var(--blue);
+}
+.session-chat__message-payload--green{
+    background-color: var(--green);
 }
 
 .session-chat__form {

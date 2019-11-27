@@ -14,10 +14,19 @@ block content
             .hand
         .session-chat
             .session-chat__message
-                .session-chat__message-payload
-                    p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent sed pharetra leo, vel dapibus est.
-                .session-chat__message-user
-                    p C
+                p.session-chat__message-payload--red Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent sed pharetra leo, vel dapibus est.
+                p.session-chat__message-user--red C
+
+            .session-chat__message
+                p.session-chat__message-payload--yellow Praesent sed pharetra leo, vel dapibus est.
+                p.session-chat__message-user--yellow C
+            .session-chat__message
+                p.session-chat__message-payload--blue Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent sed pharetra leo
+                p.session-chat__message-user--blue C
+            .session-chat__message
+                p.session-chat__message-payload--green Lorem ipsum
+                p.session-chat__message-user--green C
+            
             form.session-chat__form
                 input(type="text" class="session-chat__form-input")
                 button(type="submit" class="session-chat__form--button")

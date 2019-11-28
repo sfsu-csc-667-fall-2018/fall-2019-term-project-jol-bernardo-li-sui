@@ -1,12 +1,11 @@
 extends layout
 
 block content
+    include includes/login.pug
     .full-view
         .logo__container
             img(src='images/Logo.png', alt='uno-logo' class='logo')
-            .button__login-signup
-                a(class="button__login" href='/login') Login
-                a(class="button__login" href='/signup') Signup
+            a.button__login-signup Login / Signup
         .spinContainer
             include includes/cardspin.pug
         .bg-texture

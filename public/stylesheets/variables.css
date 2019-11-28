@@ -4,6 +4,9 @@
     --yellow: rgb(255, 222, 89);
     --blue: rgb(81, 113, 255);
     --green: rgb(126, 217,88);
+    --light-grey: rgb(240, 240, 240);
+    --grey: rgb(209, 209, 209);
+    --dark-grey: rgb(116, 116, 116);
     
     --main-font: 'Kefa-Regular';
     --secondary-font: 'helvetica';

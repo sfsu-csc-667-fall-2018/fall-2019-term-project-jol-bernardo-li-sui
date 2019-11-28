@@ -1,5 +1,6 @@
 import { MESSAGE_SEND } from '../src/events'
 import deck from './cards/hand.js'
+import display from './events/display'
 
 const socket = io();
 

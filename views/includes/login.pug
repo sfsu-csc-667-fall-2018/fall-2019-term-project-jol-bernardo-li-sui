@@ -1,0 +1,34 @@
+.modal
+    .modal__form
+        .modal__form--tabs
+            .modal__form--tab-login.selected Login
+            .modal__form--tab-signup Sign Up
+        form(class="modal__form--login" action="")
+            label.modal__form--label Username
+            input(type="text" class="modal__form--input")
+
+            label.modal__form--label Password
+            input(type="password" class="modal__form--input")
+
+            .modal__form--buttons
+                button(class="modal__form--button-cancel")
+                    a(href="../index") Cancel
+                button(class="modal__form--button-submit" type="submit") Submit
+
+        form(class="modal__form--signup" action="")
+            label.modal__form--label Name
+            input(type="text" class="modal__form--input")
+
+            label.modal__form--label Email
+            input(type="email" class="modal__form--input")
+
+            label.modal__form--label Password
+            input(type="password" class="modal__form--input")
+
+            label.modal__form--label Confirm Password
+            input(type="password" class="modal__form--input")
+
+            .modal__form--buttons
+                button(class="modal__form--button-cancel")
+                    a(href="../index") Cancel
+                button(class="modal__form--button-submit" type="submit") Submit

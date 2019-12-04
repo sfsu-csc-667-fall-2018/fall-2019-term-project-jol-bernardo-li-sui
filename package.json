@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "start:dev": "NODE_ENV=development DEBUG=uno:* nodemon ./bin/www",
+    "start:dev": "SET \"NODE_ENV=development\" SET DEBUG=myapp:* & nodemon ./bin/www",
     "build": "browserify frontend/main.js -o public/js/bundle.js -t [ babelify --presets [ @babel/preset-env ] ]",
     "build:dev": "watchify frontend/main.js -o public/js/bundle.js -t [ babelify --presets [ @babel/preset-env ] ] -v",
     "db:create:migration": "sequelize migration:generate --name ",
@@ -20,6 +20,7 @@
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
+    "passport": "^0.4.0",
     "pg-promise": "^9.3.3",
     "pug": "^2.0.0-beta11",
     "sequelize": "^5.21.1",

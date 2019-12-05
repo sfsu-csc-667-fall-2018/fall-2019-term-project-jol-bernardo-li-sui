@@ -3,27 +3,27 @@
         .modal__form--tabs
             .modal__form--tab-login.selected Login
             .modal__form--tab-signup Sign Up
-        form(class="modal__form--login" action="")
-            label.modal__form--label Username
-            input(type="text" class="modal__form--input")
+        form(class="modal__form--login" action="/login" method="POST")
+            label.modal__form--label Email
+            input(name="email" type="email" class="modal__form--input")
 
             label.modal__form--label Password
-            input(type="password" class="modal__form--input")
+            input(name="password" type="password" class="modal__form--input")
 
             .modal__form--buttons
                 button(class="modal__form--button-cancel")
                     a(href="../index") Cancel
                 button(class="modal__form--button-submit" type="submit") Submit
 
-        form(class="modal__form--signup" action="")
+        form(class="modal__form--signup" action="/signup" method="POST")
             label.modal__form--label Username
-            input(type="text" class="modal__form--input")
+            input(name="username" type="text" class="modal__form--input")
 
             label.modal__form--label Email
-            input(type="email" class="modal__form--input")
+            input(name="email" type="email" class="modal__form--input")
 
             label.modal__form--label Password
-            input(type="password" class="modal__form--input")
+            input(name="password" type="password" class="modal__form--input")
 
             label.modal__form--label Confirm Password
             input(type="password" class="modal__form--input")

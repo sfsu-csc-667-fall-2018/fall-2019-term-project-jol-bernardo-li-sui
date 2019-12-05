@@ -1,6 +1,7 @@
 extends layout
 
 block content
+
     include includes/login.pug
     .full-view
         .logo__container
@@ -29,6 +30,7 @@ block content
                     .chat__box--outgoing-message Lorem
                 .chat__box--form-container
                     form.chat__box--form
+                        //input(type="text" class="chat__box--user" value= username readonly=true)
                         input(type="text" class="chat__box--input")
                         button(type="submit" class="chat__box--button")
                             img(src="images/arrow.png" class="chat__box--button-img")
@@ -36,5 +38,6 @@ block content
         .start-page-buttons
             a(href='/session' class='start-button') Start
             a(href='/join' class='join-button') Join
+            a(href='/list_users') List Users
 
     script(src='/js/deck.js')

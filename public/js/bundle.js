@@ -223,6 +223,7 @@ socket.on(_events.MESSAGE_SEND, incomingMessage);
 var chatBoxButton = document.querySelector('.chat__box--button');
 var chatBoxInput = document.querySelector('.chat__box--input');
 
+
 if (chatBoxButton != null) {
   chatBoxButton.addEventListener("click", function (event) {
     event.preventDefault();

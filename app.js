@@ -3,9 +3,14 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+let passport = require('passport');
+let session = require('express-session');
+let flash = require('express-flash');
+let methodoverride = require('method-override');
+
 
 if(process.env.NODE_ENV === 'development') {
-    require("dotenv").config();
+  require("dotenv").config();
 }
 
 const indexRouter = require('./routes/index');
@@ -15,6 +20,9 @@ const sessionRouter = require('./routes/session');
 const joinRouter = require('./routes/join');
 
 
+
+
+require('./passport_setup')(passport);
 const app = express();
 
 // view engine setup
@@ -24,8 +32,27 @@ app.set('view engine', 'pug');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+app.use(flash());
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false
+}));
+
+
+
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+//init the passport library
+
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(methodoverride('_method'))
+app.use(flash());
+//-------------------------
 
 app.use('/', indexRouter);
 app.use('/', usersRouter);

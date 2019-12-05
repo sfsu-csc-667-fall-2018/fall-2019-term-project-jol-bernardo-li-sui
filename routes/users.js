@@ -33,8 +33,13 @@ router.delete('/logout', (req, res) => {
 })
 
 
-router.get('/getUsername', _ => {
-	res.send({username : req.user.username})
+router.get('/getUsername', (req, res) => {
+    if(req.user){
+        res.send(req.user.username )
+    }
+    else{
+        res.send("not signed in")
+    }
 })
 
 module.exports = router

@@ -21,6 +21,14 @@ h2 {
     color: white;
 }
 
+h3 {
+    font-family: var(--main-font);
+    color: white;
+    padding: 0;
+    margin: 0;
+    font-size: 30px;
+}
+
 html {
     min-height: 100vh;
 }

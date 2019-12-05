@@ -1,6 +1,7 @@
 let db = require('../../db');
 let bcrypt = require('bcrypt-nodejs');
 let passport = require('passport');
+let userModel = require('../../models/users')
 
 
 let signup = async (req, res, next) => {

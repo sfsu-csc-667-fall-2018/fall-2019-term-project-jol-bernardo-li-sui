@@ -18,7 +18,7 @@ const init = ( app, server ) => {
     socket.on( USER_JOINED, data => io.emit( USER_JOINED, data ))
 
     socket.on( MESSAGE_SEND, data => {
-        db.any(`INSERT INTO messages ("messageBody" ) VALUES ( '${data}' )`)
+        db.any(`INSERT INTO messages ("messageBody" ) VALUES ( '${data.message}' )`)
             .then( () => {
                 console.log(data)
                 io.emit(MESSAGE_SEND, data)

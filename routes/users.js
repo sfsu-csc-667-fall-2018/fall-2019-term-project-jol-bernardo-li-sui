@@ -20,9 +20,9 @@ function checkNotAuthenticated(req, res, next){
 	return next()
 }
 
-router.get('/index', (req, res) => {
+router.get('/authIndex', (req, res) => {
 	currentUsername = req.user.username;
-	res.render('index',
+	res.render('authIndex',
 		{username: req.user.username});
 });
 router.get('/login', checkNotAuthenticated,(req, res) => res.render('login'));

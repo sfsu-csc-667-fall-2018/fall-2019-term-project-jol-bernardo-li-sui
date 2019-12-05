@@ -28,14 +28,6 @@
     z-index: 10000;
 }
 
-.lobby{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    background-color: var(--main-bg-color);
-}
-
 .container{
     padding: 25px;
     border-radius: 5px;

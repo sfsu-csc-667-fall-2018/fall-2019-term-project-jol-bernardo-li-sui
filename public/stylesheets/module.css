@@ -222,6 +222,8 @@
 .modal__form{
     background-color: white;
     border-radius: 5px;
+    border: 2px solid white;
+
     overflow: hidden;
 }
 
@@ -433,6 +435,71 @@
 }
 
 /*--------------------------------------------------------------------LOBBY--*/
+.lobby{
+    display: flex;
+    flex-direction: column;
+    background-color: var(--main-bg-color);
+    height: 100vh;
+}
+
+.lobby__header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.lobby__sessions{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: scroll;
+    padding: 20px;
+}
+
+.lobby__session--instance{
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    min-width: 400px;
+    width: 80vw;
+    max-width: 700px;
+    height: 80px;
+    margin: 10px 0;
+    padding: 20px;
+
+    background-color: var(--yellow);
+    border-radius: 50px;
+
+    cursor: pointer;
+}
+
+.lobby__session--player-list{
+    display: flex;
+}
+
+.lobby__session--player{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    width: 50px;
+    height: 50px;
+    padding: 10px;
+    margin: 0 0 0 5px;
+
+    border-radius: 50px;
+    background-color: var(--red);
+    border: 2px solid white;
+
+    color: white;
+}
+
 .back-button {
     background-color: lightblue;
 

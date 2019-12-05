@@ -1,5 +1,7 @@
 const socketIo = require( 'socket.io' )
 const { USER_JOINED, MESSAGE_SEND } = require('../src/events')
+const db = require('../db')
+
 
 const init = ( app, server ) => {
   const io = socketIo( server ) //mount socket server to http server
@@ -14,7 +16,16 @@ const init = ( app, server ) => {
     })
 
     socket.on( USER_JOINED, data => io.emit( USER_JOINED, data ))
-    socket.on( MESSAGE_SEND, data => io.emit( MESSAGE_SEND, data ))
+    socket.on( MESSAGE_SEND, data => {
+      db.any(`INSERT INTO messages ("messageBody", "createdAt", "updatedAt" ) VALUES ( ${data}, ${Date.now()}, ${Date.now()})`)
+        .then( () => {
+            db.any('SELECT * FROM messages')
+        })
+        .then( result => {
+          io.emit(MESSAGE_SEND, result[0].messageBody)
+        })
+        .catch( e => console.log(e))
+    })
   })
 }
 

@@ -28,12 +28,13 @@ socket.on( MESSAGE_SEND, incomingMessage);
 
 const chatBoxButton = document.querySelector('.chat__box--button')
 const chatBoxInput = document.querySelector('.chat__box--input')
-
+const chatBoxUser = document.querySelector('.chat__box--username')
 if(chatBoxButton != null){
     chatBoxButton.addEventListener("click", (event) => {
         event.preventDefault()
         const message = chatBoxInput.value;
-        socket.emit( MESSAGE_SEND, { message })
+        const user = chatBoxUser.value;
+        socket.emit( MESSAGE_SEND, message)
     
         chatBoxInput.value = ""
     })

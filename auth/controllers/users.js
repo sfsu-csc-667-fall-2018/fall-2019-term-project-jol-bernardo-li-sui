@@ -15,7 +15,7 @@ let signup = async (req, res, next) => {
 }
 
 let login = passport.authenticate('local', {
-    successRedirect: "/index",
+    successRedirect: "/authIndex",
     failureRedirect: "/error",
     failureFlash: true
 })

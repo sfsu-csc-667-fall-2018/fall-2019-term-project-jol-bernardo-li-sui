@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "start": "node ./bin/www",
-        "start:dev": "NODE_ENV=development DEBUG=uno:* nodemon ./bin/www",
+        "start:dev": "SET \"NODE_ENV=development\" SET DEBUG=myapp:* & nodemon ./bin/www",
         "build": "browserify frontend/main.js -o public/js/bundle.js -t [ babelify --presets [ @babel/preset-env ] ]",
         "build:dev": "watchify frontend/main.js -o public/js/bundle.js -t [ babelify --presets [ @babel/preset-env ] ] -v",
         "db:create:migration": "sequelize migration:generate --name ",

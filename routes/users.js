@@ -11,7 +11,7 @@ checkAuthenticated = (req, res, next) => {
 
 checkNotAuthenticated = (req, res, next) => {
 	if(req.isAuthenticated()){
-		return res.redirect('./authenticatedIndex')
+		return res.redirect('./')
 	}
 	return next()
 }
@@ -29,6 +29,11 @@ router.get('/list_users', checkAuthenticated, user.show_users)
 router.delete('/logout', (req, res) => {
 	req.logOut();
 	res.redirect('/login');
+})
+
+
+router.get('/getUsername', _ => {
+	res.send({username : req.user.username})
 })
 
 module.exports = router

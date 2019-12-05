@@ -4,7 +4,7 @@ const router = express.Router();
 /* join page. */
 
 router.get('/lobby', function(req, res, next) {
-  res.render('lobby', {title: 'Express'});
+  res.render('lobby', {username : req.user.username});
 })
 
 

@@ -1,4 +1,5 @@
-import { sign } from "crypto"
+let loginSignupButton = document.querySelector('.button__login-signup')
+
 let showModal = () => {
     loginSignupButton.addEventListener('click', () => {
         let modal = document.querySelector('.modal')
@@ -37,8 +38,6 @@ let showSignup = () => {
         signupForm.style.display = "flex"
     })
 }
-
-let loginSignupButton = document.querySelector('.button__login-signup')
 
 if(loginSignupButton !== null){
     showModal()

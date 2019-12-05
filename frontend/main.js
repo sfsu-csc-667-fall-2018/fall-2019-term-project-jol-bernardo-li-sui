@@ -1,4 +1,5 @@
 import { MESSAGE_SEND } from '../src/events'
+const socketIo = require( 'socket.io' )
 import deck from './cards/hand.js'
 import display from './events/display'
 
@@ -15,7 +16,7 @@ const incomingMessage = data => {
     let chatBoxIncomingMessage = document.createElement("div")
     chatBoxIncomingMessage.classList.add('chat__box--incoming-message')
 
-    let node = document.createTextNode(data.message)
+    let node = document.createTextNode(data)
     chatBoxIncomingMessage.appendChild(node);
 
     chatBoxMessages.appendChild(chatBoxIncomingMessage);
@@ -33,7 +34,7 @@ if(chatBoxButton != null){
     chatBoxButton.addEventListener("click", (event) => {
         event.preventDefault()
         const message = chatBoxInput.value;
-        socket.emit( MESSAGE_SEND, { message })
+        socket.emit( MESSAGE_SEND, message)
     
         chatBoxInput.value = ""
     })

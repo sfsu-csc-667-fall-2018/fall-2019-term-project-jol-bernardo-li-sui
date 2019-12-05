@@ -17,11 +17,12 @@ checkNotAuthenticated = (req, res, next) => {
 }
 
 router.get('/authIndex', (req, res) => {
-	currentUsername = req.user.username;
 	res.render('authIndex',
 		{username: req.user.username});
 });
+
 router.post('/login', user.login);
+
 router.post('/signup', user.signup);
 
 router.get('/list_users', checkAuthenticated, user.show_users)

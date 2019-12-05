@@ -438,6 +438,7 @@
 .lobby{
     display: flex;
     flex-direction: column;
+    align-items: center;
     background-color: var(--main-bg-color);
     height: 100vh;
 }
@@ -459,7 +460,17 @@
     padding: 20px;
 }
 
-.lobby__session--instance{
+.lobby__joined{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid white;
+    max-width: 800px;
+}
+
+.lobby__session--instance,
+.lobby__joined--instance{
     flex-shrink: 0;
 
     display: flex;

@@ -1,6 +1,7 @@
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
+
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 let passport = require('passport');
@@ -22,7 +23,7 @@ const joinRouter = require('./routes/join');
 
 
 
-require('./passport_setup')(passport);
+require('./auth/passport_setup')(passport);
 const app = express();
 
 // view engine setup
@@ -40,20 +41,17 @@ app.use(session({
   saveUninitialized: false
 }));
 
-
-
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
 //init the passport library
-
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(methodoverride('_method'))
 app.use(flash());
-//-------------------------
 
+//routers
 app.use('/', indexRouter);
 app.use('/', usersRouter);
 app.use('/', testsRouter);

@@ -221,13 +221,13 @@ var incomingMessage = function incomingMessage(data) {
 
 socket.on(_events.MESSAGE_SEND, incomingMessage);
 var chatBoxButton = document.querySelector('.chat__box--button');
+var chatBoxUser = document.querySelector('.chat__box--username');
 var chatBoxInput = document.querySelector('.chat__box--input');
-
 
 if (chatBoxButton != null) {
   chatBoxButton.addEventListener("click", function (event) {
     event.preventDefault();
-    var message = chatBoxInput.value;
+    var message = chatBoxUser.value + ": " + chatBoxInput.value;
     socket.emit(_events.MESSAGE_SEND, {
       message: message
     });

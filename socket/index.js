@@ -21,18 +21,24 @@ const init = (app, server) => {
         socket.on(USER_JOINED, data => io.emit(USER_JOINED, data))
 
         socket.on(MESSAGE_SEND, data => {
-            db.any(`select * from users where username = '${data.username}'`)
-                .then(user => {
-                    db.any(`INSERT INTO messages ("messageBody", "userId" ) VALUES ( '${data.messageBody}', '${user[0].id}' )`)
-                        .then(() => {
-                            io.emit(MESSAGE_SEND, data)
-                        })
-                        .catch(e => {
-                            console.log(e)
-                        })
-                })
+            db.task(task => {
+                return task.one('select * from users where username = ${username}', data)
+                    .then(user => {
+                        return task.any('INSERT INTO messages ( ${body:name}, ${id:name} ) VALUES ( ${messageBody}, ${user} )', {
+                            messageBody: data.messageBody,
+                            user: user.id,
+                            body: "messageBody",
+                            id: "userId"
 
-
+                        })
+                    })
+            })
+            .then(() => {
+                io.emit(MESSAGE_SEND, data)
+            })
+            .catch(e => {
+                console.log(e)
+            })
         })
     })
 }

@@ -21,9 +21,12 @@ const init = (app, server) => {
         socket.on(USER_JOINED, data => io.emit(USER_JOINED, data))
 
         socket.on(MESSAGE_SEND, data => {
+            //using pg-promise task function to chain together multiple queries (recommended by docs)
             db.task(task => {
+                //get id from users table
                 return task.one('select * from users where username = ${username}', data)
                     .then(user => {
+                        //insert messageBody and userId into messages table
                         return task.any('INSERT INTO messages ( ${body:name}, ${id:name} ) VALUES ( ${messageBody}, ${user} )', {
                             messageBody: data.messageBody,
                             user: user.id,

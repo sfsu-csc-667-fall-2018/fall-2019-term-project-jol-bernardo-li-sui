@@ -1,33 +1,42 @@
-const socketIo = require( 'socket.io' )
-const { USER_JOINED, MESSAGE_SEND } = require('../src/events')
+const socketIo = require('socket.io')
+const {
+    USER_JOINED,
+    MESSAGE_SEND
+} = require('../src/events')
 const db = require('../db')
 
 
-const init = ( app, server ) => {
-  const io = socketIo( server ) //mount socket server to http server
+const init = (app, server) => {
+    const io = socketIo(server) //mount socket server to http server
 
-  app.set( 'io', io )
+    app.set('io', io)
 
-  io.on( 'connection', socket => {
-    console.log( 'client connected' )
+    io.on('connection', socket => {
+        console.log('client connected')
 
-    socket.on( 'disconnect', data => {
-      console.log( 'client disconnected' )
+        socket.on('disconnect', data => {
+            console.log('client disconnected')
+        })
+
+        socket.on(USER_JOINED, data => io.emit(USER_JOINED, data))
+
+        socket.on(MESSAGE_SEND, data => {
+            db.any(`select * from users where username = '${data.username}'`)
+                .then(user => {
+                    db.any(`INSERT INTO messages ("messageBody", "userId" ) VALUES ( '${data.messageBody}', '${user[0].id}' )`)
+                        .then(() => {
+                            io.emit(MESSAGE_SEND, data)
+                        })
+                        .catch(e => {
+                            console.log(e)
+                        })
+                })
+
+
+        })
     })
-
-    socket.on( USER_JOINED, data => io.emit( USER_JOINED, data ))
-
-    socket.on( MESSAGE_SEND, data => {
-        db.any(`INSERT INTO messages ("messageBody" ) VALUES ( '${data.message}' )`)
-            .then( () => {
-                console.log(data)
-                io.emit(MESSAGE_SEND, data)
-            })
-            .catch( e => {
-                console.log(e)
-            })
-    })
-  })
 }
 
-module.exports = { init }
+module.exports = {
+    init
+}

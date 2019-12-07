@@ -19,6 +19,7 @@ const usersRouter = require('./routes/users');
 const testsRouter = require('./routes/tests');
 const sessionRouter = require('./routes/session');
 const joinRouter = require('./routes/join');
+const messageRouter = require('./routes/messages')
 
 
 
@@ -57,6 +58,7 @@ app.use('/', usersRouter);
 app.use('/', testsRouter);
 app.use('/', sessionRouter);
 app.use('/', joinRouter);
+app.use('/', messageRouter);
 
 
 app.use('/users', require('./routes/users'));

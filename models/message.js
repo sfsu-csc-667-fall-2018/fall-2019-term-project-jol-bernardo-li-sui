@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     messageBody: DataTypes.TEXT,
     time: DataTypes.DATE,
     chatId: DataTypes.INTEGER,
-    userId: DataTypes.INTEGER
+    userId: sequelize.INTEGER
   }, {});
   message.associate = function(models) {
     // associations can be defined here

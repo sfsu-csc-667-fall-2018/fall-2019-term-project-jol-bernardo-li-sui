@@ -1,11 +1,13 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const chat = sequelize.define('chat', {
+  const Chat = sequelize.define('Chat', {
     chatName: DataTypes.STRING,
     gameId: DataTypes.INTEGER
-  }, {});
-  chat.associate = function(models) {
+  }, {
+    tableName: 'chats'
+  });
+  Chat.associate = function(models) {
     // associations can be defined here
   };
-  return chat;
+  return Chat;
 };

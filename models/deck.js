@@ -1,12 +1,14 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const deck = sequelize.define('deck', {
+  const Deck = sequelize.define('Deck', {
     remainingCards: DataTypes.INTEGER,
     deckId: DataTypes.INTEGER,
     playerId: DataTypes.INTEGER
-  }, {});
-  deck.associate = function(models) {
+  }, {
+    tableName: 'decks'
+  });
+  Deck.associate = function(models) {
     // associations can be defined here
   };
-  return deck;
+  return Deck;
 };

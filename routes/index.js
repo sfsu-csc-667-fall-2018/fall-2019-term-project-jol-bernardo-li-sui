@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 let user = require('../auth/controllers/users');
+const models  = require('../models');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -25,6 +26,12 @@ router.get('/index', function(req, res, next) {
     else{
         res.render('index', { authorized: false })
     }
-  });
+});
+
+router.get('/all_users', function(res, res) {
+    models.User.findAll().then(users => {
+        console.log(users)
+    })
+})
 
 module.exports = router;

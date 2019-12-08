@@ -1,3 +1,65 @@
+/*--------------------------------------------------------------------MODAL--*/
+.modal__create-game{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    display: none;
+    justify-content: center;
+    align-items: center;
+
+    background-color: rgba(0, 0, 0, 0.397);
+    z-index: 10000;
+}
+
+.modal__create-game--form{
+    width: 400px;
+    padding: 15px;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.modal__create-game--input{
+    width: 100%;
+    height: 40px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid var(--grey);
+    outline: none;
+    font-family: var(--secondary-font);
+    font-size: 13px;
+}
+
+.modal__create-game--label{
+    font-family: var(--main-font);
+    font-size: 25px;
+    margin-bottom: 10px;
+}
+
+.modal__create-game--button-submit,
+.modal__create-game--button-cancel{
+    float: right;
+    background-color: var(--blue);
+    padding: 5px 10px;
+    border: none;
+    outline: none;
+    color: white;
+    font-size: 15px;
+    border-radius: 5px;
+    margin-top: 10px;
+    width: 80px;
+    margin-left: 10px;
+    cursor: pointer;
+    font-family: var(--main-font);
+}
+
+.modal__create-game--button-cancel{
+    background-color: var(--light-grey);
+    color: var(--dark-grey);
+}
+
 /*---------------------------------------------------------------------LOGO--*/
 .bg-texture {
     position: absolute;
@@ -59,7 +121,8 @@
 
 .start-page-buttons {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
     width: 275px;
 }
 
@@ -73,8 +136,9 @@
     border-radius: 20px;
 
     padding: 5px 15px;
+    margin: 10px 0;
     height: 40px;
-    width: 120px;
+    width: 220px;
 
     font-family: monospace;
     font-size: 15px;

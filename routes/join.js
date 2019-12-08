@@ -1,10 +1,16 @@
 const express = require('express');
 const router = express.Router();
+const models = require("../models")
 
 /* join page. */
 
 router.get('/lobby', function(req, res, next) {
-  res.render('lobby', {username : req.user.username});
+    models.Game.findAll({attributes: ["gameName"]}).then( response => {
+        response.map( game => {
+            console.log(game)
+        })
+        res.render('lobby', {games : response});
+    })
 })
 
 

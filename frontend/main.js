@@ -15,10 +15,9 @@ if (chatBoxMessages != null) {
 const socket = io();
 socket.on(MESSAGE_SEND, globalChat.incomingMessage);
 
-
+//send message on Global Chat
 const chatBoxButton = document.querySelector('.chat__box--button')
 const chatBoxInput = document.querySelector('.chat__box--input')
-
 if (chatBoxButton != null) {
     chatBoxButton.addEventListener("click", (event) => {
         event.preventDefault()

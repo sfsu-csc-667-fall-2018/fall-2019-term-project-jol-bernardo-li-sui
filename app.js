@@ -17,12 +17,9 @@ if(process.env.NODE_ENV === 'development') {
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const testsRouter = require('./routes/tests');
-const sessionRouter = require('./routes/session');
+const createGameRouter = require('./routes/createGame');
 const joinRouter = require('./routes/join');
 const messageRouter = require('./routes/messages')
-
-
-
 
 require('./auth/passport_setup')(passport);
 const app = express();
@@ -33,7 +30,7 @@ app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 
 app.use(flash());
 app.use(session({
@@ -56,7 +53,7 @@ app.use(flash());
 app.use('/', indexRouter);
 app.use('/', usersRouter);
 app.use('/', testsRouter);
-app.use('/', sessionRouter);
+app.use('/', createGameRouter);
 app.use('/', joinRouter);
 app.use('/', messageRouter);
 

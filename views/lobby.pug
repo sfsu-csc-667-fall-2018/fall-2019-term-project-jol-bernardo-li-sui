@@ -13,9 +13,10 @@ block content
                         p.lobby__session--player C
                         p.lobby__session--player N
         .lobby__sessions
-            .lobby__session--instance.shadow
-                h3.lobby__session--name Husky
-                .lobby__session--player-list
-                    p.lobby__session--player C
-                    p.lobby__session--player N
+            each game in games
+                .lobby__session--instance.shadow
+                    h3.lobby__session--name= game.dataValues.gameName
+                    .lobby__session--player-list
+                        p.lobby__session--player C
+                        p.lobby__session--player N
 

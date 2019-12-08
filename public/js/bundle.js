@@ -239,12 +239,11 @@ module.exports = {
 "use strict";
 
 var loginSignupButton = document.querySelector('.button__login-signup');
+var startButton = document.querySelector('.start-button');
 
 var showModal = function showModal() {
-  loginSignupButton.addEventListener('click', function () {
-    var modal = document.querySelector('.modal');
-    modal.style.display = "flex";
-  });
+  var modal = document.querySelector('.modal');
+  modal.style.display = "flex";
 };
 
 var showLogin = function showLogin() {
@@ -273,10 +272,32 @@ var showSignup = function showSignup() {
   });
 };
 
+var showCreateGame = function showCreateGame() {
+  var createGameForm = document.querySelector(".modal__create-game--form");
+  createGameForm.style.display = "block";
+};
+
+var hideCreateGame = function hideCreateGame() {};
+
 if (loginSignupButton !== null) {
-  showModal();
-  showLogin();
-  showSignup();
+  loginSignupButton.addEventListener('click', function () {
+    showModal();
+    showLogin();
+    showSignup();
+  });
+}
+
+if (startButton !== null) {
+  var modal = document.querySelector('.modal__create-game');
+  var createGameButton = document.querySelector(".modal__create-game--button-cancel");
+  startButton.addEventListener('click', function () {
+    modal.style.display = "flex";
+    showCreateGame();
+  });
+  createGameButton.addEventListener("click", function (event) {
+    event.preventDefault();
+    modal.style.display = "none";
+  });
 }
 
 },{}],5:[function(require,module,exports){
@@ -304,7 +325,8 @@ if (chatBoxMessages != null) {
 }
 
 var socket = io();
-socket.on(_events.MESSAGE_SEND, _globalChat["default"].incomingMessage);
+socket.on(_events.MESSAGE_SEND, _globalChat["default"].incomingMessage); //send message on Global Chat
+
 var chatBoxButton = document.querySelector('.chat__box--button');
 var chatBoxInput = document.querySelector('.chat__box--input');
 

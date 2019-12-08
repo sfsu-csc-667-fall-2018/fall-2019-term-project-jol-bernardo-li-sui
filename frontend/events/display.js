@@ -1,10 +1,9 @@
 let loginSignupButton = document.querySelector('.button__login-signup')
+let startButton = document.querySelector('.start-button')
 
 let showModal = () => {
-    loginSignupButton.addEventListener('click', () => {
-        let modal = document.querySelector('.modal')
-        modal.style.display = "flex"
-    })
+    let modal = document.querySelector('.modal')
+    modal.style.display = "flex"
 }
 
 let showLogin = () => {
@@ -39,8 +38,34 @@ let showSignup = () => {
     })
 }
 
+let showCreateGame = () => {
+    let createGameForm = document.querySelector(".modal__create-game--form")
+    createGameForm.style.display = "block"
+}
+
+let hideCreateGame = () => {
+    
+}
+
 if(loginSignupButton !== null){
-    showModal()
-    showLogin()
-    showSignup()
+    loginSignupButton.addEventListener('click', () => {
+        showModal()
+        showLogin()
+        showSignup()
+    })
+}
+
+if(startButton !== null){
+    let modal = document.querySelector('.modal__create-game')
+    let createGameButton = document.querySelector(".modal__create-game--button-cancel")
+
+    startButton.addEventListener('click', () => {
+        modal.style.display = "flex"
+        showCreateGame();
+    })
+
+    createGameButton.addEventListener("click", (event) => {
+        event.preventDefault()
+        modal.style.display = "none"
+    })
 }

@@ -146,6 +146,7 @@
     height: 50vh;
 
     overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .chat__box--incoming-message,
@@ -156,6 +157,8 @@
     margin: 5px;
     font-family: var(--secondary-font);
     font-size: 14px;
+
+    word-wrap: break-word;
 }
 
 .chat__box--incoming-message {

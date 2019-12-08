@@ -2,17 +2,20 @@ import { MESSAGE_SEND } from '../../src/events'
 import axios from 'axios'
 import regeneratorRuntime from 'regenerator-runtime'
 
-let getUsername = async () => {
-    let username = await axios.get("/getUsername")
-    return username
+let userData = null
+
+let getUserData = async () => {
+    let data = await axios.get("/getUserData")
+    return data
 }
+getUserData().then( data => {userData = data})
 
 let getGlobalMessages = async () => {
     let response = await axios.get("/globalMessages")
-    response.data.map( message => {
-        console.log(message)
+    response.data.map(message => {
         incomingMessage(message)
     })
+    
 }
 
 //sets chatbox scroll to bottom
@@ -22,17 +25,14 @@ if (chatBoxMessages != null) {
     chatBoxMessages.scrollTop = chatBoxMessages.scrollHeight
 }
 
-let incomingMessage = data => {
+let incomingMessage = (data) => {
     let chatBoxIncomingMessage = document.createElement("div")
 
-    getUsername()
-        .then( username => {
-            if (data.username === username.data) {
-                chatBoxIncomingMessage.classList.add('chat__box--outgoing-message')
-            } else {
-                chatBoxIncomingMessage.classList.add('chat__box--incoming-message')
-            }
-        })
+    if (data.userId === userData.data.id) {
+        chatBoxIncomingMessage.classList.add('chat__box--outgoing-message')
+    } else {
+        chatBoxIncomingMessage.classList.add('chat__box--incoming-message')
+    }
 
     let node = document.createTextNode(data.messageBody)
     chatBoxIncomingMessage.appendChild(node);
@@ -44,7 +44,7 @@ let incomingMessage = data => {
 }
 
 module.exports = {
-    getUsername,
+    getUserData,
     getGlobalMessages,
     incomingMessage
 }

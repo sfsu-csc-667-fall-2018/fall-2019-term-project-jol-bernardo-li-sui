@@ -33,12 +33,12 @@ router.delete('/logout', (req, res) => {
 })
 
 
-router.get('/getUsername', (req, res) => {
+router.get('/getUserData', (req, res) => {
     if(req.user){
-        res.send(req.user.username )
+        res.send(req.user)
     }
     else{
-        res.send("not signed in")
+        res.send({username: null, userId: 0})
     }
 })
 

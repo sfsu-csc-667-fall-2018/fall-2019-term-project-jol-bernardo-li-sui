@@ -9,8 +9,8 @@ block content
 
             if authorized
                 .start-page-buttons
-                    a(href='/session' class='start-button') Start
-                    a(href='/lobby' class='join-button') Join
+                    a(href='/session' class='start-button shadow') Start
+                    a(href='/lobby' class='join-button shadow') Join
             else
                 a.button__login-signup.shadow Login / Signup
                 
@@ -34,5 +34,3 @@ block content
                             input(type="text" class="chat__box--input")
                             .chat__box--button
                                 img(src="images/arrow.png" class="chat__box--button-img")
-
-    script(src='js/bundle.js')

@@ -156,18 +156,20 @@ var _regeneratorRuntime = _interopRequireDefault(require("regenerator-runtime"))
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var getUsername = function getUsername() {
-  var username;
-  return _regeneratorRuntime["default"].async(function getUsername$(_context) {
+var userData = null;
+
+var getUserData = function getUserData() {
+  var data;
+  return _regeneratorRuntime["default"].async(function getUserData$(_context) {
     while (1) {
       switch (_context.prev = _context.next) {
         case 0:
           _context.next = 2;
-          return _regeneratorRuntime["default"].awrap(_axios["default"].get("/getUsername"));
+          return _regeneratorRuntime["default"].awrap(_axios["default"].get("/getUserData"));
 
         case 2:
-          username = _context.sent;
-          return _context.abrupt("return", username);
+          data = _context.sent;
+          return _context.abrupt("return", data);
 
         case 4:
         case "end":
@@ -176,6 +178,10 @@ var getUsername = function getUsername() {
     }
   });
 };
+
+getUserData().then(function (data) {
+  userData = data;
+});
 
 var getGlobalMessages = function getGlobalMessages() {
   var response;
@@ -189,7 +195,6 @@ var getGlobalMessages = function getGlobalMessages() {
         case 2:
           response = _context2.sent;
           response.data.map(function (message) {
-            console.log(message);
             incomingMessage(message);
           });
 
@@ -210,13 +215,13 @@ if (chatBoxMessages != null) {
 
 var incomingMessage = function incomingMessage(data) {
   var chatBoxIncomingMessage = document.createElement("div");
-  getUsername().then(function (username) {
-    if (data.username === username.data) {
-      chatBoxIncomingMessage.classList.add('chat__box--outgoing-message');
-    } else {
-      chatBoxIncomingMessage.classList.add('chat__box--incoming-message');
-    }
-  });
+
+  if (data.userId === userData.data.id) {
+    chatBoxIncomingMessage.classList.add('chat__box--outgoing-message');
+  } else {
+    chatBoxIncomingMessage.classList.add('chat__box--incoming-message');
+  }
+
   var node = document.createTextNode(data.messageBody);
   chatBoxIncomingMessage.appendChild(node);
   chatBoxMessages.appendChild(chatBoxIncomingMessage);
@@ -225,7 +230,7 @@ var incomingMessage = function incomingMessage(data) {
 };
 
 module.exports = {
-  getUsername: getUsername,
+  getUserData: getUserData,
   getGlobalMessages: getGlobalMessages,
   incomingMessage: incomingMessage
 };
@@ -304,11 +309,13 @@ var chatBoxButton = document.querySelector('.chat__box--button');
 var chatBoxInput = document.querySelector('.chat__box--input');
 
 if (chatBoxButton != null) {
-  chatBoxButton.addEventListener("click", function () {
-    _globalChat["default"].getUsername().then(function (response) {
+  chatBoxButton.addEventListener("click", function (event) {
+    event.preventDefault();
+
+    _globalChat["default"].getUserData().then(function (user) {
       socket.emit(_events.MESSAGE_SEND, {
         messageBody: chatBoxInput.value,
-        username: response.data
+        username: user.data.username
       });
     });
   });

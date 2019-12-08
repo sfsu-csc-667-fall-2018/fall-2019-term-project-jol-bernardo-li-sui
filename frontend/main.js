@@ -20,11 +20,12 @@ const chatBoxButton = document.querySelector('.chat__box--button')
 const chatBoxInput = document.querySelector('.chat__box--input')
 
 if (chatBoxButton != null) {
-    chatBoxButton.addEventListener("click", () => {
-        globalChat.getUsername().then( response => {
+    chatBoxButton.addEventListener("click", (event) => {
+        event.preventDefault()
+        globalChat.getUserData().then( user => {
             socket.emit(MESSAGE_SEND, { 
                 messageBody: chatBoxInput.value,
-                username: response.data
+                username: user.data.username
             })
         })
     })

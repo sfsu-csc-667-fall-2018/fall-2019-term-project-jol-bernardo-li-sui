@@ -4,6 +4,7 @@ const {
     MESSAGE_SEND
 } = require('../src/events')
 const db = require('../db')
+const models  = require('../models');
 
 
 const init = (app, server) => {
@@ -21,26 +22,10 @@ const init = (app, server) => {
         socket.on(USER_JOINED, data => io.emit(USER_JOINED, data))
 
         socket.on(MESSAGE_SEND, data => {
-            //using pg-promise task function to chain together multiple queries (recommended by docs)
-            db.task(task => {
-                //get id from users table
-                return task.one('select * from users where username = ${username}', data)
-                    .then(user => {
-                        //insert messageBody and userId into messages table
-                        return task.any('INSERT INTO messages ( ${body:name}, ${id:name} ) VALUES ( ${messageBody}, ${user} )', {
-                            messageBody: data.messageBody,
-                            user: user.id,
-                            body: "messageBody",
-                            id: "userId"
-
-                        })
-                    })
-            })
-            .then(() => {
-                io.emit(MESSAGE_SEND, data)
-            })
-            .catch(e => {
-                console.log(e)
+            models.User.findOne({ where: {username: data.username} }).then( user => {
+                models.Message.create({messageBody: data.messageBody, userId: user.dataValues.id}).then( response => {
+                    io.emit(MESSAGE_SEND, {messageBody: data.messageBody, userId: user.dataValues.id})
+                })
             })
         })
     })

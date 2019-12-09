@@ -1,8 +1,9 @@
 import { MESSAGE_SEND } from '../src/events.js'
 const io = require('socket.io-client')
 import globalChat from './chat/globalChat'
-import deck from './cards/hand.js'
-import display from './events/display'
+import './cards/deck.js'
+import './cards/hand.js'
+import './events/display'
 
 globalChat.getGlobalMessages()
 

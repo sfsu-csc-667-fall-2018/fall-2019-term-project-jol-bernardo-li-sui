@@ -17,23 +17,66 @@
     padding: 10px;
 }
 
-.score{
-    align-self: flex-start;
+.sidebar{
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+
+    padding: 10px;
+}
+
+.title{
+    justify-self: center;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: var(--yellow);
+    background: linear-gradient(14deg, rgba(255,222,89,1) 15%, rgba(255,238,174,1) 50%, rgba(255,222,89,1) 85%);
+
+
+    border-radius: 50px;
+    border: 3px solid white;
+    padding: 10px 40px;
+
+    color: white;
+    font-size: 50px;
+    font-family: var(--main-font);
+
+    -webkit-box-shadow: 7px 7px 5px 0px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 7px 7px 5px 0px rgba(0, 0, 0, 0.15);
+    box-shadow: 7px 7px 5px 0px rgba(0, 0, 0, 0.15);
+}
+
+.title p {
+    margin: 0;
+    padding: 0;
+}
+
+.score{
+    display: flex;
+    flex-direction: column;
+
+    background-color: var(--blue);
+    border-radius: 20px;
+    border: 2px solid white;
+
+    padding: 10px;
 }
 
 .score__player{
-    background-color: var(--yellow);
-    border-radius: 50px;
-    border: 2px solid white;
     padding: 10px;
-    margin-bottom: 10px;
+    
+    background-color: white;
+    border-radius: 50px;
+
 }
 
 .score__player--username{
-    color: white;
+    color: var(--dark-grey);
     font-size: 16px;
+    margin: 0;
 }
 
 .global-deck{
@@ -60,8 +103,6 @@
     flex-direction: column;
     justify-content: flex-end;
     align-items: flex-end;
-    
-    padding: 20px;
 }
 
 .session-chat__message{
@@ -108,7 +149,7 @@
     border-radius: 17px;
     padding: 12px;
     margin: 0;
-    color: rgb(114, 114, 114);
+    color: var(--dark-grey);
     border: 2px solid white;
 }
 .session-chat__message-payload--red{

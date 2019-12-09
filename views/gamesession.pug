@@ -3,11 +3,8 @@ extends layout
 block content
     .session
         .play-space
-            .score
-                .score__player
-                    .score__player--username Chris: 10pts
-                .score__player
-                    .score__player--username Nicole: 20pts
+            .title 
+                p #{gameName}
                 
             .global-deck
                 .hand__card
@@ -17,23 +14,29 @@ block content
                     .hand__card--circle
                         p.hand__card--num 0
             .hand
-        .session-chat
-            .session-chat__message
-                p.session-chat__message-payload--red Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent sed pharetra leo, vel dapibus est.
-                p.session-chat__message-user--red C
 
-            .session-chat__message
-                p.session-chat__message-payload--yellow Praesent sed pharetra leo, vel dapibus est.
-                p.session-chat__message-user--yellow N
-            .session-chat__message
-                p.session-chat__message-payload--blue Lorem ipsum dolor sit amet
-                p.session-chat__message-user--blue P
-            .session-chat__message
-                p.session-chat__message-payload--green Lorem ipsum
-                p.session-chat__message-user--green G
-            
-            form.session-chat__form
-                input(type="text" class="session-chat__form-input" placeholder="Type your message here")
-                button(type="submit" class="session-chat__form--button")
-                    img(src="images/arrow.png" class="session-chat__form--img")
+        .sidebar
+            .score
+                .score__player
+                    p.score__player--username Chris
+
+            .session-chat
+                .session-chat__message
+                    p.session-chat__message-payload--red Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent sed pharetra leo, vel dapibus est.
+                    p.session-chat__message-user--red C
+
+                .session-chat__message
+                    p.session-chat__message-payload--yellow Praesent sed pharetra leo, vel dapibus est.
+                    p.session-chat__message-user--yellow N
+                .session-chat__message
+                    p.session-chat__message-payload--blue Lorem ipsum dolor sit amet
+                    p.session-chat__message-user--blue P
+                .session-chat__message
+                    p.session-chat__message-payload--green Lorem ipsum
+                    p.session-chat__message-user--green G
+                
+                form.session-chat__form
+                    input(type="text" class="session-chat__form-input" placeholder="Type your message here")
+                    button(type="submit" class="session-chat__form--button")
+                        img(src="images/arrow.png" class="session-chat__form--img")
             

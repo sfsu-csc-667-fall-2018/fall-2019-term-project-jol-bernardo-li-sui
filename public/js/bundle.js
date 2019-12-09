@@ -307,9 +307,11 @@ var _events = require("../src/events.js");
 
 var _globalChat = _interopRequireDefault(require("./chat/globalChat"));
 
-var _hand = _interopRequireDefault(require("./cards/hand.js"));
+require("./cards/deck.js");
 
-var _display = _interopRequireDefault(require("./events/display"));
+require("./cards/hand.js");
+
+require("./events/display");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -344,7 +346,7 @@ if (chatBoxButton != null) {
   chatBoxInput.value = "";
 }
 
-},{"../src/events.js":85,"./cards/hand.js":2,"./chat/globalChat":3,"./events/display":4,"socket.io-client":67}],6:[function(require,module,exports){
+},{"../src/events.js":85,"./cards/deck.js":1,"./cards/hand.js":2,"./chat/globalChat":3,"./events/display":4,"socket.io-client":67}],6:[function(require,module,exports){
 module.exports = after
 
 function after(count, callback, err_cb) {

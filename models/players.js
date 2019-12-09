@@ -4,7 +4,9 @@ module.exports = (sequelize, DataTypes) => {
     score: DataTypes.INTEGER,
     userId: DataTypes.INTEGER,
     chatId: DataTypes.INTEGER,
-    gameId: DataTypes.INTEGER
+    gameId: DataTypes.INTEGER,
+    turn: DataTypes.BOOLEAN,
+    score: DataTypes.INTEGER
   }, {
     tableName: 'players'
   });

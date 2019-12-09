@@ -73,6 +73,7 @@
     background-size: 350px;
 
     animation: animatedBackground 80s linear infinite;
+    z-index: 0;
 
 }
 
@@ -143,6 +144,21 @@
     font-family: monospace;
     font-size: 15px;
     text-align: center;
+}
+
+.home-arrow{
+    position: absolute;
+    width: 36px;
+    bottom: 30px;
+    left: calc(50% - 15px);
+    transform: rotateZ(180deg);
+    opacity: 0;
+
+    animation-name: arrowBounce;
+    animation-direction: alternate;
+    animation-iteration-count: 12;
+    animation-duration: .5s;
+    animation-timing-function: linear;
 }
 
 /*--------------------------------------------------------------------ABOUT--*/
@@ -513,11 +529,12 @@
 
 .lobby__header{
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
+    z-index: 1000;
 }
 
 .lobby__sessions{
@@ -526,6 +543,7 @@
     align-items: center;
     overflow: scroll;
     padding: 20px;
+    z-index: 1000;
 }
 
 .lobby__joined{
@@ -535,6 +553,14 @@
     padding: 20px;
     border-bottom: 1px solid white;
     max-width: 800px;
+    z-index: 1000;
+}
+
+.lobby__session--head{
+    display: flex;
+    align-items: center;
+
+    color: white;
 }
 
 .lobby__session--instance,
@@ -556,6 +582,11 @@
     border-radius: 50px;
 
     cursor: pointer;
+}
+
+.lobby_session--id{
+    font-family: var(--main-font);
+    font-size: 30px;
 }
 
 .lobby__session--player-list{

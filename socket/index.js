@@ -10,7 +10,7 @@ const models  = require('../models');
 const init = (app, server) => {
     const io = socketIo(server) //mount socket server to http server
 
-    app.set('io', io)
+    app.io = io
 
     io.on('connection', socket => {
         console.log('client connected')
@@ -20,14 +20,7 @@ const init = (app, server) => {
         })
 
         socket.on(USER_JOINED, data => io.emit(USER_JOINED, data))
-
-        socket.on(MESSAGE_SEND, data => {
-            models.User.findOne({ where: {username: data.username} }).then( user => {
-                models.Message.create({messageBody: data.messageBody, userId: user.dataValues.id}).then( response => {
-                    io.emit(MESSAGE_SEND, {messageBody: data.messageBody, userId: user.dataValues.id})
-                })
-            })
-        })
+        
     })
 }
 

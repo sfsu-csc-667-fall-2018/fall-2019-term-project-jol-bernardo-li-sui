@@ -307,6 +307,8 @@ var _events = require("../src/events.js");
 
 var _globalChat = _interopRequireDefault(require("./chat/globalChat"));
 
+var _axios = _interopRequireDefault(require("axios"));
+
 require("./cards/deck.js");
 
 require("./cards/hand.js");
@@ -336,17 +338,18 @@ if (chatBoxButton != null) {
   chatBoxButton.addEventListener("click", function (event) {
     event.preventDefault();
 
-    _globalChat["default"].getUserData().then(function (user) {
-      socket.emit(_events.MESSAGE_SEND, {
-        messageBody: chatBoxInput.value,
-        username: user.data.username
-      });
+    _axios["default"].post("/sendMessage", {
+      messageBody: chatBoxInput.value
+    }).then(function (res) {
+      return console.log(res);
+    })["catch"](function (e) {
+      return console.log(e);
     });
   });
   chatBoxInput.value = "";
 }
 
-},{"../src/events.js":85,"./cards/deck.js":1,"./cards/hand.js":2,"./chat/globalChat":3,"./events/display":4,"socket.io-client":67}],6:[function(require,module,exports){
+},{"../src/events.js":85,"./cards/deck.js":1,"./cards/hand.js":2,"./chat/globalChat":3,"./events/display":4,"axios":8,"socket.io-client":67}],6:[function(require,module,exports){
 module.exports = after
 
 function after(count, callback, err_cb) {

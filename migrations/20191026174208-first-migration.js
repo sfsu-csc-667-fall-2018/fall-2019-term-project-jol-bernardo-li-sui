@@ -11,11 +11,11 @@ module.exports = {
       createdAt: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal("NOW()"),
-        allowNull: false
+        allowNull: true
       },
       testString: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
       }
     });
   },

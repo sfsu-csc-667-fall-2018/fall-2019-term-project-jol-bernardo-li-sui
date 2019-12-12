@@ -21,22 +21,23 @@ block content
                     p.score__player--username Chris
 
             .session-chat
-                .session-chat__message
-                    p.session-chat__message-payload--red Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent sed pharetra leo, vel dapibus est.
-                    p.session-chat__message-user--red C
+                .session-chat__messages
+                    .session-chat__message
+                        p.session-chat__message-payload--red Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent sed pharetra leo, vel dapibus est.
+                        p.session-chat__message-user--red C
 
-                .session-chat__message
-                    p.session-chat__message-payload--yellow Praesent sed pharetra leo, vel dapibus est.
-                    p.session-chat__message-user--yellow N
-                .session-chat__message
-                    p.session-chat__message-payload--blue Lorem ipsum dolor sit amet
-                    p.session-chat__message-user--blue P
-                .session-chat__message
-                    p.session-chat__message-payload--green Lorem ipsum
-                    p.session-chat__message-user--green G
+                    .session-chat__message
+                        p.session-chat__message-payload--yellow Praesent sed pharetra leo, vel dapibus est.
+                        p.session-chat__message-user--yellow N
+                    .session-chat__message
+                        p.session-chat__message-payload--blue Lorem ipsum dolor sit amet
+                        p.session-chat__message-user--blue P
+                    .session-chat__message
+                        p.session-chat__message-payload--green Lorem ipsum
+                        p.session-chat__message-user--green G
                 
                 form.session-chat__form
-                    input(type="text" class="session-chat__form-input" placeholder="Type your message here")
+                    input( type="text" class="session-chat__form-input" placeholder="Type your message here")
                     button(type="submit" class="session-chat__form--button")
                         img(src="images/arrow.png" class="session-chat__form--img")
             

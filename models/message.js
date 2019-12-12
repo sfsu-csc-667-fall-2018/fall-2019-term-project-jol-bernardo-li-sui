@@ -9,7 +9,9 @@ module.exports = (sequelize, DataTypes) => {
     tableName: "messages"
   });
   Message.associate = function(models) {
-    // associations can be defined here
+    Message.belongsTo(models.User, {
+        foreignKey: "userId"
+    })
   };
   return Message;
 };

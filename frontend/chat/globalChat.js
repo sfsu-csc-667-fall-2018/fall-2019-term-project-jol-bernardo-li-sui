@@ -1,4 +1,3 @@
-import { MESSAGE_SEND } from '../../src/events'
 import axios from 'axios'
 import regeneratorRuntime from 'regenerator-runtime'
 

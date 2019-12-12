@@ -529,10 +529,10 @@
 
 .lobby__header{
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding: 10px;
+    padding: 10px 30px;
     margin-bottom: 20px;
     z-index: 1000;
 }
@@ -556,11 +556,19 @@
     z-index: 1000;
 }
 
-.lobby__session--head{
-    display: flex;
-    align-items: center;
-
+.lobby__session--name{
     color: white;
+}
+
+.lobby__back-button{
+    position: relative;
+    top: -2px;
+
+    width: 35px;
+    height: 35px;
+    transform: rotateZ(-90deg);
+
+    cursor: pointer;
 }
 
 .lobby__session--instance,
@@ -584,13 +592,9 @@
     cursor: pointer;
 }
 
-.lobby_session--id{
-    font-family: var(--main-font);
-    font-size: 30px;
-}
-
 .lobby__session--player-list{
     display: flex;
+    justify-content: flex-end;
 }
 
 .lobby__session--player{

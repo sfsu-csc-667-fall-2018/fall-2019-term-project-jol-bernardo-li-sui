@@ -1,6 +1,7 @@
-.session{
+.session {
     display: grid;
     grid-template-columns: 1fr 350px;
+    grid-template-rows: 100vh;
 
     background-color: var(--main-bg-color);
 
@@ -8,7 +9,7 @@
     width: 100%;
 }
 
-.play-space{
+.play-space {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -17,7 +18,7 @@
     padding: 10px;
 }
 
-.sidebar{
+.sidebar {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -25,7 +26,7 @@
     padding: 10px;
 }
 
-.title{
+.title {
     justify-self: center;
 
     display: flex;
@@ -33,7 +34,7 @@
     align-items: center;
 
     background-color: var(--yellow);
-    background: linear-gradient(14deg, rgba(255,222,89,1) 15%, rgba(255,238,174,1) 50%, rgba(255,222,89,1) 85%);
+    background: linear-gradient(14deg, rgba(255, 222, 89, 1) 15%, rgba(255, 238, 174, 1) 50%, rgba(255, 222, 89, 1) 85%);
 
 
     border-radius: 50px;
@@ -54,7 +55,9 @@
     padding: 0;
 }
 
-.score{
+.score {
+    flex-shrink: 0;
+
     display: flex;
     flex-direction: column;
 
@@ -63,23 +66,24 @@
     border: 2px solid white;
 
     padding: 10px;
+    margin-bottom: 30px;
 }
 
-.score__player{
+.score__player {
     padding: 10px;
-    
+
     background-color: white;
     border-radius: 50px;
 
 }
 
-.score__player--username{
+.score__player--username {
     color: var(--dark-grey);
     font-size: 16px;
     margin: 0;
 }
 
-.global-deck{
+.global-deck {
     display: flex;
 }
 
@@ -93,95 +97,109 @@
     overflow: -moz-scrollbars-none;
     -ms-overflow-style: none;
 }
+
 .hand::-webkit-scrollbar {
     height: 0 !important
 }
 
-.session-chat{
+.session-chat {
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     align-items: flex-end;
-
-    overflow-y: scroll;
 }
 
-.session-chat__messages{
+.session-chat__messages {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    overflow-y: scroll;
 }
 
-.session-chat__message{
+.session-chat__message {
+    flex-shrink: 0;
     display: flex;
     align-items: center;
     margin: 0 0 10px 0;
 }
+
 .session-chat__message-user--red,
 .session-chat__message-user--blue,
 .session-chat__message-user--green,
-.session-chat__message-user--yellow{
+.session-chat__message-user--yellow {
     display: flex;
     justify-content: center;
     align-items: center;
 
-    min-height: 50px;
-    max-height: 50px;
-    min-width: 50px;
-    max-width: 50px;
+    min-height: 40px;
+    max-height: 40px;
+    min-width: 40px;
+    max-width: 40px;
     border-radius: 50px;
     padding: 10px;
+    margin: 0;
     margin-left: 15px;
 
     color: white;
     border: 2px solid white;
 }
-.session-chat__message-user--red{
+
+.session-chat__message-user--red {
     background-color: var(--red);
 }
-.session-chat__message-user--yellow{
+
+.session-chat__message-user--yellow {
     background-color: var(--yellow);
 }
-.session-chat__message-user--green{
+
+.session-chat__message-user--green {
     background-color: var(--green);
 }
-.session-chat__message-user--blue{
+
+.session-chat__message-user--blue {
     background-color: var(--blue);
 }
 
 .session-chat__message-payload--red,
 .session-chat__message-payload--blue,
 .session-chat__message-payload--green,
-.session-chat__message-payload--yellow{
-    border-radius: 17px;
+.session-chat__message-payload--yellow {
+    border-radius: 25px;
     padding: 12px;
     margin: 0;
     color: var(--dark-grey);
     border: 2px solid white;
 }
-.session-chat__message-payload--red{
+
+.session-chat__message-payload--red {
     background-color: white;
 }
-.session-chat__message-payload--yellow{
+
+.session-chat__message-payload--yellow {
     background-color: white;
 }
-.session-chat__message-payload--blue{
+
+.session-chat__message-payload--blue {
     background-color: white;
 }
-.session-chat__message-payload--green{
+
+.session-chat__message-payload--green {
     background-color: white;
 }
 
 .session-chat__form {
     align-self: center;
+    flex-shrink: 0;
 
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     background-color: white;
     border-radius: 50px;
     width: 100%;
+    margin-top: 10px;
 }
 
 .session-chat__form-input {

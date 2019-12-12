@@ -1,32 +1,59 @@
+const {
+    GAME_MESSAGE_SEND,
+    MESSAGE_SEND
+} = require('../src/events')
 const express = require('express');
 const router = express.Router();
 const models = require("../models")
 
 /* join page. */
-
 router.get('/lobby', function(req, res, next) {
-    models.Game.findAll().then( response => {
-        res.render('lobby', {games : response });
+    models.Game.findAll({ 
+        attributes: ['id', 'gameName'],
+        include: [{ 
+            model: models.Player,
+            attributes: ["userId"],
+            include: [{model: models.User, attributes: ["username"]}]
+        }]
+    }).then( games => {
+        res.render("lobby", {games: games})
     })
+    .catch(e => console.log(e))
 })
 
 router.get('/join/:id', (req, res, next) => {
-    models.Game.findOne({where: {id: req.params.id}}).then (game => {
-        models.Player.findAll({ where: {gameId: game.dataValues.id} }).then ( userIds => {
-            userIds.map( player => {
-                if(player.dataValues.userId == req.user.id){
-                    res.render('gamesession', {gameName: game.dataValues.gameName, gameId: game.dataValues.id})
-                    return
-                }
-                else{
-                    models.Player.create({ userId: req.user.id, gameId: req.params.id, chatId: game.dataValues.chatId, turn: false, score: 0}).then( _ => {
-                        res.render('gamesession', {gameName: game.dataValues.gameName, gameId: game.dataValues.id})
-                        return
-                    })
-                }
-            })
-        })
+
+    let gameFull = false
+
+    models.Player.findAll({ where: {gameId: req.params.id} }).then( players => {
+        if(players.length >= 4){
+            gameFull = true
+        }
     })
+
+    models.Game.findOne({where: {id: req.params.id}}).then( game => {
+        models.Player.findOne({ where: {gameId: game.dataValues.id, userId: req.user.id} }).then( player => {
+
+            //check if user is already in the game
+            if(player !== null){
+                res.render('gamesession', {gameName: game.dataValues.gameName, gameId: game.dataValues.id})
+            }
+            //if user is not in game already and game is not full, create new player and add to game
+            else if(gameFull !== true){
+                models.Player.create({ userId: req.user.id, gameId: req.params.id, chatId: game.dataValues.chatId, turn: false, score: 0}).then( player => {
+                    //post to game chat that user has joined
+                    models.Message.create({messageBody: `${req.user.username} joined the game`, userId: req.user.id, chatId: game.dataValues.chatId}).then( _ => {
+                        req.app.io.emit(`${GAME_MESSAGE_SEND}/${req.params.id}`, {messageBody: `${req.user.username} joined the game`, username: req.user.username})
+                        res.render('gamesession', {gameName: game.dataValues.gameName, gameId: game.dataValues.id})
+                    })
+                })
+            }
+            //if game is full redirect back to lobby
+            else{
+                res.redirect('/lobby')
+            }
+        })
+    }).then( _ => {})
     .catch(e => console.log(e))
 })
 

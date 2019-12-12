@@ -8,7 +8,9 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'games'
   });
   Game.associate = function(models) {
-    // associations can be defined here
+    Game.hasMany(models.Player, {
+        foreignKey: "gameId"
+    })
   };
   return Game;
 };

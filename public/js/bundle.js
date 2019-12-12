@@ -254,7 +254,6 @@ var getSessionMessages = function getSessionMessages(id) {
         case 2:
           response = _context.sent;
           response.data.map(function (message) {
-            console.log(message);
             incomingMessage(message);
           });
 
@@ -267,6 +266,7 @@ var getSessionMessages = function getSessionMessages(id) {
 };
 
 var incomingMessage = function incomingMessage(data) {
+  var userName = data.username || data.User.username;
   var sessionChat = document.querySelector(".session-chat__messages");
   var sessionChatMessage = document.createElement("div");
   sessionChatMessage.classList.add("session-chat__message"); //create messageBody element and append text
@@ -278,7 +278,7 @@ var incomingMessage = function incomingMessage(data) {
 
   var user = document.createElement('p');
   user.classList.add("session-chat__message-user--red");
-  var initial = data.username[0];
+  var initial = userName[0];
   var initialNode = document.createTextNode(initial);
   user.appendChild(initialNode);
   sessionChatMessage.appendChild(messageBody);
@@ -379,7 +379,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 var io = require('socket.io-client');
 
-_globalChat["default"].getGlobalMessages(); //sets chatbox scroll to bottom
+var indexChat = document.querySelector(".chat");
+
+if (indexChat !== null) {
+  _globalChat["default"].getGlobalMessages();
+} //sets chatbox scroll to bottom
 
 
 var chatBoxMessages = document.querySelector('.chat__box--messages');
@@ -390,17 +394,22 @@ if (chatBoxMessages != null) {
 
 var url = window.location.href;
 var split = url.split('/');
-(0, _sessionChat.getSessionMessages)(split[split.length - 1]);
+var session = document.querySelector(".session");
+
+if (session !== null) {
+  (0, _sessionChat.getSessionMessages)(split[split.length - 1]);
+}
+
 var socket = io();
 socket.on(_events.MESSAGE_SEND, _globalChat["default"].incomingMessage);
 socket.on("".concat(_events.GAME_MESSAGE_SEND, "/").concat(split[split.length - 1]), _sessionChat.incomingMessage); //send message on Global Chat
 
 var chatBoxButton = document.querySelector('.chat__box--button');
-var chatBoxInput = document.querySelector('.chat__box--input');
 
 if (chatBoxButton != null) {
   chatBoxButton.addEventListener("click", function (event) {
     event.preventDefault();
+    var chatBoxInput = document.querySelector('.chat__box--input');
 
     _axios["default"].post("/sendMessage", {
       messageBody: chatBoxInput.value

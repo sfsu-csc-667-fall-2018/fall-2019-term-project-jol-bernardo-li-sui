@@ -4,13 +4,15 @@ import regeneratorRuntime from 'regenerator-runtime'
 let getSessionMessages = async (id) => {
     let response = await axios.get(`/sessionMessages/${id}`)
     response.data.map(message => {
-        console.log(message)
         incomingMessage(message)
+        
     })
-    
 }
 
 let incomingMessage = (data) => {
+
+    let userName = data.username || data.User.username
+
     let sessionChat = document.querySelector(".session-chat__messages")
 
     let sessionChatMessage = document.createElement("div")
@@ -25,7 +27,7 @@ let incomingMessage = (data) => {
     //create username container and append initial
     let user = document.createElement('p')
     user.classList.add("session-chat__message-user--red")
-    let initial = data.username[0]
+    let initial = userName[0]
     let initialNode = document.createTextNode(initial)
     user.appendChild(initialNode)
 

@@ -8,7 +8,9 @@ const models = require("../models")
 router.get('/game/:id', (req, res, next) => {
     models.Game.findOne({where: {id: req.params.id}}).then( game => {
         models.Player.findOne({where: {userId: req.user.id, gameId: req.params.id}}).then( player => {
-            res.render('gamesession', {gameName: game.dataValues.gameName})
+            models.Card.findAll({where: {played: false, playerId: player.dataValues.id}}).then(card => {
+                res.render('gamesession', {gameName: game.dataValues.gameName, cards: card})
+            }) 
         })
     })
 })

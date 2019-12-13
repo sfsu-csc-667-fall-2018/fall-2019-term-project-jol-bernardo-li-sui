@@ -1,8 +1,8 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Chat = sequelize.define('Chat', {
-    chatName: DataTypes.STRING,
-    gameId: DataTypes.INTEGER
+    chatName: DataTypes.STRING
+    // gameId: DataTypes.INTEGER
   }, {
     tableName: 'chats'
   });

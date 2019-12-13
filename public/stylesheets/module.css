@@ -423,10 +423,11 @@
     background-color: rgb(255, 255, 255);
     border-radius: 10px;
     border: 5px solid white;
-    width: 160px;
-    height: 258px;
-
+    width: 120px;
+    height: 194px;
     margin: 10px;
+
+    cursor: pointer;
 }
 
 .hand__card--green {
@@ -449,6 +450,13 @@
     color: var(--blue);
 }
 
+.about,
+.played,
+.pile {
+    width: 160px;
+    height: 258px;
+}
+
 .hand__card--circle {
     display: flex;
     justify-content: center;
@@ -464,7 +472,7 @@
 
 .hand__card--num {
     transform: rotateZ(-20deg);
-    margin: 0;
+    margin: 20px 0 0 5px;
     padding: 0;
 
     font-size: 100px;
@@ -529,10 +537,10 @@
 
 .lobby__header{
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding: 10px;
+    padding: 10px 30px;
     margin-bottom: 20px;
     z-index: 1000;
 }
@@ -541,30 +549,33 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    overflow: scroll;
     padding: 20px;
+
+    overflow-y: scroll;
+    overflow: -moz-scrollbars-none;
+    -ms-overflow-style: none;
     z-index: 1000;
 }
-
-.lobby__joined{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    border-bottom: 1px solid white;
-    max-width: 800px;
-    z-index: 1000;
+.lobby__sessions::-webkit-scrollbar {
+    display: none;
 }
 
-.lobby__session--head{
-    display: flex;
-    align-items: center;
-
+.lobby__session--name{
     color: white;
 }
 
-.lobby__session--instance,
-.lobby__joined--instance{
+.lobby__back-button{
+    position: relative;
+    top: -2px;
+
+    width: 35px;
+    height: 35px;
+    transform: rotateZ(-90deg);
+
+    cursor: pointer;
+}
+
+.lobby__session--instance{
     flex-shrink: 0;
 
     display: flex;
@@ -584,13 +595,9 @@
     cursor: pointer;
 }
 
-.lobby_session--id{
-    font-family: var(--main-font);
-    font-size: 30px;
-}
-
 .lobby__session--player-list{
     display: flex;
+    justify-content: flex-end;
 }
 
 .lobby__session--player{
@@ -618,13 +625,6 @@
     margin-left: 5px;
 }
 
-.user-icon {
-    width: 60px;
-    height: 70px;
-    padding: 4px;
-    border-radius: 50%;
-}
-
 .sessions {
     display: flex;
     flex-direction: row;
@@ -635,13 +635,4 @@
     padding: 12px;
     overflow: auto;
 
-}
-
-.lobby-icon {
-    width: 125px;
-    height: 125px;
-    border-radius: 50%;
-    margin: 0px 20px;
-
-    background-color: white;
 }

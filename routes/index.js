@@ -34,4 +34,16 @@ router.get('/all_users', function(res, res) {
     })
 })
 
+router.get('/tests', function(res, res) {
+    models.Player.findAll({
+        attributes: { exclude: ['createdAt', 'updatedAt'] },
+        where: { id: 2}
+    }).then(players => {
+        res.render('test', {gameNum: players.dataValues.gameNum})
+        console.log(players)
+    })
+})
+
+
+
 module.exports = router;

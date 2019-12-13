@@ -7,12 +7,6 @@ block content
                 img(src="images/arrow.png" class="lobby__back-button")
             h1.lobby-title Choose a game
             div 
-        .lobby__joined
-            .lobby__joined--instance.shadow
-                    h3.lobby__session--name Husky
-                    .lobby__session--player-list
-                        p.lobby__session--player C
-                        p.lobby__session--player N
         .lobby__sessions
             each game in games
                 a.lobby__session--instance.shadow(href="/join/" + game.id)
@@ -20,5 +14,9 @@ block content
                     .lobby__session--player-list
                         each player in game.Players
                             p.lobby__session--player #{player.User.username[0]}
+
+            else
+                h1 There are no lobbies
+                
         .bg-texture
 

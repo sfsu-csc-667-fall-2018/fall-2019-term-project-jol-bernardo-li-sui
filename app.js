@@ -1,62 +1,62 @@
-const createError = require('http-errors');
-const express = require('express');
-const path = require('path');
+const createError = require('http-errors')
+const express = require('express')
+const path = require('path')
 
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-let passport = require('passport');
-let session = require('express-session');
-let flash = require('express-flash');
-let methodoverride = require('method-override');
+const cookieParser = require('cookie-parser')
+const logger = require('morgan')
+let passport = require('passport')
+let session = require('express-session')
+let flash = require('express-flash')
+let methodoverride = require('method-override')
 
 
 if(process.env.NODE_ENV === 'development') {
-  require("dotenv").config();
+  require("dotenv").config()
 }
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-const testsRouter = require('./routes/tests');
-const createGameRouter = require('./routes/createGame');
-const joinRouter = require('./routes/join');
+const indexRouter = require('./routes/index')
+const usersRouter = require('./routes/users')
+const createGameRouter = require('./routes/createGame')
+const joinRouter = require('./routes/join')
 const messageRouter = require('./routes/messages')
+const gameRouter = require('./routes/game')
 
-require('./auth/passport_setup')(passport);
-const app = express();
+require('./auth/passport_setup')(passport)
+const app = express()
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'pug')
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(logger('dev'))
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
-app.use(flash());
+app.use(flash())
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false
-}));
+}))
 
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-app.use('/join',express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')))
+app.use('/game',express.static(path.join(__dirname, 'public')))
 
 
 //init the passport library
-app.use(passport.initialize());
+app.use(passport.initialize())
 app.use(passport.session());
 app.use(methodoverride('_method'))
-app.use(flash());
+app.use(flash())
 
 //routers
-app.use('/', indexRouter);
-app.use('/', usersRouter);
-app.use('/', testsRouter);
-app.use('/', createGameRouter);
-app.use('/', joinRouter);
-app.use('/', messageRouter);
+app.use('/', indexRouter)
+app.use('/', usersRouter)
+app.use('/', createGameRouter)
+app.use('/', joinRouter)
+app.use('/', messageRouter)
+app.use('/', gameRouter)
 
 
 app.use('/users', require('./routes/users'));

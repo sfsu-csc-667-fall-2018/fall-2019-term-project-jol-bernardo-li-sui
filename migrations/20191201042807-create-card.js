@@ -14,6 +14,9 @@ module.exports = {
       color: {
         type: Sequelize.STRING
       },
+      played: {
+          type: Sequelize.BOOLEAN
+      },
       createdAt: {
         allowNull: true,
         type: Sequelize.DATE

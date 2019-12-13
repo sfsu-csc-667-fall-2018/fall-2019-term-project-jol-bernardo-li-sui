@@ -20,16 +20,16 @@ let incomingMessage = (data) => {
 
     //create messageBody element and append text
     let messageBody = document.createElement('p')
-    messageBody.classList.add("session-chat__message-payload--red")
+    messageBody.classList.add("session-chat__message-payload")
     let node = document.createTextNode(data.messageBody)
     messageBody.appendChild(node);
 
-    //create username container and append initial
-    let user = document.createElement('p')
-    user.classList.add("session-chat__message-user--red")
-    let initial = userName[0]
-    let initialNode = document.createTextNode(initial)
-    user.appendChild(initialNode)
+     //create username container and append initial
+     let user = document.createElement('p')
+     user.classList.add("session-chat__message-user--red")
+     let initial = userName[0]
+     let initialNode = document.createTextNode(initial)
+     user.appendChild(initialNode)
 
     sessionChatMessage.appendChild(messageBody)
     sessionChatMessage.appendChild(user)

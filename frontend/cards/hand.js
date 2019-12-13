@@ -10,6 +10,7 @@ hand = deck.deal(deckInstance)
 hand.map(card => {
     let handCard = document.createElement('div')
     handCard.classList.add(`hand__card${card.color}`)
+    handCard.classList.add("shadow")
 
     let handCardCircle = document.createElement('div')
     handCardCircle.classList.add(`hand__card--circle`)

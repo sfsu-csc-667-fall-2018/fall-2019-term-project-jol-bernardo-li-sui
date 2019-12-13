@@ -36,11 +36,7 @@ router.get('/join/:id', (req, res, next) => {
 
             //check if user is already in the game
             if(player !== null){
-                //post to game chat that user has joined
-                models.Message.create({messageBody: `${req.user.username} joined the game`, userId: req.user.id, chatId: game.dataValues.chatId}).then( _ => {
-                    req.app.io.emit(`${GAME_MESSAGE_SEND}/${req.params.id}`, {messageBody: `${req.user.username} joined the game`, username: req.user.username})
-                    res.render('gamesession', {gameName: game.dataValues.gameName, gameId: game.dataValues.id})
-                })
+                res.redirect(`/game/${game.dataValues.id}`)
             }
             //if user is not in game already and game is not full, create new player and add to game
             else if(gameFull !== true){
@@ -48,7 +44,7 @@ router.get('/join/:id', (req, res, next) => {
                     //post to game chat that user has joined
                     models.Message.create({messageBody: `${req.user.username} joined the game`, userId: req.user.id, chatId: game.dataValues.chatId}).then( _ => {
                         req.app.io.emit(`${GAME_MESSAGE_SEND}/${req.params.id}`, {messageBody: `${req.user.username} joined the game`, username: req.user.username})
-                        res.render('gamesession', {gameName: game.dataValues.gameName, gameId: game.dataValues.id})
+                        res.redirect(`/game/${game.dataValues.id}`)
                     })
                 })
             }
@@ -59,6 +55,18 @@ router.get('/join/:id', (req, res, next) => {
         })
     }).then( _ => {})
     .catch(e => console.log(e))
+})
+
+router.get("/users/:id", (req, res, next) => {
+    models.Player.findAll({
+        where: {gameId: req.params.id},
+        include: [{
+            model: models.User,
+            attributes: ["username"]
+        }]
+    }).then( users => {
+        res.send(users)
+    })
 })
 
 

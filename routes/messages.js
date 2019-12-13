@@ -29,8 +29,8 @@ router.get('/globalMessages', function(req, res, next) {
         attributes: ['messageBody', 'userId'],
         where: {chatId: null}
     })
-        .then(response => {
-            res.send(response)
+        .then(messages => {
+            res.send(messages)
         })
         .catch( e => console.log(e))
 });

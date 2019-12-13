@@ -5,11 +5,13 @@ import {
 const io = require('socket.io-client')
 import globalChat from './chat/globalChat'
 import { incomingMessage, getSessionMessages } from './chat/sessionChat' 
+import { getSessionUsers } from './events/users'
 import axios from 'axios'
 import './cards/deck.js'
 import './cards/hand.js'
 import './events/display'
 
+//get all global messages from db
 let indexChat = document.querySelector(".chat")
 if(indexChat !== null){
     globalChat.getGlobalMessages()
@@ -23,17 +25,25 @@ if (chatBoxMessages != null) {
 
 let url = window.location.href;
 let split = url.split('/');
+let id = split[split.length-1]
+
 
 let session = document.querySelector(".session")
 if(session !== null){
-    getSessionMessages(split[split.length-1])
+    //get all session messages from db
+    getSessionMessages(id)
+    //get all users in session
+    getSessionUsers(id)
 }
 
+
+
+//listen for socket events
 const socket = io();
 socket.on(MESSAGE_SEND, globalChat.incomingMessage);
 socket.on(`${GAME_MESSAGE_SEND}/${split[split.length-1]}`, incomingMessage)
 
-//send message on Global Chat
+//send message from Global Chat
 const chatBoxButton = document.querySelector('.chat__box--button')
 
 if (chatBoxButton != null) {
@@ -53,6 +63,7 @@ if (chatBoxButton != null) {
     chatBoxInput.value = ""
 }
 
+//send message from sessionChat
 const sessionChatFormButton = document.querySelector(".session-chat__form--button")
 
 if( sessionChatFormButton !== null){

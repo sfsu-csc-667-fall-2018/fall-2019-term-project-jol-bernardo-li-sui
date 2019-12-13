@@ -3,22 +3,23 @@ extends layout
 block content
     .session
         .play-space
-            .title 
-                p #{gameName}
+            .header
+                a(href="/lobby")
+                    img(src="images/arrow.png" class="header__back-button")
+                h1.header__title #{gameName}
+                div
                 
-            .global-deck
-                .hand__card
+            .deck
+                .hand__card.played
                     .hand__card--circle
                         p.hand__card--num 0
-                .hand__card
+                .hand__card.pile
                     .hand__card--circle
                         p.hand__card--num 0
             .hand
 
         .sidebar
             .score
-                .score__player
-                    p.score__player--username Chris
 
             .session-chat
                 .session-chat__messages
@@ -27,4 +28,6 @@ block content
                     input( type="text" class="session-chat__form-input" placeholder="Type your message here")
                     button(type="submit" class="session-chat__form--button")
                         img(src="images/arrow.png" class="session-chat__form--img")
+
+        .bg-texture
             

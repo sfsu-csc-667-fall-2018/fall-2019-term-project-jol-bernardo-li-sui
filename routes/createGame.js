@@ -15,24 +15,20 @@ router.post('/create', function(req, res, next) {
             //create new deck
             models.Deck.create().then( deck => {
 
-                //create player with userId, gameId, and chatId
-                models.Player.create({userId: req.user.id, gameId: game.dataValues.id, chatId: chat.dataValues.id, turn: false, score: 0}).then( _ => {
+                //update game table with chat id and deck id
+                models.Game.update({ chatId: chat.dataValues.id, deckId: deck.dataValues.id }, {where: {id: game.dataValues.id}}).then( _ => {
 
-                    //update game table with chat id and deck id
-                    models.Game.update({ chatId: chat.dataValues.id, deckId: deck.dataValues.id }, {where: {id: game.dataValues.id}}).then( _ => {
+                    //create an array of card objects and shuffle it
+                    let cardArry = createDeck()
+                    shuffle(cardArry)
 
-                        //create an array of card objects and shuffle it
-                        let cardArry = createDeck()
-                        shuffle(cardArry)
-
-                        //insert each card into the cards database table with deckId associated with game
-                        cardArry.map( card => {
-                            models.Card.create({type: card.value, color: card.color, deckId: deck.dataValues.id, played: false})
-                        })
-                        // req.app.io.emit("gameCreated") --implement to update lobby on game creation
-                        res.redirect(`/join/${game.dataValues.id}`)
-                    })  
-                })
+                    //insert each card into the cards database table with deckId associated with game
+                    cardArry.map( card => {
+                        models.Card.create({type: card.value, color: card.color, deckId: deck.dataValues.id, played: false})
+                    })
+                    // req.app.io.emit("gameCreated") --implement to update lobby on game creation
+                    res.redirect(`/join/${game.dataValues.id}`)
+                })  
             })
         })
     })

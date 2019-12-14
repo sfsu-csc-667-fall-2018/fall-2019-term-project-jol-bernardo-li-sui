@@ -83,70 +83,81 @@ module.exports = {
 },{}],2:[function(require,module,exports){
 "use strict";
 
-var deck = require('./deck.js');
+var _axios = _interopRequireDefault(require("axios"));
 
-var deckInstance = deck.createDeck();
-var hand = [];
-deck.shuffle(deckInstance);
-hand = deck.deal(deckInstance);
-hand.map(function (card) {
-  var handCard = document.createElement('div');
-  handCard.classList.add("hand__card".concat(card.color));
-  handCard.classList.add("shadow");
-  var handCardCircle = document.createElement('div');
-  handCardCircle.classList.add("hand__card--circle");
-  var handCardImg;
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-  switch (card.value) {
-    case 'Reverse':
-      handCardImg = document.createElement('img');
-      handCardImg.classList.add("hand__card--img");
-      handCardImg.src = "images/card_icons/reverse".concat(card.color, ".png");
-      handCardCircle.appendChild(handCardImg);
-      break;
+var getHand = function getHand(id) {
+  _axios["default"].get("/drawHand/".concat(id)).then(function (hand) {
+    renderHand(hand);
+  });
+};
 
-    case 'Skip':
-      handCardImg = document.createElement('img');
-      handCardImg.classList.add("hand__card--img");
-      handCardImg.src = "images/card_icons/skip".concat(card.color, ".png");
-      handCardCircle.appendChild(handCardImg);
-      break;
+var renderHand = function renderHand(hand) {
+  console.log(hand);
+  hand.data.map(function (card) {
+    var handCard = document.createElement('div');
+    handCard.classList.add("hand__card".concat(card.color));
+    handCard.classList.add("shadow");
+    var handCardCircle = document.createElement('div');
+    handCardCircle.classList.add("hand__card--circle");
+    var handCardImg;
 
-    case 'Draw Two':
-      handCardImg = document.createElement('img');
-      handCardImg.classList.add("hand__card--img");
-      handCardImg.src = "images/card_icons/draw2".concat(card.color, ".png");
-      handCardCircle.appendChild(handCardImg);
-      break;
+    switch (card.type) {
+      case 'Reverse':
+        handCardImg = document.createElement('img');
+        handCardImg.classList.add("hand__card--img");
+        handCardImg.src = "images/card_icons/reverse".concat(card.color, ".png");
+        handCardCircle.appendChild(handCardImg);
+        break;
 
-    case 'wild':
-      handCardImg = document.createElement('img');
-      handCardImg.classList.add("hand__card--img-wild");
-      handCardImg.src = "images/card_icons/wild.png";
-      handCardCircle.appendChild(handCardImg);
-      break;
+      case 'Skip':
+        handCardImg = document.createElement('img');
+        handCardImg.classList.add("hand__card--img");
+        handCardImg.src = "images/card_icons/skip".concat(card.color, ".png");
+        handCardCircle.appendChild(handCardImg);
+        break;
 
-    case 'draw4':
-      handCardImg = document.createElement('img');
-      handCardImg.classList.add("hand__card--img-wild");
-      handCardImg.src = "images/card_icons/draw4.png";
-      handCardCircle.appendChild(handCardImg);
-      break;
+      case 'Draw Two':
+        handCardImg = document.createElement('img');
+        handCardImg.classList.add("hand__card--img");
+        handCardImg.src = "images/card_icons/draw2".concat(card.color, ".png");
+        handCardCircle.appendChild(handCardImg);
+        break;
 
-    default:
-      var handCardNum = document.createElement('p');
-      handCardNum.classList.add('hand__card--num');
-      var node = document.createTextNode(card.value);
-      handCardNum.appendChild(node);
-      handCardCircle.appendChild(handCardNum);
-  }
+      case 'wild':
+        handCardImg = document.createElement('img');
+        handCardImg.classList.add("hand__card--img-wild");
+        handCardImg.src = "images/card_icons/wild.png";
+        handCardCircle.appendChild(handCardImg);
+        break;
 
-  handCard.appendChild(handCardCircle);
-  var hand = document.querySelector('.hand');
-  if (hand != null) hand.appendChild(handCard);
-});
+      case 'draw4':
+        handCardImg = document.createElement('img');
+        handCardImg.classList.add("hand__card--img-wild");
+        handCardImg.src = "images/card_icons/draw4.png";
+        handCardCircle.appendChild(handCardImg);
+        break;
 
-},{"./deck.js":1}],3:[function(require,module,exports){
+      default:
+        var handCardNum = document.createElement('p');
+        handCardNum.classList.add('hand__card--num');
+        var node = document.createTextNode(card.type);
+        handCardNum.appendChild(node);
+        handCardCircle.appendChild(handCardNum);
+    }
+
+    handCard.appendChild(handCardCircle);
+    var hand = document.querySelector('.hand');
+    if (hand != null) hand.appendChild(handCard);
+  });
+};
+
+module.exports = {
+  getHand: getHand
+};
+
+},{"axios":10}],3:[function(require,module,exports){
 "use strict";
 
 var _axios = _interopRequireDefault(require("axios"));
@@ -426,6 +437,8 @@ var _sessionChat = require("./chat/sessionChat");
 
 var _users = require("./events/users");
 
+var _hand = require("./cards/hand");
+
 var _axios = _interopRequireDefault(require("axios"));
 
 require("./cards/deck.js");
@@ -454,14 +467,17 @@ if (chatBoxMessages != null) {
 
 var url = window.location.href;
 var split = url.split('/');
-var id = split[split.length - 1];
+var id = split[split.length - 1]; //get session messages
+
 var session = document.querySelector(".session");
 
 if (session !== null) {
   //get all session messages from db
   (0, _sessionChat.getSessionMessages)(id); //get all users in session
 
-  (0, _users.getSessionUsers)(id);
+  (0, _users.getSessionUsers)(id); //get hand
+
+  (0, _hand.getHand)(id);
 } //listen for socket events
 
 
@@ -502,7 +518,7 @@ if (sessionChatFormButton !== null) {
   });
 }
 
-},{"../src/events.js":87,"./cards/deck.js":1,"./cards/hand.js":2,"./chat/globalChat":3,"./chat/sessionChat":4,"./events/display":5,"./events/users":6,"axios":10,"socket.io-client":69}],8:[function(require,module,exports){
+},{"../src/events.js":87,"./cards/deck.js":1,"./cards/hand":2,"./cards/hand.js":2,"./chat/globalChat":3,"./chat/sessionChat":4,"./events/display":5,"./events/users":6,"axios":10,"socket.io-client":69}],8:[function(require,module,exports){
 module.exports = after
 
 function after(count, callback, err_cb) {

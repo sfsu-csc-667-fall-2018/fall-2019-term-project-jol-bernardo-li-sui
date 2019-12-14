@@ -20,6 +20,7 @@ const createGameRouter = require('./routes/createGame')
 const joinRouter = require('./routes/join')
 const messageRouter = require('./routes/messages')
 const gameRouter = require('./routes/game')
+const handRouter = require('./routes/hand')
 
 require('./auth/passport_setup')(passport)
 const app = express()
@@ -57,6 +58,7 @@ app.use('/', createGameRouter)
 app.use('/', joinRouter)
 app.use('/', messageRouter)
 app.use('/', gameRouter)
+app.use('/', handRouter)
 
 
 app.use('/users', require('./routes/users'));

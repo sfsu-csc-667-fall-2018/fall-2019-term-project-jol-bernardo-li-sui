@@ -7,6 +7,7 @@ const io = require('socket.io-client')
 import globalChat from './chat/globalChat'
 import { incomingMessage, getSessionMessages } from './chat/sessionChat' 
 import { getSessionUsers, updateUsers } from './events/users'
+import { getHand } from './cards/hand'
 import axios from 'axios'
 import './cards/deck.js'
 import './cards/hand.js'
@@ -28,16 +29,16 @@ let url = window.location.href;
 let split = url.split('/');
 let id = split[split.length-1]
 
-
+//get session messages
 let session = document.querySelector(".session")
 if(session !== null){
     //get all session messages from db
     getSessionMessages(id)
     //get all users in session
     getSessionUsers(id)
+    //get hand
+    getHand(id)
 }
-
-
 
 //listen for socket events
 const socket = io();

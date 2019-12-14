@@ -44,7 +44,7 @@ router.get('/join/:id', (req, res, next) => {
                     //post to game chat that user has joined
                     models.Message.create({messageBody: `${req.user.username} joined the game`, userId: req.user.id, chatId: game.dataValues.chatId}).then( _ => {
                         req.app.io.emit(`${USER_JOINED}/${req.params.id}`, {messageBody: `${req.user.username} joined the game`, username: req.user.username, score: player.dataValues.score})
-                        res.redirect(`/game/${game.dataValues.id}`)
+                        res.redirect(`/hand/${game.dataValues.id}`)
                     })
                 })
             }

@@ -364,6 +364,8 @@ if (startButton !== null) {
 
 var _axios = _interopRequireDefault(require("axios"));
 
+var _sessionChat = require("../chat/sessionChat");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var getSessionUsers = function getSessionUsers(id) {
@@ -388,11 +390,32 @@ var getSessionUsers = function getSessionUsers(id) {
   });
 };
 
-module.exports = {
-  getSessionUsers: getSessionUsers
+var updateUsers = function updateUsers(data) {
+  console.log(data); //select score container from page
+
+  var score = document.querySelector(".score"); //create score player element
+
+  var scorePlayer = document.createElement("div");
+  scorePlayer.classList.add("score__player"); //create username element
+
+  var scorePlayerUsername = document.createElement("p");
+  scorePlayerUsername.classList.add("score__player--username"); //append text to username element
+
+  var node = document.createTextNode(data.username);
+  scorePlayerUsername.appendChild(node); //append username element to container
+
+  scorePlayer.appendChild(scorePlayerUsername); //append to DOM
+
+  score.appendChild(scorePlayer);
+  (0, _sessionChat.incomingMessage)(data);
 };
 
-},{"axios":10}],7:[function(require,module,exports){
+module.exports = {
+  getSessionUsers: getSessionUsers,
+  updateUsers: updateUsers
+};
+
+},{"../chat/sessionChat":4,"axios":10}],7:[function(require,module,exports){
 "use strict";
 
 var _events = require("../src/events.js");
@@ -444,7 +467,8 @@ if (session !== null) {
 
 var socket = io();
 socket.on(_events.MESSAGE_SEND, _globalChat["default"].incomingMessage);
-socket.on("".concat(_events.GAME_MESSAGE_SEND, "/").concat(split[split.length - 1]), _sessionChat.incomingMessage); //send message from Global Chat
+socket.on("".concat(_events.GAME_MESSAGE_SEND, "/").concat(split[split.length - 1]), _sessionChat.incomingMessage);
+socket.on("".concat(_events.USER_JOINED, "/").concat(id), _users.updateUsers); //send message from Global Chat
 
 var chatBoxButton = document.querySelector('.chat__box--button');
 

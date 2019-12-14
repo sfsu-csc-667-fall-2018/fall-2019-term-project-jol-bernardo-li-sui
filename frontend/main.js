@@ -1,11 +1,12 @@
 import {
     MESSAGE_SEND,
-    GAME_MESSAGE_SEND
+    GAME_MESSAGE_SEND,
+    USER_JOINED
 } from '../src/events.js'
 const io = require('socket.io-client')
 import globalChat from './chat/globalChat'
 import { incomingMessage, getSessionMessages } from './chat/sessionChat' 
-import { getSessionUsers } from './events/users'
+import { getSessionUsers, updateUsers } from './events/users'
 import axios from 'axios'
 import './cards/deck.js'
 import './cards/hand.js'
@@ -42,6 +43,7 @@ if(session !== null){
 const socket = io();
 socket.on(MESSAGE_SEND, globalChat.incomingMessage);
 socket.on(`${GAME_MESSAGE_SEND}/${split[split.length-1]}`, incomingMessage)
+socket.on(`${USER_JOINED}/${id}`, updateUsers)
 
 //send message from Global Chat
 const chatBoxButton = document.querySelector('.chat__box--button')

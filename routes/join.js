@@ -1,6 +1,6 @@
 const {
     GAME_MESSAGE_SEND,
-    MESSAGE_SEND
+    USER_JOINED
 } = require('../src/events')
 const express = require('express');
 const router = express.Router();
@@ -43,7 +43,7 @@ router.get('/join/:id', (req, res, next) => {
                 models.Player.create({ userId: req.user.id, gameId: req.params.id, chatId: game.dataValues.chatId, turn: false, score: 0}).then( player => {
                     //post to game chat that user has joined
                     models.Message.create({messageBody: `${req.user.username} joined the game`, userId: req.user.id, chatId: game.dataValues.chatId}).then( _ => {
-                        req.app.io.emit(`${GAME_MESSAGE_SEND}/${req.params.id}`, {messageBody: `${req.user.username} joined the game`, username: req.user.username})
+                        req.app.io.emit(`${USER_JOINED}/${req.params.id}`, {messageBody: `${req.user.username} joined the game`, username: req.user.username, score: player.dataValues.score})
                         res.redirect(`/game/${game.dataValues.id}`)
                     })
                 })

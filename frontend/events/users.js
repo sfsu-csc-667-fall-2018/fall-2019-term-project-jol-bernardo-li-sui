@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { incomingMessage } from '../chat/sessionChat'
 
 let getSessionUsers = (id) => {
     axios.get(`/users/${id}`).then(users => {
@@ -28,6 +29,35 @@ let getSessionUsers = (id) => {
     })
 }
 
+let updateUsers = (data) => {
+
+    console.log(data)
+
+    //select score container from page
+    let score = document.querySelector(".score")
+
+    //create score player element
+    let scorePlayer = document.createElement("div")
+    scorePlayer.classList.add("score__player")
+
+    //create username element
+    let scorePlayerUsername = document.createElement("p")
+    scorePlayerUsername.classList.add("score__player--username")
+
+    //append text to username element
+    let node = document.createTextNode(data.username)
+    scorePlayerUsername.appendChild(node)
+
+    //append username element to container
+    scorePlayer.appendChild(scorePlayerUsername)
+
+    //append to DOM
+    score.appendChild(scorePlayer)
+
+    incomingMessage(data)
+}
+
 module.exports = {
-    getSessionUsers
+    getSessionUsers,
+    updateUsers
 }

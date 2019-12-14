@@ -1,20 +1,19 @@
 import axios from 'axios'
+import { render } from 'pug'
 
-let getHand = (id, callback) => {
-    axios.get(`/drawHand/${id}`).then(hand => {
-        renderHand(hand)
-    }).then(_ => {
-        callback(id)
+let getHand = (id) => {
+    axios.post(`/drawHand/${id}`).then(hand => {
+        renderHand(id, hand)
     })
 }
 
-let renderHand = (hand) => {
+let renderHand = (id, hand) => {
     hand.data.map(card => {
-        renderCard(card)
+        renderCard(id, card)
     })
 }
 
-let renderCard = (card) => {
+let renderCard = (id, card) => {
 
     let handCard = document.createElement('div')
     handCard.classList.add(`hand__card${card.color}`)
@@ -81,24 +80,20 @@ let renderCard = (card) => {
     handCard.appendChild(handCardCircle)
 
     let hand = document.querySelector('.hand')
-    if (hand != null) hand.appendChild(handCard)
+    if (hand != null) hand.prepend(handCard)
+    
+    handCard.addEventListener("click", function () {
+        handCard.remove()
+        axios.get(`/playHand/${id}/${handCard.id}`)
+    })
+
 }
 
-let playHand = (id) => {
-    let cards = document.querySelectorAll(".card-to-play")
-
-    if (cards !== null) {
-        cards.forEach(card => {
-            card.addEventListener("click", function () {
-                this.remove()
-                axios.get(`/playHand/${id}/${this.id}`)
-            })
-        })
-    }
+let drawCard = (id) => {
+    axios.get(`/drawCard/${id}`).then( card => renderCard(id, card.data))
 }
 
 module.exports = {
     getHand,
-    playHand,
-    renderCard
+    drawCard
 }

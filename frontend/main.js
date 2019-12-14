@@ -8,7 +8,7 @@ const io = require('socket.io-client')
 import globalChat from './chat/globalChat'
 import { incomingMessage, getSessionMessages } from './chat/sessionChat' 
 import { getSessionUsers, updateUsers } from './events/users'
-import { getHand, playHand } from './cards/hand'
+import { getHand, drawCard } from './cards/hand'
 import { renderGraveyard } from './gameplay/graveYard'
 import axios from 'axios'
 import './cards/deck.js'
@@ -31,7 +31,7 @@ let url = window.location.href;
 let split = url.split('/');
 let id = split[split.length-1]
 
-//get session messages
+//load information for individual session
 let session = document.querySelector(".session")
 if(session !== null){
     //get all session messages from db
@@ -39,7 +39,7 @@ if(session !== null){
     //get all users in session
     getSessionUsers(id)
     //get hand
-    getHand(id, playHand)
+    getHand(id)
 
     //pull graveyard from database
     axios.get(`/graveyard/${id}`).then(card => renderGraveyard(card.data))
@@ -84,6 +84,14 @@ if( sessionChatFormButton !== null){
         axios.post(`/sendMessage/${split[split.length-1]}`, {
             messageBody: sessionChatFormInput.value
         })
+    })
+}
+
+//draw card on click
+let pile = document.querySelector(".hand__card.pile")
+if(pile !== null){
+    pile.addEventListener("click", function(){
+        drawCard(id)
     })
 }
 

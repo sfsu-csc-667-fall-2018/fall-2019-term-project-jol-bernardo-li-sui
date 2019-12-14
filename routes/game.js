@@ -13,7 +13,7 @@ router.get('/game/:id', (req, res, next) => {
     })
 })
 
-router.get('/drawHand/:id', (req, res, next) => {
+router.post('/drawHand/:id', (req, res, next) => {
     models.Game.findOne({where: {id: req.params.id}}).then( game => {
         models.Player.findOne({where: {userId: req.user.id, gameId: game.dataValues.id}}).then( player => {
             models.Card.findAll({where: {playerId: player.dataValues.id, deckId: game.dataValues.deckId, played: false}}).then( hand => {
@@ -40,7 +40,27 @@ router.get('/graveyard/:id', (req, res, next) => {
     models.Game.findOne({where: {id: req.params.id}}).then( game => {
         models.Deck.findOne({where: {id: game.dataValues.deckId}}).then(deck => {
             models.Card.findOne({where: {id: deck.currentCard, deckId: deck.dataValues.id}}).then( card => {
-                res.send(card.dataValues)
+                if(card === null){
+                    models.Card.findOne({where: {deckId: deck.dataValues.id, played: false, playerId: null}}).then( card => {
+                        card.update({played: true}).then( card => {
+                            res.send(card)
+                        })
+                    })
+                }else{
+                    res.send(card.dataValues)
+                }
+            })
+        })
+    })
+})
+
+router.get('/drawCard/:id', (req,res, next) => {
+    models.Game.findOne({where: {id: req.params.id}}).then( game => {
+        models.Player.findOne({where: {gameId: game.dataValues.id, userId: req.user.id}}).then( player => {
+            models.Card.findOne({where: {played: false, deckId: game.dataValues.deckId, playerId: null}}).then( card => {
+                card.update({playerId: player.dataValues.id}).then( card => {
+                    res.send(card)
+                })
             })
         })
     })

@@ -90,6 +90,7 @@ let playHand = (id) => {
     if (cards !== null) {
         cards.forEach(card => {
             card.addEventListener("click", function () {
+                this.remove()
                 axios.get(`/playHand/${id}/${this.id}`)
             })
         })

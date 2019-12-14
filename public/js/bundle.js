@@ -166,6 +166,8 @@ var playHand = function playHand(id) {
   if (cards !== null) {
     cards.forEach(function (card) {
       card.addEventListener("click", function () {
+        this.remove();
+
         _axios["default"].get("/playHand/".concat(id, "/").concat(this.id));
       });
     });
@@ -452,7 +454,16 @@ module.exports = {
 
 var renderGraveyard = function renderGraveyard(card) {
   if (document.querySelector(".session") !== null) {
+    removeCard();
     renderCard(card);
+  }
+};
+
+var removeCard = function removeCard() {
+  var graveYard = document.querySelector('.played');
+
+  if (graveYard !== null) {
+    graveYard.remove();
   }
 };
 
@@ -510,7 +521,7 @@ var renderCard = function renderCard(card) {
 
   handCard.appendChild(handCardCircle);
   var graveYard = document.querySelector('.deck');
-  if (graveYard != null) graveYard.appendChild(handCard);
+  if (graveYard != null) graveYard.prepend(handCard);
 };
 
 module.exports = {

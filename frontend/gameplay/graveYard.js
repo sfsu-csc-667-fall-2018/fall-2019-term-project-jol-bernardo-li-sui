@@ -1,7 +1,15 @@
 
 let renderGraveyard = (card) => {
     if(document.querySelector(".session") !== null){
+        removeCard()
         renderCard(card)
+    }
+}
+
+let removeCard = () => {
+    let graveYard = document.querySelector('.played')
+    if(graveYard !== null){
+        graveYard.remove()
     }
 }
 
@@ -69,7 +77,7 @@ let renderCard = (card) => {
     handCard.appendChild(handCardCircle)
 
     let graveYard = document.querySelector('.deck')
-    if (graveYard != null) graveYard.appendChild(handCard)
+    if (graveYard != null) graveYard.prepend(handCard)
 }
 
 module.exports = { renderGraveyard }

@@ -14,7 +14,7 @@ router.get('/game/:id', (req, res, next) => {
 })
 
 router.get('/drawHand/:id', (req, res, next) => {
-
+    
 })
 
 module.exports = router

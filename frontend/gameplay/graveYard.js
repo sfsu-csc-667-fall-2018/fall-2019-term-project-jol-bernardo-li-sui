@@ -1,26 +1,14 @@
-import axios from 'axios'
 
-let getHand = (id, callback) => {
-    axios.get(`/drawHand/${id}`).then(hand => {
-        renderHand(hand)
-    }).then(_ => {
-        callback(id)
-    })
-}
-
-let renderHand = (hand) => {
-    hand.data.map(card => {
+let renderGraveyard = (card) => {
+    if(document.querySelector(".session") !== null){
         renderCard(card)
-    })
+    }
 }
 
 let renderCard = (card) => {
-
     let handCard = document.createElement('div')
     handCard.classList.add(`hand__card${card.color}`)
-    handCard.classList.add('card-to-play')
-    handCard.setAttribute("id", card.id);
-    handCard.classList.add("shadow")
+    handCard.classList.add('played')
 
     let handCardCircle = document.createElement('div')
     handCardCircle.classList.add(`hand__card--circle`)
@@ -80,24 +68,8 @@ let renderCard = (card) => {
 
     handCard.appendChild(handCardCircle)
 
-    let hand = document.querySelector('.hand')
-    if (hand != null) hand.appendChild(handCard)
+    let graveYard = document.querySelector('.deck')
+    if (graveYard != null) graveYard.appendChild(handCard)
 }
 
-let playHand = (id) => {
-    let cards = document.querySelectorAll(".card-to-play")
-
-    if (cards !== null) {
-        cards.forEach(card => {
-            card.addEventListener("click", function () {
-                axios.get(`/playHand/${id}/${this.id}`)
-            })
-        })
-    }
-}
-
-module.exports = {
-    getHand,
-    playHand,
-    renderCard
-}
+module.exports = { renderGraveyard }

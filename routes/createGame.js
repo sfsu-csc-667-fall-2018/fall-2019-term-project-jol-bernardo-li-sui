@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const models = require('../models')
 
+
 /* game session page. */
 router.post('/create', function(req, res, next) {
 
@@ -28,7 +29,6 @@ router.post('/create', function(req, res, next) {
                         cardArry.map( card => {
                             models.Card.create({type: card.value, color: card.color, deckId: deck.dataValues.id, played: false})
                         })
-
                         // req.app.io.emit("gameCreated") --implement to update lobby on game creation
                         res.redirect(`/join/${game.dataValues.id}`)
                     })  
@@ -69,5 +69,7 @@ const shuffle = (deck) => {
         deck[i] = temp;
     }
 }
+
+
 
 module.exports = router;

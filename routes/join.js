@@ -30,7 +30,7 @@ router.get('/join/:id', (req, res, next) => {
                 res.redirect(`/game/${game.dataValues.id}`)
             }
             //if user is not in game already and game is not full, create new player and add to game
-            else if(playerCount <= 4){
+            else if(playerCount <= 4 && game.dataValues.gameStarted !== true){
                 models.Player.create({ userId: req.user.id, gameId: req.params.id, chatId: game.dataValues.chatId, position: (playerCount + 1), turn: false, score: 0}).then( player => {
                     game.update({playerCount: playerCount + 1}, {where: {id: req.params.id}}).then( _ => {
                         //post to game chat that user has joined

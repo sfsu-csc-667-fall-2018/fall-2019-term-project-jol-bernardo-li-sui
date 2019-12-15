@@ -41,6 +41,8 @@ router.get('/playCard/:gameId/:cardId', (req, res, next) => {
                             //check if card matches color/type or is wild
                             if(validate.checkValid(card, graveYardCard)){
 
+                                let position = player.dataValues.position
+
                                 //handle card types
                                 switch(card.dataValues.type) {
                                     case 'Reverse':
@@ -48,15 +50,15 @@ router.get('/playCard/:gameId/:cardId', (req, res, next) => {
                                         break
 
                                     case 'Skip':
-                                        //TODO
+                                            position = validate.getNextPlayer(game.dataValues.reverse, position, game.dataValues.playerCount)
                                         break
 
                                     case 'Draw Two':
                                         models.Card.findAll({ where:{played: false, playerId: null, deckId: game.dataValues.deckId}, limit: 2 }).then(cards => {
     
-                                            let nextPostition = validate.getNextPlayer(game.dataValues.reverse, player.dataValues.position, game.dataValues.playerCount)
+                                            position = validate.getNextPlayer(game.dataValues.reverse, position, game.dataValues.playerCount)
     
-                                            models.Player.findOne({ where: {gameId: req.params.gameId, position: nextPostition}}).then( nextPlayer => {
+                                            models.Player.findOne({ where: {gameId: req.params.gameId, position: position}}).then( nextPlayer => {
                                                 cards.map(card => {
                                                     card.update({playerId: nextPlayer.dataValues.id})
                                                 })
@@ -68,9 +70,9 @@ router.get('/playCard/:gameId/:cardId', (req, res, next) => {
                                     case 'draw4':
                                         models.Card.findAll({ where:{played: false, playerId: null, deckId: game.dataValues.deckId}, limit: 4 }).then(cards => {
     
-                                            let nextPosition = validate.getNextPlayer(game.dataValues.reverse, player.dataValues.position, game.dataValues.playerCount)
+                                            position = validate.getNextPlayer(game.dataValues.reverse, position, game.dataValues.playerCount)
     
-                                            models.Player.findOne({ where: {gameId: req.params.gameId, position: nextPosition}}).then( nextPlayer => {
+                                            models.Player.findOne({ where: {gameId: req.params.gameId, position: position}}).then( nextPlayer => {
                                                 cards.map(card => {
                                                     card.update({playerId: nextPlayer.dataValues.id})
                                                 })
@@ -87,15 +89,10 @@ router.get('/playCard/:gameId/:cardId', (req, res, next) => {
                                     models.Deck.update({currentCard: req.params.cardId}, {where: {id: game.dataValues.deckId}}).then( deck => {
                                         player.update({turn: false}, {where: {gameId: req.params.gameId, userId: req.user.id}}).then( _ => {
     
-                                            let nextPosition = validate.getNextPlayer(game.dataValues.reverse, player.dataValues.position, game.dataValues.playerCount)
+                                            position = validate.getNextPlayer(game.dataValues.reverse, position, game.dataValues.playerCount)
     
-                                            models.Player.update({turn: true}, {where: {gameId: req.params.gameId, position: nextPosition}}).then( _ => {
+                                            models.Player.update({turn: true}, {where: {gameId: req.params.gameId, position: position}}).then( _ => {
                                                 models.Player.findOne({where: {turn: true, gameId: req.params.gameId}}).then( nextPlayer => {
-                                                    
-                                                    console.log("------------------------------------------------------------------------------")
-                                                    console.log(nextPlayer.dataValues.id)
-                                                    console.log("------------------------------------------------------------------------------")
-
                                                     req.app.io.emit(`NEXT_TURN/${game.dataValues.id}`, {playerId: nextPlayer.dataValues.id})
                                                     req.app.io.emit(`CARD_PLAYED/${req.params.gameId}`, {card: card, game: game})
                                                     res.send({sent: true})

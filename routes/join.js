@@ -53,6 +53,7 @@ router.get('/join/:id', (req, res, next) => {
 router.get("/users/:id", (req, res, next) => {
     models.Player.findAll({
         where: {gameId: req.params.id},
+        order: [['createdAt']],
         include: [{
             model: models.User,
             attributes: ["username"]

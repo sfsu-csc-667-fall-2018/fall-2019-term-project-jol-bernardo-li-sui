@@ -16,14 +16,21 @@ let startGame = (id) => {
 let updatePlayers = (data) => {
     let players = document.querySelectorAll(".score__player")
     players.forEach( player => {
-        player.setAttribute("style", "top: 0; left: 0; background-color: var(--yellow);")
+
+        console.log(`${player.getAttribute("id")} === ${data.playerId}`)
+
+        let nextPlayer = parseInt(player.getAttribute("id")) === data.playerId
+
+        if(nextPlayer){
+            console.log("true")
+            player.setAttribute("style", "top: -5px; left: -10px; background-color: var(--green);")
+        }else {
+            console.log("false")
+            player.setAttribute("style", "top: 0; left: 0; background-color: var(--yellow);")
+        }
     })
 
-    let player = document.getElementById(data.playerId)
-    player.setAttribute("style", "top: -5px; left: -10px; background-color: var(--green);")
-
     showDeck()
-
 }
 
 let showDeck = () => {

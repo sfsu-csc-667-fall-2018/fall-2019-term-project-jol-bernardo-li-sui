@@ -27,7 +27,8 @@ router.post('/sendMessage/:id', (req, res, next) => {
 router.get('/globalMessages', function(req, res, next) {
     Message.findAll({
         attributes: ['messageBody', 'userId'],
-        where: {chatId: null}
+        where: {chatId: null},
+        order: [['createdAt']],
     })
         .then(messages => {
             res.send(messages)
@@ -40,6 +41,7 @@ router.get("/sessionMessages/:id", (req, res, next) => {
         Message.findAll({ 
             where: {chatId: game.dataValues.chatId},
             attributes: ['messageBody'],
+            order: [['createdAt']],
             include: [{ model: User, attributes: ["username"] }],
         }).then( messages => {
             res.send(messages)

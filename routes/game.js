@@ -20,7 +20,7 @@ router.get('/game/:id', (req, res, next) => {
 router.post('/drawHand/:id', (req, res, next) => {
     models.Game.findOne({where: {id: req.params.id}}).then( game => {
         models.Player.findOne({where: {userId: req.user.id, gameId: game.dataValues.id}}).then( player => {
-            models.Card.findAll({where: {playerId: player.dataValues.id, deckId: game.dataValues.deckId, played: false}}).then( hand => {
+            models.Card.findAll({where: {playerId: player.dataValues.id, deckId: game.dataValues.deckId, played: false}, order: [['updatedAt']]}).then( hand => {
                 res.send(hand)
             })
         })
@@ -34,83 +34,79 @@ router.get('/playCard/:gameId/:cardId', (req, res, next) => {
             models.Deck.findOne({where: {id: game.dataValues.deckId}}).then (deck => {
                 models.Card.findOne({where: {id: deck.dataValues.currentCard}}).then( graveYardCard => {
                     models.Card.findOne({where: {id: req.params.cardId}}).then( card => {
-    
-                        let valid = false
-                        let validType = false
 
+                        //check if it's players turn
                         if(player.dataValues.turn === true) {
-    
-                            switch(card.dataValues.type) {
-                                case 'Reverse':
-                                    valid = validate.checkColor(card, graveYardCard)
-                                    validType = validate.checkType(card,graveYardCard)
-                                    if(valid || validType){
+
+                            //check if card matches color/type or is wild
+                            if(validate.checkValid(card, graveYardCard)){
+
+                                //handle card types
+                                switch(card.dataValues.type) {
+                                    case 'Reverse':
                                         game.update({reverse: !game.dataValues.reverse}, {where: {id: req.params.gameId}})
-                                    }
-                                    break
-                                case 'Skip':
-                                    // valid = validate.skip(card, graveYardCard)
-                                    break
-                                case 'Draw Two':
-                                    valid = validate.checkColor(card, graveYardCard)
-                                    validType = validate.checkType(card,graveYardCard)
-                                    if(valid || validType){
+                                        break
+
+                                    case 'Skip':
+                                        //TODO
+                                        break
+
+                                    case 'Draw Two':
                                         models.Card.findAll({ where:{played: false, playerId: null, deckId: game.dataValues.deckId}, limit: 2 }).then(cards => {
-
-                                            let nextPlayer = validate.getNextPlayer(game.dataValues.reverse, player.dataValues.position, game.dataValues.playerCount)
     
-                                            models.Player.findOne({ where: {gameId: req.params.gameId, position: nextPlayer}}).then( player => {
+                                            let nextPostition = validate.getNextPlayer(game.dataValues.reverse, player.dataValues.position, game.dataValues.playerCount)
+    
+                                            models.Player.findOne({ where: {gameId: req.params.gameId, position: nextPostition}}).then( nextPlayer => {
                                                 cards.map(card => {
-                                                    card.update({playerId: player.dataValues.id})
+                                                    card.update({playerId: nextPlayer.dataValues.id})
                                                 })
-                                                req.app.io.emit(`DRAW_EVENT/${player.dataValues.id}`, cards)  
+                                                req.app.io.emit(`DRAW_EVENT/${nextPlayer.dataValues.id}`, cards)  
                                             })
                                         })
-                                    }
-                                    break
-                                case 'wild':
-                                    valid = true
-                                    break
-                                case 'draw4':
-                                    models.Card.findAll({ where:{played: false, playerId: null, deckId: game.dataValues.deckId}, limit: 4 }).then(cards => {
+                                        break
 
-                                        let nextPlayer = validate.getNextPlayer(game.dataValues.reverse, player.dataValues.position, game.dataValues.playerCount)
-
-                                        console.log(nextPlayer)
-
-                                        models.Player.findOne({ where: {gameId: req.params.gameId, position: nextPlayer}}).then( newPlayer => {
-                                            cards.map(card => {
-                                                card.update({playerId: newPlayer.dataValues.id})
+                                    case 'draw4':
+                                        models.Card.findAll({ where:{played: false, playerId: null, deckId: game.dataValues.deckId}, limit: 4 }).then(cards => {
+    
+                                            let nextPosition = validate.getNextPlayer(game.dataValues.reverse, player.dataValues.position, game.dataValues.playerCount)
+    
+                                            models.Player.findOne({ where: {gameId: req.params.gameId, position: nextPosition}}).then( nextPlayer => {
+                                                cards.map(card => {
+                                                    card.update({playerId: nextPlayer.dataValues.id})
+                                                })
+                                                req.app.io.emit(`DRAW_EVENT/${nextPlayer.dataValues.id}`, cards)  
                                             })
-                                            req.app.io.emit(`DRAW_EVENT/${newPlayer.dataValues.id}`, cards)  
                                         })
-                                    })
-                                    valid = true
-                                    break
-                                default:
-                                    valid = validate.colorCard(card, graveYardCard)
-                                    break
-                            }
-                        }
-            
-                        if(valid || validType){
-                            card.update({played: true, playerId: null}).then( card => {
-                                models.Deck.update({currentCard: req.params.cardId}, {where: {id: game.dataValues.deckId}}).then( deck => {
-                                    player.update({turn: false}, {where: {gameId: req.params.gameId, userId: req.user.id}}).then( _ => {
+                                        break
 
-                                        let nextPosition = validate.getNextPlayer(game.dataValues.reverse, player.dataValues.position, game.dataValues.playerCount)
+                                    default:
+                                        break
+                                }
 
-                                        models.Player.update({turn: true}, {where: {gameId: req.params.gameId, position: nextPosition}}).then( _ => {
-                                            models.Player.findOne({where: {turn: true, gameId: req.params.gameId}}).then( newPlayer => {
-                                                console.log(newPlayer)
-                                                req.app.io.emit(`NEXT_TURN/${game.dataValues.id}`, {playerId: newPlayer.dataValues.id})
-                                                req.app.io.emit(`CARD_PLAYED/${req.params.gameId}`, {card: card, game: game})
-                                                res.send({sent: true})
+                                card.update({played: true, playerId: null}).then( card => {
+                                    models.Deck.update({currentCard: req.params.cardId}, {where: {id: game.dataValues.deckId}}).then( deck => {
+                                        player.update({turn: false}, {where: {gameId: req.params.gameId, userId: req.user.id}}).then( _ => {
+    
+                                            let nextPosition = validate.getNextPlayer(game.dataValues.reverse, player.dataValues.position, game.dataValues.playerCount)
+    
+                                            models.Player.update({turn: true}, {where: {gameId: req.params.gameId, position: nextPosition}}).then( _ => {
+                                                models.Player.findOne({where: {turn: true, gameId: req.params.gameId}}).then( nextPlayer => {
+                                                    
+                                                    console.log("------------------------------------------------------------------------------")
+                                                    console.log(nextPlayer.dataValues.id)
+                                                    console.log("------------------------------------------------------------------------------")
+
+                                                    req.app.io.emit(`NEXT_TURN/${game.dataValues.id}`, {playerId: nextPlayer.dataValues.id})
+                                                    req.app.io.emit(`CARD_PLAYED/${req.params.gameId}`, {card: card, game: game})
+                                                    res.send({sent: true})
+                                                })
                                             })
                                         })
                                     })
                                 })
-                            })
+                            } else{
+                                res.send({sent: false})
+                            }
                         } else{
                             res.send({sent: false})
                         }

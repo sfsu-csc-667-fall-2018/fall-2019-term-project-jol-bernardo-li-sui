@@ -43,10 +43,8 @@ if(session !== null){
     getSessionUsers(id)
     //get hand
     getHand(id)
-
     //start game
     startGame(id)
-
     //pull graveyard from database
     axios.get(`/graveyard/${id}`).then(data => renderGraveyard(data.data))
 }

@@ -51,17 +51,19 @@ router.get('/playCard/:gameId/:cardId', (req, res, next) => {
                                     break
                                 case 'Draw Two':
                                     valid = validate.checkColor(card, graveYardCard)
-                                    models.Card.findAll({ where:{played: false, playerId: null, deckId: game.dataValues.deckId}, limit: 2 }).then(cards => {
+                                    if(valid){
+                                        models.Card.findAll({ where:{played: false, playerId: null, deckId: game.dataValues.deckId}, limit: 2 }).then(cards => {
 
-                                        let nextPlayer = validate.getNextPlayer(game.dataValues.reverse, player.dataValues.position, game.dataValues.playerCount)
-
-                                        models.Player.findOne({ where: {gameId: req.params.gameId, position: nextPlayer}}).then( player => {
-                                            cards.map(card => {
-                                                card.update({playerId: player.dataValues.id})
+                                            let nextPlayer = validate.getNextPlayer(game.dataValues.reverse, player.dataValues.position, game.dataValues.playerCount)
+    
+                                            models.Player.findOne({ where: {gameId: req.params.gameId, position: nextPlayer}}).then( player => {
+                                                cards.map(card => {
+                                                    card.update({playerId: player.dataValues.id})
+                                                })
+                                                req.app.io.emit(`DRAW_EVENT/${player.dataValues.id}`, cards)  
                                             })
-                                            req.app.io.emit(`DRAW_EVENT/${player.dataValues.id}`, cards)  
                                         })
-                                    })
+                                    }
                                     break
                                 case 'wild':
                                     valid = true

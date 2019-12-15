@@ -22,6 +22,13 @@ let checkColor = (card, graveYardCard) => {
     }
 }
 
+let checkType = (card, graveYardCard) => {
+    if(graveYardCard.dataValues.type === card.dataValues.type){
+        return true
+    }
+    return false
+}
+
 let getNextPlayer = (reverse, currentPlayer, playerCount) => {
     if(reverse === false || reverse === null){
         if(currentPlayer >= playerCount){
@@ -40,4 +47,4 @@ let getNextPlayer = (reverse, currentPlayer, playerCount) => {
     }
 }
 
-module.exports = { colorCard, getNextPlayer, checkColor }
+module.exports = { colorCard, getNextPlayer, checkColor, checkType }

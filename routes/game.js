@@ -36,13 +36,15 @@ router.get('/playCard/:gameId/:cardId', (req, res, next) => {
                     models.Card.findOne({where: {id: req.params.cardId}}).then( card => {
     
                         let valid = false
+                        let validType = false
 
                         if(player.dataValues.turn === true) {
     
                             switch(card.dataValues.type) {
                                 case 'Reverse':
                                     valid = validate.checkColor(card, graveYardCard)
-                                    if(valid){
+                                    validType = validate.checkType(card,graveYardCard)
+                                    if(valid || validType){
                                         game.update({reverse: !game.dataValues.reverse}, {where: {id: req.params.gameId}})
                                     }
                                     break
@@ -51,7 +53,8 @@ router.get('/playCard/:gameId/:cardId', (req, res, next) => {
                                     break
                                 case 'Draw Two':
                                     valid = validate.checkColor(card, graveYardCard)
-                                    if(valid){
+                                    validType = validate.checkType(card,graveYardCard)
+                                    if(valid || validType){
                                         models.Card.findAll({ where:{played: false, playerId: null, deckId: game.dataValues.deckId}, limit: 2 }).then(cards => {
 
                                             let nextPlayer = validate.getNextPlayer(game.dataValues.reverse, player.dataValues.position, game.dataValues.playerCount)
@@ -87,11 +90,10 @@ router.get('/playCard/:gameId/:cardId', (req, res, next) => {
                                 default:
                                     valid = validate.colorCard(card, graveYardCard)
                                     break
-        
                             }
                         }
             
-                        if(valid){
+                        if(valid || validType){
                             card.update({played: true, playerId: null}).then( card => {
                                 models.Deck.update({currentCard: req.params.cardId}, {where: {id: game.dataValues.deckId}}).then( deck => {
                                     player.update({turn: false}, {where: {gameId: req.params.gameId, userId: req.user.id}}).then( _ => {

@@ -40,7 +40,10 @@ router.get('/playCard/:gameId/:cardId', (req, res, next) => {
     
                             switch(card.dataValues.type) {
                                 case 'Reverse':
-                                    // valid = validate.reverse(card, graveYardCard)
+                                    valid = validate.checkColor(card, graveYardCard)
+                                    if(valid){
+                                        game.update({reverse: !game.dataValues.reverse}, {where: {id: req.params.gameId}})
+                                    }
                                     break
                                 case 'Skip':
                                     // valid = validate.skip(card, graveYardCard)
@@ -48,10 +51,10 @@ router.get('/playCard/:gameId/:cardId', (req, res, next) => {
                                 case 'Draw Two':
                                     models.Card.findAll({ where:{played: false, playerId: null, deckId: game.dataValues.deckId}, limit: 2 }).then(cards => {
 
-                                        let nextPlayer = validate.getNextPlayer(game.dataValues.reverse, player.dataValues.postition)
+                                        let nextPlayer = validate.getNextPlayer(game.dataValues.reverse, player.dataValues.postition, game.dataValues.playerCount)
 
                                         models.Player.findOne({ where: {gameId: req.params.gameId, postition: nextPlayer}}).then( player => {
-                                            req.app.io.emit(`DRAW_EVENT/${req.params.gameId}`, cards)  
+                                            req.app.io.emit(`DRAW_EVENT/${player.dataValues.id}`, cards)  
                                             valid = true
                                         })
                                     })
@@ -62,10 +65,10 @@ router.get('/playCard/:gameId/:cardId', (req, res, next) => {
                                 case 'draw4':
                                     models.Card.findAll({ where:{played: false, playerId: null, deckId: game.dataValues.deckId}, limit: 4 }).then(cards => {
 
-                                        let nextPlayer = validate.getNextPlayer(game.dataValues.reverse, player.dataValues.postition)
+                                        let nextPlayer = validate.getNextPlayer(game.dataValues.reverse, player.dataValues.postition, game.dataValues.playerCount)
 
                                         models.Player.findOne({ where: {gameId: req.params.gameId, postition: nextPlayer}}).then( player => {
-                                            req.app.io.emit(`DRAW_FOUR/${req.params.gameId}`, cards)  
+                                            req.app.io.emit(`DRAW_FOUR/${player.dataValues.id}`, cards)  
                                             valid = true
                                         })
                                     })

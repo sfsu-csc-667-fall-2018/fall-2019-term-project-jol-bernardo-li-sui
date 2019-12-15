@@ -1,8 +1,20 @@
 function colorCard(card, graveYardCard) {
-    if(graveYardCard.dataValues.type === "wild"){
+    if(graveYardCard.dataValues.type === "wild" || graveYardCard.dataValues.type === "draw4"){
         return true
     }else {
         if(card.dataValues.color === graveYardCard.dataValues.color || card.dataValues.type === graveYardCard.dataValues.type) {
+            return true
+        } else {
+            return false
+        }
+    }
+}
+
+let checkColor = (card, graveYardCard) => {
+    if(graveYardCard.dataValues.type === "wild" || graveYardCard.dataValues.type === "draw4"){
+        return true
+    }else {
+        if(card.dataValues.color === graveYardCard.dataValues.color){
             return true
         } else {
             return false
@@ -19,7 +31,7 @@ let getNextPlayer = (reverse, currentPlayer, playerCount) => {
         }
     }
     else {
-        if(currenPlayer <= 1) {
+        if(currentPlayer <= 1) {
             return playerCount
         }
         else {
@@ -28,4 +40,4 @@ let getNextPlayer = (reverse, currentPlayer, playerCount) => {
     }
 }
 
-module.exports = { colorCard, getNextPlayer }
+module.exports = { colorCard, getNextPlayer, checkColor }

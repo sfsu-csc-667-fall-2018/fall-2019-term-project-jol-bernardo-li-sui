@@ -102,5 +102,6 @@ let drawCard = (id) => {
 
 module.exports = {
     getHand,
-    drawCard
+    drawCard,
+    renderCard
 }

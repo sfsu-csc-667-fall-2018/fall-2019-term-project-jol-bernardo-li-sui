@@ -177,7 +177,8 @@ var drawCard = function drawCard(id) {
 
 module.exports = {
   getHand: getHand,
-  drawCard: drawCard
+  drawCard: drawCard,
+  renderCard: renderCard
 };
 
 },{"axios":24,"pug":461}],3:[function(require,module,exports){
@@ -461,13 +462,20 @@ module.exports = {
 },{"../chat/sessionChat":4,"axios":24}],7:[function(require,module,exports){
 "use strict";
 
-var drawFour = function drawFour(data) {};
+var _hand = require("../cards/hand");
 
-module.exports = {
-  drawFour: drawFour
+var drawEvent = function drawEvent(id, cards) {
+  console.log(cards);
+  cards.map(function (card) {
+    (0, _hand.renderCard)(id, card);
+  });
 };
 
-},{}],8:[function(require,module,exports){
+module.exports = {
+  drawEvent: drawEvent
+};
+
+},{"../cards/hand":2}],8:[function(require,module,exports){
 "use strict";
 
 var _axios = _interopRequireDefault(require("axios"));
@@ -613,7 +621,7 @@ var _graveYard = require("./gameplay/graveYard");
 
 var _gameStart = require("./gameplay/gameStart");
 
-var _drawFour = require("./gameplay/drawFour");
+var _drawEvent = require("./gameplay/drawEvent");
 
 var _axios = _interopRequireDefault(require("axios"));
 
@@ -646,6 +654,7 @@ var split = url.split('/');
 var id = split[split.length - 1]; //load information for individual session
 
 var session = document.querySelector(".session");
+var playerId = session.id;
 
 if (session !== null) {
   //get all session messages from db
@@ -660,10 +669,6 @@ if (session !== null) {
   _axios["default"].get("/graveyard/".concat(id)).then(function (data) {
     return (0, _graveYard.renderGraveyard)(data.data);
   });
-
-  _axios["default"].get("/getPlayerData/".concat(id)).then(function (player) {
-    socket.on("DRAW_EVENT/".concat(player.id), _drawFour.drawFour);
-  });
 } //listen for socket events
 
 
@@ -673,7 +678,10 @@ socket.on("".concat(_events.GAME_MESSAGE_SEND, "/").concat(split[split.length - 
 socket.on("".concat(_events.USER_JOINED, "/").concat(id), _users.updateUsers);
 socket.on("CARD_PLAYED/".concat(id), _graveYard.renderGraveyard);
 socket.on("START_GAME/".concat(id), _gameStart.updatePlayers);
-socket.on("NEXT_TURN/".concat(id), _gameStart.updatePlayers); //send message from Global Chat
+socket.on("NEXT_TURN/".concat(id), _gameStart.updatePlayers);
+socket.on("DRAW_EVENT/".concat(playerId), function (cards) {
+  return (0, _drawEvent.drawEvent)(id, cards);
+}); //send message from Global Chat
 
 var chatBoxButton = document.querySelector('.chat__box--button');
 
@@ -716,7 +724,7 @@ if (pile !== null) {
   });
 }
 
-},{"../src/events.js":547,"./cards/deck.js":1,"./cards/hand":2,"./cards/hand.js":2,"./chat/globalChat":3,"./chat/sessionChat":4,"./events/display":5,"./events/users":6,"./gameplay/drawFour":7,"./gameplay/gameStart":8,"./gameplay/graveYard":9,"axios":24,"socket.io-client":476}],11:[function(require,module,exports){
+},{"../src/events.js":547,"./cards/deck.js":1,"./cards/hand":2,"./cards/hand.js":2,"./chat/globalChat":3,"./chat/sessionChat":4,"./events/display":5,"./events/users":6,"./gameplay/drawEvent":7,"./gameplay/gameStart":8,"./gameplay/graveYard":9,"axios":24,"socket.io-client":476}],11:[function(require,module,exports){
 'use strict';
 
 var acorn = require('acorn');

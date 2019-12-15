@@ -1,6 +1,5 @@
 const {
     DRAW_EVENT,
-    DRAW_FOUR,
     CARD_PLAYED,
     NEXT_TURN
 } = require('../src/events')
@@ -12,7 +11,9 @@ const validate = require("../backendJS/checkValidCard")
 
 router.get('/game/:id', (req, res, next) => {
     models.Game.findOne({where: {id: req.params.id}}).then( game => {
-        res.render('gamesession', {gameName: game.dataValues.gameName})
+        models.Player.findOne({where: {gameId: game.dataValues.id, userId: req.user.id}}).then( player => {
+            res.render('gamesession', {gameName: game.dataValues.gameName, playerId: player.dataValues.id})
+        })
     })
 })
 
@@ -49,13 +50,13 @@ router.get('/playCard/:gameId/:cardId', (req, res, next) => {
                                     // valid = validate.skip(card, graveYardCard)
                                     break
                                 case 'Draw Two':
+                                    valid = validate.checkColor(card, graveYardCard)
                                     models.Card.findAll({ where:{played: false, playerId: null, deckId: game.dataValues.deckId}, limit: 2 }).then(cards => {
 
-                                        let nextPlayer = validate.getNextPlayer(game.dataValues.reverse, player.dataValues.postition, game.dataValues.playerCount)
+                                        let nextPlayer = validate.getNextPlayer(game.dataValues.reverse, player.dataValues.position, game.dataValues.playerCount)
 
-                                        models.Player.findOne({ where: {gameId: req.params.gameId, postition: nextPlayer}}).then( player => {
+                                        models.Player.findOne({ where: {gameId: req.params.gameId, position: nextPlayer}}).then( player => {
                                             req.app.io.emit(`DRAW_EVENT/${player.dataValues.id}`, cards)  
-                                            valid = true
                                         })
                                     })
                                     break
@@ -65,13 +66,15 @@ router.get('/playCard/:gameId/:cardId', (req, res, next) => {
                                 case 'draw4':
                                     models.Card.findAll({ where:{played: false, playerId: null, deckId: game.dataValues.deckId}, limit: 4 }).then(cards => {
 
-                                        let nextPlayer = validate.getNextPlayer(game.dataValues.reverse, player.dataValues.postition, game.dataValues.playerCount)
+                                        let nextPlayer = validate.getNextPlayer(game.dataValues.reverse, player.dataValues.position, game.dataValues.playerCount)
 
-                                        models.Player.findOne({ where: {gameId: req.params.gameId, postition: nextPlayer}}).then( player => {
-                                            req.app.io.emit(`DRAW_FOUR/${player.dataValues.id}`, cards)  
-                                            valid = true
+                                        console.log(nextPlayer)
+
+                                        models.Player.findOne({ where: {gameId: req.params.gameId, position: nextPlayer}}).then( newPlayer => {
+                                            req.app.io.emit(`DRAW_EVENT/${newPlayer.dataValues.id}`, cards)  
                                         })
                                     })
+                                    valid = true
                                     break
                                 default:
                                     valid = validate.colorCard(card, graveYardCard)

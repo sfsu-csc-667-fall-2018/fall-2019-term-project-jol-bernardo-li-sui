@@ -1,9 +1,31 @@
 function colorCard(card, graveYardCard) {
-    if(card.dataValues.color == graveYardCard.dataValues.color || card.dataValues.value == graveYardCard.dataValues.value) {
+    if(graveYardCard.dataValues.type === "wild"){
         return true
-    } else {
-        return false
+    }else {
+        if(card.dataValues.color === graveYardCard.dataValues.color || card.dataValues.type === graveYardCard.dataValues.type) {
+            return true
+        } else {
+            return false
+        }
     }
 }
 
-module.exports = {colorCard}
+let getNextPlayer = (reverse, currentPlayer, playerCount) => {
+    if(reverse === false || reverse === null){
+        if(currentPlayer >= playerCount){
+            return 1
+        }else {
+            return currentPlayer + 1
+        }
+    }
+    else {
+        if(currenPlayer <= 1) {
+            return playerCount
+        }
+        else {
+            return currentPlayer - 1
+        }
+    }
+}
+
+module.exports = { colorCard, getNextPlayer }

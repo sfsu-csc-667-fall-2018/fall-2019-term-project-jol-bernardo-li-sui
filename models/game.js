@@ -5,7 +5,8 @@ module.exports = (sequelize, DataTypes) => {
     chatId: DataTypes.INTEGER,
     deckId: DataTypes.INTEGER,
     gameStarted: DataTypes.BOOLEAN,
-    reverse: DataTypes.BOOLEAN
+    reverse: DataTypes.BOOLEAN,
+    playerCount: DataTypes.INTEGER
   }, {
     tableName: 'games'
   });

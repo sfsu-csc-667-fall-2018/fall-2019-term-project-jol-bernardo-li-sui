@@ -83,8 +83,11 @@ let renderCard = (id, card) => {
     if (hand != null) hand.prepend(handCard)
     
     handCard.addEventListener("click", function () {
-        handCard.remove()
-        axios.get(`/playCard/${id}/${handCard.id}`)
+        axios.get(`/playCard/${id}/${handCard.id}`).then( response => {
+            if(response.data.sent === true){
+                handCard.remove()
+            }
+        })
     })
 
 }
@@ -92,7 +95,7 @@ let renderCard = (id, card) => {
 let drawCard = (id) => {
     axios.get(`/drawCard/${id}`).then( data => {
         if(data.data.sent === true) {
-            renderCard(id, data.data)
+            renderCard(id, data.data.card)
         }
     })
 }

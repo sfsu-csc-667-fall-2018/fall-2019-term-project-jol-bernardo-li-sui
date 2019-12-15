@@ -2,7 +2,7 @@ import {
     MESSAGE_SEND,
     GAME_MESSAGE_SEND,
     USER_JOINED,
-    START_GAME
+    DRAW_FOUR
 } from '../src/events.js'
 const io = require('socket.io-client')
 import globalChat from './chat/globalChat'
@@ -11,6 +11,7 @@ import { getSessionUsers, updateUsers } from './events/users'
 import { getHand, drawCard } from './cards/hand'
 import { renderGraveyard } from './gameplay/graveYard'
 import { startGame, updatePlayers } from './gameplay/gameStart'
+import { drawFour } from './gameplay/drawFour'
 import axios from 'axios'
 import './cards/deck.js'
 import './cards/hand.js'
@@ -46,9 +47,9 @@ if(session !== null){
     startGame(id)
 
     //pull graveyard from database
-    axios.get(`/graveyard/${id}`).then(renderGraveyard)
+    axios.get(`/graveyard/${id}`).then(data => renderGraveyard(data.data))
     axios.get(`/getPlayerData/${id}`).then(player => {
-        console.log(player.data)
+        socket.on(`DRAW_EVENT/${player.id}`, drawFour)
     })
 }
 
@@ -59,6 +60,7 @@ socket.on(`${GAME_MESSAGE_SEND}/${split[split.length-1]}`, incomingMessage)
 socket.on(`${USER_JOINED}/${id}`, updateUsers)
 socket.on(`CARD_PLAYED/${id}`, renderGraveyard)
 socket.on(`START_GAME/${id}`, updatePlayers)
+socket.on(`NEXT_TURN/${id}`, updatePlayers)
 
 //send message from Global Chat
 const chatBoxButton = document.querySelector('.chat__box--button')
@@ -94,8 +96,6 @@ if( sessionChatFormButton !== null){
         })
     })
 }
-
-
 
 //draw card on click
 let pile = document.querySelector(".hand__card.pile")

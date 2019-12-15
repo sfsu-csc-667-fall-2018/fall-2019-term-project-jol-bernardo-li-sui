@@ -17,6 +17,9 @@ module.exports = {
       reverse: {
         type: Sequelize.BOOLEAN
       },
+      playerCount: {
+          type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: true,
         type: Sequelize.DATE

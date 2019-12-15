@@ -1,5 +1,8 @@
 const {
-    DRAW_FOUR
+    DRAW_EVENT,
+    DRAW_FOUR,
+    CARD_PLAYED,
+    NEXT_TURN
 } = require('../src/events')
 const db = require('../db');
 const express = require('express');
@@ -31,40 +34,70 @@ router.get('/playCard/:gameId/:cardId', (req, res, next) => {
                 models.Card.findOne({where: {id: deck.dataValues.currentCard}}).then( graveYardCard => {
                     models.Card.findOne({where: {id: req.params.cardId}}).then( card => {
     
+                        let valid = false
+
                         if(player.dataValues.turn === true) {
-                            let valid = false
     
                             switch(card.dataValues.type) {
                                 case 'Reverse':
-                                    valid = validate.reverse(card, graveYardCard)
+                                    // valid = validate.reverse(card, graveYardCard)
                                     break
                                 case 'Skip':
-                                    valid = validate.skip(card, graveYardCard)
+                                    // valid = validate.skip(card, graveYardCard)
                                     break
                                 case 'Draw Two':
-                                    valid = validate.drawTwo(card, graveYardCard)
+                                    models.Card.findAll({ where:{played: false, playerId: null, deckId: game.dataValues.deckId}, limit: 2 }).then(cards => {
+
+                                        let nextPlayer = validate.getNextPlayer(game.dataValues.reverse, player.dataValues.postition)
+
+                                        models.Player.findOne({ where: {gameId: req.params.gameId, postition: nextPlayer}}).then( player => {
+                                            req.app.io.emit(`DRAW_EVENT/${req.params.gameId}`, cards)  
+                                            valid = true
+                                        })
+                                    })
                                     break
                                 case 'wild':
                                     valid = true
                                     break
                                 case 'draw4':
-                                    req.app.io.emit(`DRAW_FOUR/${req.params.gameId}`)
-                                    valid = true
+                                    models.Card.findAll({ where:{played: false, playerId: null, deckId: game.dataValues.deckId}, limit: 4 }).then(cards => {
+
+                                        let nextPlayer = validate.getNextPlayer(game.dataValues.reverse, player.dataValues.postition)
+
+                                        models.Player.findOne({ where: {gameId: req.params.gameId, postition: nextPlayer}}).then( player => {
+                                            req.app.io.emit(`DRAW_FOUR/${req.params.gameId}`, cards)  
+                                            valid = true
+                                        })
+                                    })
                                     break
                                 default:
                                     valid = validate.colorCard(card, graveYardCard)
                                     break
         
                             }
-                        } else {
-                            res.send({sent: false})
                         }
             
-                        card.update({played: true, playerId: null}).then( card => {
-                            models.Deck.update({currentCard: req.params.cardId}, {where: {id: game.dataValues.deckId}}).then( deck => {
-                                req.app.io.emit(`CARD_PLAYED/${req.params.gameId}`, card.dataValues)
+                        if(valid){
+                            card.update({played: true, playerId: null}).then( card => {
+                                models.Deck.update({currentCard: req.params.cardId}, {where: {id: game.dataValues.deckId}}).then( deck => {
+                                    player.update({turn: false}, {where: {gameId: req.params.gameId, userId: req.user.id}}).then( _ => {
+
+                                        let nextPosition = validate.getNextPlayer(game.dataValues.reverse, player.dataValues.position, game.dataValues.playerCount)
+
+                                        models.Player.update({turn: true}, {where: {gameId: req.params.gameId, position: nextPosition}}).then( _ => {
+                                            models.Player.findOne({where: {turn: true, gameId: req.params.gameId}}).then( newPlayer => {
+                                                console.log(newPlayer)
+                                                req.app.io.emit(`NEXT_TURN/${game.dataValues.id}`, {playerId: newPlayer.dataValues.id})
+                                                req.app.io.emit(`CARD_PLAYED/${req.params.gameId}`, {card: card, game: game})
+                                                res.send({sent: true})
+                                            })
+                                        })
+                                    })
+                                })
                             })
-                        })
+                        } else{
+                            res.send({sent: false})
+                        }
                     })  
                 })
             })
@@ -95,11 +128,15 @@ router.get('/graveyard/:id', (req, res, next) => {
 router.get('/drawCard/:id', (req,res, next) => {
     models.Game.findOne({where: {id: req.params.id}}).then( game => {
         models.Player.findOne({where: {gameId: game.dataValues.id, userId: req.user.id}}).then( player => {
-            models.Card.findOne({where: {played: false, deckId: game.dataValues.deckId, playerId: null}}).then( card => {
-                card.update({playerId: player.dataValues.id}).then( card => {
-                    res.send(card)
+            if(player.dataValues.turn === true){
+                models.Card.findOne({where: {played: false, deckId: game.dataValues.deckId, playerId: null}}).then( card => {
+                    card.update({playerId: player.dataValues.id}).then( card => {
+                        res.send({sent: true, card: card})
+                    })
                 })
-            })
+            }else{
+                res.send({sent: false})
+            }
         })
     })
 })

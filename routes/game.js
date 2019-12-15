@@ -74,6 +74,9 @@ router.get('/playCard/:gameId/:cardId', (req, res, next) => {
                                         console.log(nextPlayer)
 
                                         models.Player.findOne({ where: {gameId: req.params.gameId, position: nextPlayer}}).then( newPlayer => {
+                                            cards.map(card => {
+                                                card.update({playerId: newPlayer.dataValues.id})
+                                            })
                                             req.app.io.emit(`DRAW_EVENT/${newPlayer.dataValues.id}`, cards)  
                                         })
                                     })

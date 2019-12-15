@@ -4,7 +4,8 @@ module.exports = (sequelize, DataTypes) => {
     type: DataTypes.STRING,
     color: DataTypes.STRING,
     played: DataTypes.BOOLEAN,
-    deckId: DataTypes.INTEGER
+    deckId: DataTypes.INTEGER,
+    playerId: DataTypes.INTEGER
   }, {
     tableName: 'cards'
   });

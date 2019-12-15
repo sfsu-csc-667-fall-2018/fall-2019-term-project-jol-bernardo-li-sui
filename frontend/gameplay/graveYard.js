@@ -1,25 +1,22 @@
-import axios from 'axios'
-import { render } from 'pug'
 
-let getHand = (id) => {
-    axios.post(`/drawHand/${id}`).then(hand => {
-        renderHand(id, hand)
-    })
+let renderGraveyard = (card) => {
+    if(document.querySelector(".session") !== null){
+        removeCard()
+        renderCard(card)
+    }
 }
 
-let renderHand = (id, hand) => {
-    hand.data.map(card => {
-        renderCard(id, card)
-    })
+let removeCard = () => {
+    let graveYard = document.querySelector('.played')
+    if(graveYard !== null){
+        graveYard.remove()
+    }
 }
 
-let renderCard = (id, card) => {
-
+let renderCard = (card) => {
     let handCard = document.createElement('div')
     handCard.classList.add(`hand__card${card.color}`)
-    handCard.classList.add('card-to-play')
-    handCard.setAttribute("id", card.id);
-    handCard.classList.add("shadow")
+    handCard.classList.add('played')
 
     let handCardCircle = document.createElement('div')
     handCardCircle.classList.add(`hand__card--circle`)
@@ -79,21 +76,8 @@ let renderCard = (id, card) => {
 
     handCard.appendChild(handCardCircle)
 
-    let hand = document.querySelector('.hand')
-    if (hand != null) hand.prepend(handCard)
-    
-    handCard.addEventListener("click", function () {
-        handCard.remove()
-        axios.get(`/playHand/${id}/${handCard.id}`)
-    })
-
+    let graveYard = document.querySelector('.deck')
+    if (graveYard != null) graveYard.prepend(handCard)
 }
 
-let drawCard = (id) => {
-    axios.get(`/drawCard/${id}`).then( card => renderCard(id, card.data))
-}
-
-module.exports = {
-    getHand,
-    drawCard
-}
+module.exports = { renderGraveyard }

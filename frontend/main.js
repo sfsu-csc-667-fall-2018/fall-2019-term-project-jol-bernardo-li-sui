@@ -1,11 +1,15 @@
 import {
     MESSAGE_SEND,
-    GAME_MESSAGE_SEND
+    GAME_MESSAGE_SEND,
+    USER_JOINED,
+    CARD_PLAYED
 } from '../src/events.js'
 const io = require('socket.io-client')
 import globalChat from './chat/globalChat'
 import { incomingMessage, getSessionMessages } from './chat/sessionChat' 
-import { getSessionUsers } from './events/users'
+import { getSessionUsers, updateUsers } from './events/users'
+import { getHand, drawCard } from './cards/hand'
+import { renderGraveyard } from './gameplay/graveYard'
 import axios from 'axios'
 import './cards/deck.js'
 import './cards/hand.js'
@@ -27,21 +31,26 @@ let url = window.location.href;
 let split = url.split('/');
 let id = split[split.length-1]
 
-
+//load information for individual session
 let session = document.querySelector(".session")
 if(session !== null){
     //get all session messages from db
     getSessionMessages(id)
     //get all users in session
     getSessionUsers(id)
+    //get hand
+    getHand(id)
+
+    //pull graveyard from database
+    axios.get(`/graveyard/${id}`).then(card => renderGraveyard(card.data))
 }
-
-
 
 //listen for socket events
 const socket = io();
 socket.on(MESSAGE_SEND, globalChat.incomingMessage);
 socket.on(`${GAME_MESSAGE_SEND}/${split[split.length-1]}`, incomingMessage)
+socket.on(`${USER_JOINED}/${id}`, updateUsers)
+socket.on(`CARD_PLAYED/${id}`, renderGraveyard)
 
 //send message from Global Chat
 const chatBoxButton = document.querySelector('.chat__box--button')
@@ -77,3 +86,12 @@ if( sessionChatFormButton !== null){
         })
     })
 }
+
+//draw card on click
+let pile = document.querySelector(".hand__card.pile")
+if(pile !== null){
+    pile.addEventListener("click", function(){
+        drawCard(id)
+    })
+}
+

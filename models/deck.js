@@ -1,9 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Deck = sequelize.define('Deck', {
-    remainingCards: DataTypes.INTEGER,
-    deckId: DataTypes.INTEGER,
-    playerId: DataTypes.INTEGER
+    currentCard: DataTypes.INTEGER
   }, {
     tableName: 'decks'
   });

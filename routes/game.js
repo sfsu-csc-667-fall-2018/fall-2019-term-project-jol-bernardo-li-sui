@@ -56,6 +56,9 @@ router.get('/playCard/:gameId/:cardId', (req, res, next) => {
                                         let nextPlayer = validate.getNextPlayer(game.dataValues.reverse, player.dataValues.position, game.dataValues.playerCount)
 
                                         models.Player.findOne({ where: {gameId: req.params.gameId, position: nextPlayer}}).then( player => {
+                                            cards.map(card => {
+                                                card.update({playerId: player.dataValues.id})
+                                            })
                                             req.app.io.emit(`DRAW_EVENT/${player.dataValues.id}`, cards)  
                                         })
                                     })

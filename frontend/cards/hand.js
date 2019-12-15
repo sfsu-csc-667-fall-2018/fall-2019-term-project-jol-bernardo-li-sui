@@ -84,7 +84,7 @@ let renderCard = (id, card) => {
     
     handCard.addEventListener("click", function () {
         handCard.remove()
-        axios.get(`/playHand/${id}/${handCard.id}`)
+        axios.get(`/playCard/${id}/${handCard.id}`)
     })
 
 }

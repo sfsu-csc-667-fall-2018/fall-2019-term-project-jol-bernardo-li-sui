@@ -11,6 +11,9 @@ module.exports = {
       gameName: {
         type: Sequelize.STRING
       },
+      gameStarted: {
+          type: Sequelize.BOOLEAN
+      },
       createdAt: {
         allowNull: true,
         type: Sequelize.DATE

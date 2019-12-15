@@ -43,10 +43,6 @@ let showCreateGame = () => {
     createGameForm.style.display = "block"
 }
 
-let hideCreateGame = () => {
-    
-}
-
 if(loginSignupButton !== null){
     loginSignupButton.addEventListener('click', () => {
         showModal()

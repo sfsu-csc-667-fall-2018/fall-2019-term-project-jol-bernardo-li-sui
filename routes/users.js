@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 let user = require('../auth/controllers/users');
+let models = require('../models');
 
 checkAuthenticated = (req, res, next) => {
 	if(req.isAuthenticated()){
@@ -40,6 +41,12 @@ router.get('/getUserData', (req, res) => {
     else{
         res.send({username: null, userId: 0})
     }
+})
+
+router.get('/getPlayerData/:id', (req, res) => {
+    models.Player.findOne({where: {gameId: req.params.id, userId: req.user.id}}).then(player => {
+        res.send(player)
+    })
 })
 
 module.exports = router

@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     chatId: DataTypes.INTEGER,
     gameId: DataTypes.INTEGER,
     turn: DataTypes.BOOLEAN,
+    position: DataTypes.INTEGER,
     score: DataTypes.INTEGER
   }, {
     tableName: 'players'

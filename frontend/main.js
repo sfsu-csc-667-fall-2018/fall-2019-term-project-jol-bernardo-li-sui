@@ -47,6 +47,9 @@ if(session !== null){
 
     //pull graveyard from database
     axios.get(`/graveyard/${id}`).then(renderGraveyard)
+    axios.get(`/getPlayerData/${id}`).then(player => {
+        console.log(player.data)
+    })
 }
 
 //listen for socket events

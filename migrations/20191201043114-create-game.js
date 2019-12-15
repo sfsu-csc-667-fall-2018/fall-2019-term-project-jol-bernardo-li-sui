@@ -14,6 +14,9 @@ module.exports = {
       gameStarted: {
           type: Sequelize.BOOLEAN
       },
+      reverse: {
+        type: Sequelize.BOOLEAN
+      },
       createdAt: {
         allowNull: true,
         type: Sequelize.DATE

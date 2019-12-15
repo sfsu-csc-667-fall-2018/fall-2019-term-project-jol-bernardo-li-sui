@@ -4,7 +4,8 @@ module.exports = (sequelize, DataTypes) => {
     gameName: DataTypes.STRING,
     chatId: DataTypes.INTEGER,
     deckId: DataTypes.INTEGER,
-    gameStarted: DataTypes.BOOLEAN
+    gameStarted: DataTypes.BOOLEAN,
+    reverse: DataTypes.BOOLEAN
   }, {
     tableName: 'games'
   });

@@ -23,12 +23,10 @@ router.get('/lobby', function(req, res, next) {
 
 router.get('/join/:id', (req, res, next) => {
 
-    let gameFull = false
+    let playerList = 0
 
     models.Player.findAll({ where: {gameId: req.params.id} }).then( players => {
-        if(players.length >= 4){
-            gameFull = true
-        }
+        playerList = players.length
     })
 
     models.Game.findOne({where: {id: req.params.id}}).then( game => {
@@ -39,8 +37,8 @@ router.get('/join/:id', (req, res, next) => {
                 res.redirect(`/game/${game.dataValues.id}`)
             }
             //if user is not in game already and game is not full, create new player and add to game
-            else if(gameFull !== true){
-                models.Player.create({ userId: req.user.id, gameId: req.params.id, chatId: game.dataValues.chatId, turn: false, score: 0}).then( player => {
+            else if(playerList < 4){
+                models.Player.create({ userId: req.user.id, gameId: req.params.id, chatId: game.dataValues.chatId, position: (playerList + 1), turn: false, score: 0}).then( player => {
                     //post to game chat that user has joined
                     models.Message.create({messageBody: `${req.user.username} joined the game`, userId: req.user.id, chatId: game.dataValues.chatId}).then( _ => {
                         req.app.io.emit(`${USER_JOINED}/${req.params.id}`, {messageBody: `${req.user.username} joined the game`, username: req.user.username, score: player.dataValues.score, playerId: player.dataValues.id})

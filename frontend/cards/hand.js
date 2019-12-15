@@ -90,7 +90,11 @@ let renderCard = (id, card) => {
 }
 
 let drawCard = (id) => {
-    axios.get(`/drawCard/${id}`).then( card => renderCard(id, card.data))
+    axios.get(`/drawCard/${id}`).then( data => {
+        if(data.data.sent === true) {
+            renderCard(id, data.data)
+        }
+    })
 }
 
 module.exports = {

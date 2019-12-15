@@ -135,11 +135,10 @@
     display: none;
 }
 
-.played{
-
-}
 .pile{
-
+    background: url('../images/card_icons/uno.png');
+    background-size: 160px 258px;
+    background-position-x: -5px;
 }
 
 .hand {

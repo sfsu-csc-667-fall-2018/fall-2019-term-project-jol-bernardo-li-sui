@@ -36,7 +36,7 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use(flash())
 app.use(session({
-  secret: process.env.SESSION_SECRET,
+  secret: "secret",
   resave: false,
   saveUninitialized: false
 }))

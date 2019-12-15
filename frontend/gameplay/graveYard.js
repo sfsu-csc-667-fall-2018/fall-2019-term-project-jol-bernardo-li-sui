@@ -1,8 +1,13 @@
 
-let renderGraveyard = (card) => {
+import { showDeck } from './gameStart'
+
+let renderGraveyard = (data) => {
     if(document.querySelector(".session") !== null){
         removeCard()
-        renderCard(card)
+        if(data.data.game.gameStarted === true){
+            showDeck()
+        }
+        renderCard(data.data.card)
     }
 }
 

@@ -11,6 +11,10 @@ let getSessionUsers = (id) => {
             //create score player element
             let scorePlayer = document.createElement("div")
             scorePlayer.classList.add("score__player")
+            scorePlayer.setAttribute("id", user.id);
+            if(user.turn === true){
+                scorePlayer.setAttribute("style", "top: -5px; left: -10px; background-color: var(--green);")
+            }
 
             //create username element
             let scorePlayerUsername = document.createElement("p")
@@ -31,14 +35,16 @@ let getSessionUsers = (id) => {
 
 let updateUsers = (data) => {
 
-    console.log(data)
-
     //select score container from page
     let score = document.querySelector(".score")
 
     //create score player element
     let scorePlayer = document.createElement("div")
     scorePlayer.classList.add("score__player")
+    scorePlayer.setAttribute("id", data.playerId);
+    if(data.turn === true){
+        scorePlayer.setAttribute("style", "top: -5px; left: -10px; background-color: var(--green);")
+    }
 
     //create username element
     let scorePlayerUsername = document.createElement("p")

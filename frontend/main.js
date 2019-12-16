@@ -6,7 +6,7 @@ import {
 } from '../src/events.js'
 const io = require('socket.io-client')
 import globalChat from './chat/globalChat'
-import { incomingMessage, getSessionMessages } from './chat/sessionChat' 
+import { incomingMessage, getSessionMessages, setSessionStorage } from './chat/sessionChat' 
 import { getSessionUsers, updateUsers } from './events/users'
 import { getHand, drawCard } from './cards/hand'
 import { renderGraveyard } from './gameplay/graveYard'
@@ -47,6 +47,8 @@ if(session !== null){
     startGame(id)
     //pull graveyard from database
     axios.get(`/graveyard/${id}`).then(data => renderGraveyard(data.data))
+    //set chat input value to what user typed before refresh
+    setSessionStorage()
 }
 
 //listen for socket events

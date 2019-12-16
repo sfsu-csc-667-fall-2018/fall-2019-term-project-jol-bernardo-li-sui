@@ -276,6 +276,8 @@ var _axios = _interopRequireDefault(require("axios"));
 
 var _regeneratorRuntime = _interopRequireDefault(require("regenerator-runtime"));
 
+var _this = void 0;
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var getSessionMessages = function getSessionMessages(id) {
@@ -301,6 +303,14 @@ var getSessionMessages = function getSessionMessages(id) {
   });
 };
 
+var setSessionStorage = function setSessionStorage() {
+  var sessionChatFormInput = document.querySelector(".session-chat__form-input");
+  sessionChatFormInput.addEventListener("change", function () {
+    console.log(sessionChatFormInput.value);
+    sessionStorage.setItem("workingMessage", _this.value);
+  });
+};
+
 var incomingMessage = function incomingMessage(data) {
   var userName = data.username || data.User.username;
   var sessionChat = document.querySelector(".session-chat__messages");
@@ -322,11 +332,14 @@ var incomingMessage = function incomingMessage(data) {
   sessionChat.appendChild(sessionChatMessage);
   sessionChat.scrollTop = sessionChat.scrollHeight;
   document.querySelector('.session-chat__form-input').value = "";
+  var sessionChatFormInput = document.querySelector(".session-chat__form-input");
+  sessionChatFormInput.value = sessionStorage.setItem("workingMessage");
 };
 
 module.exports = {
   incomingMessage: incomingMessage,
-  getSessionMessages: getSessionMessages
+  getSessionMessages: getSessionMessages,
+  setSessionStorage: setSessionStorage
 };
 
 },{"axios":24,"regenerator-runtime":466}],5:[function(require,module,exports){
@@ -675,7 +688,10 @@ if (session !== null) {
 
   _axios["default"].get("/graveyard/".concat(id)).then(function (data) {
     return (0, _graveYard.renderGraveyard)(data.data);
-  });
+  }); //set chat input value to what user typed before refresh
+
+
+  (0, _sessionChat.setSessionStorage)();
 } //listen for socket events
 
 

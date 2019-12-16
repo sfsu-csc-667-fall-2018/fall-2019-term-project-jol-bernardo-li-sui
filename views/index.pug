@@ -18,6 +18,8 @@ block content
                 .start-page-buttons
                     a(href='#' class='start-button shadow') Start a new game
                     a(href='/lobby' class='join-button shadow') Join an existing game
+                    form(action="/logout?_method=DELETE" method="POST" class='logout-button shadow')
+                        button(type="submit" class="unstyled-button") Log Out
             else
                 a.button__login-signup.shadow Login / Signup
 

@@ -30,7 +30,7 @@ router.get('/list_users', checkAuthenticated, user.show_users)
 
 router.delete('/logout', (req, res) => {
 	req.logOut();
-	res.redirect('/login');
+	res.redirect('/');
 })
 
 

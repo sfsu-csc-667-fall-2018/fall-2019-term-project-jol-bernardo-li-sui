@@ -128,7 +128,8 @@
 }
 
 .start-button,
-.join-button {
+.join-button,
+.logout-button{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -144,6 +145,11 @@
     font-family: monospace;
     font-size: 15px;
     text-align: center;
+}
+.unstyled-button {
+    border: none;
+    padding: 0;
+    background: none;
 }
 
 .home-arrow{

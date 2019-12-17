@@ -54,7 +54,7 @@ if(session !== null){
 //listen for socket events
 const socket = io();
 socket.on(MESSAGE_SEND, globalChat.incomingMessage);
-socket.on(`${GAME_MESSAGE_SEND}/${split[split.length-1]}`, incomingMessage)
+socket.on(`${GAME_MESSAGE_SEND}/${id}`, incomingMessage)
 socket.on(`${USER_JOINED}/${id}`, updateUsers)
 socket.on(`CARD_PLAYED/${id}`, renderGraveyard)
 socket.on(`START_GAME/${id}`, updatePlayers)
@@ -90,7 +90,7 @@ if( sessionChatFormButton !== null){
 
         let sessionChatFormInput = document.querySelector('.session-chat__form-input')
 
-        axios.post(`/sendMessage/${split[split.length-1]}`, {
+        axios.post(`/sendMessage/${id}`, {
             messageBody: sessionChatFormInput.value
         })
     })

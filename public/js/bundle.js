@@ -276,8 +276,6 @@ var _axios = _interopRequireDefault(require("axios"));
 
 var _regeneratorRuntime = _interopRequireDefault(require("regenerator-runtime"));
 
-var _this = void 0;
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var getSessionMessages = function getSessionMessages(id) {
@@ -292,6 +290,7 @@ var getSessionMessages = function getSessionMessages(id) {
         case 2:
           response = _context.sent;
           response.data.map(function (message) {
+            console.log(message);
             incomingMessage(message);
           });
 
@@ -300,14 +299,6 @@ var getSessionMessages = function getSessionMessages(id) {
           return _context.stop();
       }
     }
-  });
-};
-
-var setSessionStorage = function setSessionStorage() {
-  var sessionChatFormInput = document.querySelector(".session-chat__form-input");
-  sessionChatFormInput.addEventListener("change", function () {
-    console.log(sessionChatFormInput.value);
-    sessionStorage.setItem("workingMessage", _this.value);
   });
 };
 
@@ -332,14 +323,11 @@ var incomingMessage = function incomingMessage(data) {
   sessionChat.appendChild(sessionChatMessage);
   sessionChat.scrollTop = sessionChat.scrollHeight;
   document.querySelector('.session-chat__form-input').value = "";
-  var sessionChatFormInput = document.querySelector(".session-chat__form-input");
-  sessionChatFormInput.value = sessionStorage.setItem("workingMessage");
 };
 
 module.exports = {
   incomingMessage: incomingMessage,
-  getSessionMessages: getSessionMessages,
-  setSessionStorage: setSessionStorage
+  getSessionMessages: getSessionMessages
 };
 
 },{"axios":24,"regenerator-runtime":466}],5:[function(require,module,exports){
@@ -697,7 +685,7 @@ if (session !== null) {
 
 var socket = io();
 socket.on(_events.MESSAGE_SEND, _globalChat["default"].incomingMessage);
-socket.on("".concat(_events.GAME_MESSAGE_SEND, "/").concat(split[split.length - 1]), _sessionChat.incomingMessage);
+socket.on("".concat(_events.GAME_MESSAGE_SEND, "/").concat(id), _sessionChat.incomingMessage);
 socket.on("".concat(_events.USER_JOINED, "/").concat(id), _users.updateUsers);
 socket.on("CARD_PLAYED/".concat(id), _graveYard.renderGraveyard);
 socket.on("START_GAME/".concat(id), _gameStart.updatePlayers);
@@ -732,7 +720,7 @@ if (sessionChatFormButton !== null) {
     event.preventDefault();
     var sessionChatFormInput = document.querySelector('.session-chat__form-input');
 
-    _axios["default"].post("/sendMessage/".concat(split[split.length - 1]), {
+    _axios["default"].post("/sendMessage/".concat(id), {
       messageBody: sessionChatFormInput.value
     });
   });

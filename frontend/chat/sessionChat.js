@@ -4,16 +4,8 @@ import regeneratorRuntime from 'regenerator-runtime'
 let getSessionMessages = async (id) => {
     let response = await axios.get(`/sessionMessages/${id}`)
     response.data.map(message => {
+        console.log(message)
         incomingMessage(message)
-        
-    })
-}
-
-let setSessionStorage = () => {
-    let sessionChatFormInput = document.querySelector(".session-chat__form-input")
-    sessionChatFormInput.addEventListener("change", () => {
-        console.log(sessionChatFormInput.value)
-        sessionStorage.setItem("workingMessage", this.value)
     })
 }
 
@@ -46,9 +38,6 @@ let incomingMessage = (data) => {
 
     sessionChat.scrollTop = sessionChat.scrollHeight
     document.querySelector('.session-chat__form-input').value = ""
-
-    let sessionChatFormInput = document.querySelector(".session-chat__form-input")
-    sessionChatFormInput.value = sessionStorage.setItem("workingMessage")
 }
 
-module.exports = {incomingMessage, getSessionMessages, setSessionStorage };
+module.exports = {incomingMessage, getSessionMessages };

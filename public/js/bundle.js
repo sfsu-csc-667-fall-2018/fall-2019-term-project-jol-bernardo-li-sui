@@ -290,7 +290,6 @@ var getSessionMessages = function getSessionMessages(id) {
         case 2:
           response = _context.sent;
           response.data.map(function (message) {
-            console.log(message);
             incomingMessage(message);
           });
 
@@ -676,16 +675,13 @@ if (session !== null) {
 
   _axios["default"].get("/graveyard/".concat(id)).then(function (data) {
     return (0, _graveYard.renderGraveyard)(data.data);
-  }); //set chat input value to what user typed before refresh
-
-
-  (0, _sessionChat.setSessionStorage)();
+  });
 } //listen for socket events
 
 
 var socket = io();
 socket.on(_events.MESSAGE_SEND, _globalChat["default"].incomingMessage);
-socket.on("".concat(_events.GAME_MESSAGE_SEND, "/").concat(id), _sessionChat.incomingMessage);
+socket.on("".concat(_events.GAME_MESSAGE_SEND, "/").concat(split[split.length - 1]), _sessionChat.incomingMessage);
 socket.on("".concat(_events.USER_JOINED, "/").concat(id), _users.updateUsers);
 socket.on("CARD_PLAYED/".concat(id), _graveYard.renderGraveyard);
 socket.on("START_GAME/".concat(id), _gameStart.updatePlayers);
@@ -720,7 +716,7 @@ if (sessionChatFormButton !== null) {
     event.preventDefault();
     var sessionChatFormInput = document.querySelector('.session-chat__form-input');
 
-    _axios["default"].post("/sendMessage/".concat(id), {
+    _axios["default"].post("/sendMessage/".concat(split[split.length - 1]), {
       messageBody: sessionChatFormInput.value
     });
   });

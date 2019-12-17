@@ -6,7 +6,7 @@ import {
 } from '../src/events.js'
 const io = require('socket.io-client')
 import globalChat from './chat/globalChat'
-import { incomingMessage, getSessionMessages, setSessionStorage } from './chat/sessionChat' 
+import { incomingMessage, getSessionMessages } from './chat/sessionChat' 
 import { getSessionUsers, updateUsers } from './events/users'
 import { getHand, drawCard } from './cards/hand'
 import { renderGraveyard } from './gameplay/graveYard'
@@ -47,14 +47,12 @@ if(session !== null){
     startGame(id)
     //pull graveyard from database
     axios.get(`/graveyard/${id}`).then(data => renderGraveyard(data.data))
-    //set chat input value to what user typed before refresh
-    setSessionStorage()
 }
 
 //listen for socket events
 const socket = io();
 socket.on(MESSAGE_SEND, globalChat.incomingMessage);
-socket.on(`${GAME_MESSAGE_SEND}/${id}`, incomingMessage)
+socket.on(`${GAME_MESSAGE_SEND}/${split[split.length-1]}`, incomingMessage)
 socket.on(`${USER_JOINED}/${id}`, updateUsers)
 socket.on(`CARD_PLAYED/${id}`, renderGraveyard)
 socket.on(`START_GAME/${id}`, updatePlayers)
@@ -90,7 +88,7 @@ if( sessionChatFormButton !== null){
 
         let sessionChatFormInput = document.querySelector('.session-chat__form-input')
 
-        axios.post(`/sendMessage/${id}`, {
+        axios.post(`/sendMessage/${split[split.length-1]}`, {
             messageBody: sessionChatFormInput.value
         })
     })

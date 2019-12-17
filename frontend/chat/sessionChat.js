@@ -4,8 +4,8 @@ import regeneratorRuntime from 'regenerator-runtime'
 let getSessionMessages = async (id) => {
     let response = await axios.get(`/sessionMessages/${id}`)
     response.data.map(message => {
-        console.log(message)
         incomingMessage(message)
+        
     })
 }
 
